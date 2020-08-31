@@ -1,6 +1,8 @@
 # schedule
 
-Project - https://github.com/GoldenkovVitali/schedule/projects
+### Project - https://github.com/GoldenkovVitali/schedule/projects
+### Task description - https://github.com/rolling-scopes-school/tasks/blob/master/tasks/schedule.md
+
 ## Workflow:
 
 1) Create an issue and **don't forget to point the project in issue settings** (skip this step if the issue is already created)
