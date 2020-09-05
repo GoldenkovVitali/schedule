@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import Service from '../../service/Service'
 import './app.css';
 
+import Table from '../table-shedule/table';
+
+
+
 export default class App extends Component {
   state = {
     data: null,
@@ -17,12 +21,17 @@ export default class App extends Component {
 }
 
   render() {
-    console.log(this.state)
+    const {data} = this.state;
+    console.log(data)
   
     return (
-      <div className="todo-app">
-      Старт
-      </div>
+      <>
+      <div className="todo-app">WOWWWW</div>
+    <Table
+    dataShedule={data}
+      />
+
+    </>
     );
   }
 }

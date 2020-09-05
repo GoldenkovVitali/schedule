@@ -64,6 +64,7 @@
     "react-h5-audio-player": "^3.4.0",
     "react-router": "^5.2.0",
     "react-use-gesture": "^7.0.16",
+    "react-with-important-style": "^0.2.2",
     "regenerator-runtime": "^0.13.1",
     "webpack-bundle-analyzer": "^3.8.0"
   }
