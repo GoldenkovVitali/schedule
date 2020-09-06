@@ -1,0 +1,90 @@
+.task-page {
+  margin: auto;  
+  margin-top: 50px; /* delete */
+  padding: 45px 60px;
+  width: 100%;
+  max-width: 1120px;
+  border: 1px solid #E5E5E5;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px #00000040;  
+  box-sizing: border-box;
+}
+
+.task-page * {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.task-page__header-block {
+  margin-bottom: 20px;
+  width: 100%;
+  border-bottom: 1px solid #7E7E7E;
+}
+
+.task-page__header {
+  width: 100%;
+  font-size: 36px;
+  line-height: 1.5;  
+  color: #848484;  
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  border: none;
+}
+
+/* .task-page__date-block {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.task-page__date-block-item {
+  margin-right: 30px;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.task-page__date-block-checkbox {
+  margin-right: 5px;
+}
+
+.task-page__date-block-item-type {
+  margin-right: 10px;
+  width: fit-content;
+  font-weight: 700;
+  display: flex;
+  align-items: center; 
+} */
+
+/* .task-page__lection-description-block {
+  margin-bottom: 30px;
+  display: flex;
+}
+
+.task-page__lecture-description {
+  resize: none;
+}
+
+.task-page__lection-description-block-checkbox {
+  margin-right: 5px;
+} */
+
+/* .image-block {
+  margin-bottom: 30px;
+}
+
+.image-block__edite-block {
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.image-block__checkbox {
+  margin-right: 10px;
+}
+
+.image-block__image {
+  width: 90%;
+  max-width: 700px;
+} */

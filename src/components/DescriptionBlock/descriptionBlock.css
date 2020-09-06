@@ -1,0 +1,12 @@
+.description-block {
+  margin-bottom: 30px;
+  display: flex;
+}
+
+.description-block__textarea {
+  resize: none;
+}
+
+.description-block__checkbox {
+  margin-right: 5px;
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Service from '../../service/Service'
 import './app.css';
+import TaskPage from '../TaskPage/TaskPage';
 
 export default class App extends Component {
   state = {
@@ -17,12 +18,12 @@ export default class App extends Component {
 }
 
   render() {
-    console.log(this.state)
+    // console.log(this.state)
+
+    const { data } = this.state;
   
     return (
-      <div className="todo-app">
-      Старт
-      </div>
+      <TaskPage data={data} />
     );
   }
 }
