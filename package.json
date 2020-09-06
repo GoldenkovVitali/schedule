@@ -60,10 +60,12 @@
     "direct-styled": "^1.0.1",
     "prop-types": "^15.6.2",
     "react": "^16.12.0",
+    "react-color": "^2.18.1",
     "react-dom": "^16.12.0",
     "react-h5-audio-player": "^3.4.0",
     "react-router": "^5.2.0",
     "react-use-gesture": "^7.0.16",
+    "reactcss": "^1.2.3",
     "regenerator-runtime": "^0.13.1",
     "webpack-bundle-analyzer": "^3.8.0"
   }
