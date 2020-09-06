@@ -2,30 +2,19 @@ import React from 'react'
 import reactCSS from 'reactcss'
 import { SketchPicker } from 'react-color'
 
-export default class BackgroundColorPicker extends React.Component {
-  state = {
-    displayColorPicker: false,
-    color: {
-      r: '241',
-      g: '112',
-      b: '19',
-      a: '1',
-    },
+const BackgroundColorPicker = ({displayBgPicker, setDisplayBgPicker, colorBgPicker, setColorBgPicker}) => {
+
+  const handleClick = () => {
+    setDisplayBgPicker(!displayBgPicker)
   };
 
-  handleClick = () => {
-    this.setState({ displayColorPicker: !this.state.displayColorPicker })
+  const handleClose = () => {
+    setDisplayBgPicker(false)
   };
 
-  handleClose = () => {
-    this.setState({ displayColorPicker: false })
+  const handleChange = (color) => {
+    setColorBgPicker(color.rgb)
   };
-
-  handleChange = (color) => {
-    this.setState({ color: color.rgb })
-  };
-
-  render() {
 
     const styles = reactCSS({
       'default': {
@@ -33,7 +22,7 @@ export default class BackgroundColorPicker extends React.Component {
           width: '36px',
           height: '14px',
           borderRadius: '2px',
-          background: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`,
+          background: `rgba(${ colorBgPicker.r }, ${ colorBgPicker.g }, ${ colorBgPicker.b }, ${ colorBgPicker.a })`,
         },
         swatch: {
           padding: '5px',
@@ -59,14 +48,15 @@ export default class BackgroundColorPicker extends React.Component {
 
     return (
       <div>
-        <div style={ styles.swatch } onClick={ this.handleClick }>
+        <div style={ styles.swatch } onClick={ handleClick }>
           <div style={ styles.color } />
         </div>
-        { this.state.displayColorPicker ? <div style={ styles.popover }>
-          <div style={ styles.cover } onClick={ this.handleClose }/>
-          <SketchPicker color={ this.state.color } onChange={ this.handleChange } />
+        { displayBgPicker ? <div style={ styles.popover }>
+          <div style={ styles.cover } onClick={ handleClose }/>
+          <SketchPicker color={ colorBgPicker } onChange={ handleChange } />
         </div> : null }
       </div>
     )
-  }
 }
+
+export default BackgroundColorPicker;

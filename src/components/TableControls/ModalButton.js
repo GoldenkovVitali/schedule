@@ -9,13 +9,11 @@ const ModalButton = (props) => {
     setVisible(true)
   };
 
-  const handleOk = e => {
-    console.log(e);
+  const handleOk = () => {
     setVisible(false)
   };
 
-  const handleCancel = e => {
-    console.log(e);
+  const handleCancel = () => {
     setVisible(false)
   };
 
