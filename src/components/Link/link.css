@@ -1,0 +1,28 @@
+.link-block {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.link-block__checkbox{
+  margin-right: 10px;
+}
+
+.link-block__content {
+  width: 100%;
+  display: flex;
+}
+
+.link-block__label {
+  margin-right: 10px;
+  width: fit-content;
+}
+
+.link-block__link {
+  align-self: center;
+}
+
+.link-block__link-input {
+  width: 90%;
+}
+

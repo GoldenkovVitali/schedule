@@ -1,6 +1,7 @@
 .task-page {
   margin: auto;  
   margin-top: 50px; /* delete */
+  margin-bottom: 50px;
   padding: 45px 60px;
   width: 100%;
   max-width: 1120px;

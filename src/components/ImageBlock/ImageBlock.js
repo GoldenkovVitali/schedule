@@ -4,18 +4,51 @@ import 'antd/dist/antd.css';
 import './imageBlock.css';
 
 export default class ImageBlock extends Component {
+  state = {
+    checked: false,
+    url: '',
+  }
+
+  onChangeCheckbox = (event) => {
+    const isChecked = event.target.checked;
+    this.setState({ checked: isChecked })
+  }
+
+  onChangeInput = (event) => {
+    const inputValue =  event.target.value;
+    this.setState({ url: inputValue })
+  }
+
+
   render() {
+    const { isEdited } = this.props;
+    const { checked, url } = this.state;
+
+    if (!isEdited && !checked) {
+      return null;
+    }
+
     return (
-      <div className='image-block'>
+      <div className='image-block'>        
+        { isEdited ?
         <div className='image-block__edite-block'>            
-          <Checkbox className='image-block__checkbox' />
-          <Input value='Image url'/>
-        </div>
+          <Checkbox 
+            className='image-block__checkbox'
+            onChange={this.onChangeCheckbox}
+            checked={checked}
+          />
+          <Input 
+            placeholder='Add image url...'
+            defaultValue={url}
+            disabled={!checked}
+            onChange={this.onChangeInput}
+          />
+        </div> :
         <Image
           className='image-block__image'
-          src="error"
-          fallback=""
-        />
+          src={url}
+          fallback="" /*default picture*/
+        /> }
       </div>
     )
   }

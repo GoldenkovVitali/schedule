@@ -1,46 +1,42 @@
 import React, { Component } from 'react';
-import { Input, Checkbox, Image } from 'antd';
+// import { Input, Checkbox, Image } from 'antd';
 import 'antd/dist/antd.css';
 import './taskPage.css';
+import taskStructure from './taskStructureConfig';
 import DateBlock from '../DateBlock/DateBlock';
 import DescriptionBlock from '../DescriptionBlock/DescriptionBlock';
 import ImageBlock from '../ImageBlock/ImageBlock';
 import VideoBlock from '../VideoBlock/VideoBlock';
 import OrganizerBlock from '../OrganizerBlock/OrganizerBlock';
-
+import Link from '../Link/Link';
+import TaskPageHeader from '../TaskPageHeader/TaskPageHeader'
 
 export default class TaskPage extends Component {
   state = {
-    isEdited: false,
+    isEdited: true,
   }
 
+  togglePageMode = () => {
+    this.setState({ isEdited: !this.state.isEdited })
+  }
+  // taskTypes = ['lecture', 'js_task']
+
   render() {
-    // console.log(this.props.data)
-    const { TextArea } = Input;
+    const { isEdited } = this.state;
 
     return (
       <div className='task-page'>
+        <button onClick={this.togglePageMode} style={{ position:"absolute", top: '10px'}}>change mode</button>
 
-        <div className='task-page__header-block'>
-          {/* <select className='task-page__type'>
-            <option>type</option>
-          </select> */}
-          <input className='task-page__header' value='Header'/>
-        </div>
-
-        <DateBlock />
-        <DescriptionBlock />
-        <ImageBlock />
-        <VideoBlock />
-        <DescriptionBlock />
-        <OrganizerBlock />
-
-
-
-        
-
+        <TaskPageHeader isEdited={isEdited} />
+        <DateBlock isEdited={isEdited} />
+        <DescriptionBlock isEdited={isEdited} />
+        <ImageBlock isEdited={isEdited} />
+        <VideoBlock isEdited={isEdited} />
+        <Link isEdited={isEdited} />
+        <DescriptionBlock isEdited={isEdited} />
+        <OrganizerBlock isEdited={isEdited} />
       </div>
-
     )
   }
 }

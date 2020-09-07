@@ -18,8 +18,6 @@ export default class App extends Component {
 }
 
   render() {
-    // console.log(this.state)
-
     const { data } = this.state;
   
     return (
