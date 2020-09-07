@@ -1,14 +1,15 @@
 .ant-table-wrapper {
-    margin: 20px;
+  margin: 20px;
 }
 
 .urlshref {
-    color: blue
+  color: blue;
 }
 
-.red{
-    color: red;
+.red {
+  color: red;
 }
+
 .green {
-    color :green;
+  color: green;
 }
