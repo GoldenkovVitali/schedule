@@ -17,6 +17,17 @@ export default class Link extends Component {
       linkTitle: '',
     })
   }
+  
+  onChangeInput = (event) => {
+    const inputValue =  event.target.value;
+    this.setState({ linkTitle: inputValue })
+  }
+
+  
+  onChangeLinkInput = (event) => {
+    const url =  event.target.value;
+    this.setState({ url: url })
+  }
 
   render() {
     const { Link } = Typography;
@@ -42,6 +53,7 @@ export default class Link extends Component {
             placeholder='Add link title...'
             defaultValue={linkTitle}
             disabled={!checked}
+            onChange={this.onChangeInput}
           />
           { isEdited ?
           <Input 
@@ -49,12 +61,13 @@ export default class Link extends Component {
             placeholder='Add URL...'
             defaultValue={url}
             disabled={!checked}
+            onChange={this.onChangeLinkInput}
           /> : 
           <Link 
             className='link-block__link'
             href={url}
             target="_blank"
-          >https://ant.design</Link>   
+          >{url}</Link>   
           }            
         </div>               
       </div>

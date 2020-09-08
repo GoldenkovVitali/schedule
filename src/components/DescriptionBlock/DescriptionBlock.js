@@ -7,9 +7,10 @@ import './descriptionBlock.css';
 export default class DescriptionBlock extends Component {
   state = {
     checked: false,
+    textareaValue: '',
   }
 
-  onChange = (event) => {
+  onChangeCheckbox = (event) => {
     const isChecked = event.target.checked;
 
     this.setState({
@@ -17,10 +18,15 @@ export default class DescriptionBlock extends Component {
     })
   }
 
+  onChangeTextarea = (event) => {
+    const textareaValue =  event.target.value;
+    this.setState({ textareaValue: textareaValue })
+  }
+
   render() {
     const { TextArea } = Input;
     const { isEdited } = this.props;
-    const { checked } = this.state;
+    const { checked, descriptionValue } = this.state;
 
     if (!isEdited && !checked) {
       return null;
@@ -31,15 +37,17 @@ export default class DescriptionBlock extends Component {
         { isEdited ? 
         <Checkbox 
           className='description-block__checkbox' 
-          onChange={this.onChange}
+          onChange={this.onChangeCheckbox}
           checked={checked}
         /> : null }
         <TextArea
           className='description-block__textarea'
-          defaultValue='Write description...' 
+          placeholder='Write description...' 
+          defaultValue={descriptionValue}
           autoSize={{ minRows: 3, }}
           disabled={!checked}
           readOnly={isEdited ? false : true}
+          onChange={this.onChangeTextarea}
         />
       </div>
     )

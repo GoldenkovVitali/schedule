@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Input, Checkbox, Image } from 'antd';
 import 'antd/dist/antd.css';
 import './imageBlock.css';
+import noImage from '../../assets/images/no_img.jpg'
 
 export default class ImageBlock extends Component {
   state = {
@@ -47,7 +48,7 @@ export default class ImageBlock extends Component {
         <Image
           className='image-block__image'
           src={url}
-          fallback="" /*default picture*/
+          fallback={noImage} /*default picture*/
         /> }
       </div>
     )
