@@ -8,6 +8,7 @@ import DescriptionBlock from '../DescriptionBlock/DescriptionBlock';
 import ImageBlock from '../ImageBlock/ImageBlock';
 import VideoBlock from '../VideoBlock/VideoBlock';
 import OrganizerBlock from '../OrganizerBlock/OrganizerBlock';
+import MapBlock from '../MapBlock/MapBlock';
 import Link from '../Link/Link';
 import TaskPageHeader from '../TaskPageHeader/TaskPageHeader'
 
@@ -35,6 +36,7 @@ export default class TaskPage extends Component {
         <VideoBlock isEdited={isEdited} />
         <Link isEdited={isEdited} />
         <DescriptionBlock isEdited={isEdited} />
+        <MapBlock isEdited={isEdited} />
         <OrganizerBlock isEdited={isEdited} />
       </div>
     )

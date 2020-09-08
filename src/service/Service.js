@@ -3,7 +3,6 @@ export default class Service {
     this.base = 'https://rs-react-schedule.firebaseapp.com/api/team/18'
   }           
 
-
   getResource = async (url) => {
     const res = await fetch(`${this.base}${url}`);
 
@@ -34,7 +33,7 @@ export default class Service {
     return this._transformOrganizer(organizer)
   }
 
-  postEvent = async ({name = 'no data', description = 'no data', descriptionUrl = 'no data', type = 'no data', timeZone = 'no data', dateTime = 'no data', place = 'no data', comment = 'no data'}) => {
+  postEvent = async ({name = 'no data', description = 'no data', descriptionUrl = 'no data', type = 'no data', timeZone = 'no data', dateTime = 'no data', place = 'no data', comment = 'no data', video = 'no data', image = 'no data', link= 'no data'}) => {
     let url = '/event';
     let data = {
       name,
@@ -45,6 +44,9 @@ export default class Service {
       dateTime,
       place,
       comment,
+      video,
+      image, 
+      link,
     };
 
     try {
@@ -56,11 +58,11 @@ export default class Service {
         body: JSON.stringify(data)
       });
       const json = await response.json();
-      console.log('Успех:', JSON.stringify(json));
+      const resId = JSON.stringify(json);
+      console.log('Успех:', resId);
     } catch (error) {
       console.error('Ошибка:', error);
     }
-
   }
 
   postOrganizer = async ({ name = 'no data'}) => {
@@ -68,7 +70,6 @@ export default class Service {
     let data = {
       name
     };
-
     try {
       const response = await fetch(`${this.base}${url}`, {
         method: 'POST',
@@ -76,14 +77,12 @@ export default class Service {
           'Content-type': 'application/json'
         },
         body: JSON.stringify(data)
-
       });
       const json = await response.json();
       console.log('Успех:', JSON.stringify(json));
     } catch (error) {
       console.error('Ошибка:', error);
     }
-    
   }
 
   updateEvent = async (id, {name = 'no data', description = 'no data', descriptionUrl = 'no data', type = 'no data', timeZone = 'no data', dateTime = 'no data', place = 'no data', comment = 'no data'}) => {
@@ -187,6 +186,9 @@ export default class Service {
       dateTime: this.isSet(event.dateTime),
       place: this.isSet(event.place),
       comment: this.isSet(event.comment),
+      video: this.isSet(event.video),
+      image: this.isSet(event.image),
+      link: this.isSet(event.link),
     };
   }
 }
