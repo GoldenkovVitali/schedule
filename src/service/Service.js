@@ -34,7 +34,7 @@ export default class Service {
     return this._transformOrganizer(organizer)
   }
 
-  postEvent = async ({name = 'no data', description = 'no data', descriptionUrl = 'no data', type = 'no data', timeZone = 'no data', dateTime = 'no data', place = 'no data', comment = 'no data'}) => {
+  postEvent = async ({name = 'no data', description = 'no data', descriptionUrl = 'no data', type = 'no data', timeZone = 'no data', dateTime = 'no data', place = 'no data', comment = 'no data', ...args}) => {
     let url = '/event';
     let data = {
       name,
@@ -45,6 +45,7 @@ export default class Service {
       dateTime,
       place,
       comment,
+      ...args
     };
 
     try {
@@ -177,17 +178,22 @@ export default class Service {
   }
 
   _transformEvent = (event) => {
-    return {
-      id: this.isSet(event.id),
-      name: this.isSet(event.name),
-      description: this.isSet(event.description),
-      descriptionUrl: this.isSet(event.descriptionUrl),
-      type: this.isSet(event.type), 
-      timeZone: this.isSet(event.timeZone),
-      dateTime: this.isSet(event.dateTime),
-      place: this.isSet(event.place),
-      comment: this.isSet(event.comment),
-    };
+    const eventKeys = Object.keys(event);
+    eventKeys.forEach((key) => event[key] = this.isSet(event[key]));
+
+    return event;
+
+    // return {
+    //   id: this.isSet(event.id),
+    //   name: this.isSet(event.name),
+    //   description: this.isSet(event.description),
+    //   descriptionUrl: this.isSet(event.descriptionUrl),
+    //   type: this.isSet(event.type), 
+    //   timeZone: this.isSet(event.timeZone),
+    //   dateTime: this.isSet(event.dateTime),
+    //   place: this.isSet(event.place),
+    //   comment: this.isSet(event.comment),
+    // };
   }
 }
 

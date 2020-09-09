@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Select, Tag, Input } from 'antd';
 import 'antd/dist/antd.css';
 import './taskPageHeader.css';
+import '../../configs/EventTypeColors';
+import EventTypeColors from '../../configs/EventTypeColors';
 
 export default class TaskPageHeader extends Component {
   taskTypes = {
@@ -23,34 +25,37 @@ export default class TaskPageHeader extends Component {
 
 
   render() {
-    const { isEdited, options, handleChangeSelect } = this.props;
+    const { isEdited, handleChangeSelect, handleChangeInput, data, name } = this.props;
 
     const taskTypesArr = Object.keys(this.taskTypes);
     
-    const opt = taskTypesArr.map((type) => {
-      return {value: type, label: this.taskTypes[type]};
+    const options = taskTypesArr.map((type) => {
+      return { value: type, label: this.taskTypes[type] };
     })
-    
-    // [{value: 'test', label: 'testLabel'}, {value: 'test1', label: 'test1Label'}]
 
+    console.log(data, 'select') //
 
     return (
         <div className='task-page__header-block'>
           { isEdited ?
             <Select
-              defaultValue={['test']}
-              style={{ width: '100px' }}
-              options={opt}
+              defaultValue={[data.type]}
+              style={{ width: '200px' }}
+              options={options}
               onChange={handleChangeSelect}
             /> :
-            <Tag color={'green'} >
-              {'task type'}
+            <Tag color={EventTypeColors[data.type]} >
+              {this.taskTypes[data.type]}
             </Tag>
           }
           <Input 
-            className='task-page__header'  
-            defaultValue='Header'
+            className='task-page__header' 
+            placeholder='Write task header...' 
+            defaultValue={data.header}
+            value={data.header}
             readOnly={isEdited ? false : true}
+            data-name={name}
+            onChange={handleChangeInput}
           />
         </div>
     )

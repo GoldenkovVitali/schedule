@@ -15,14 +15,14 @@ export default class ImageBlock extends Component {
     this.setState({ checked: isChecked })
   }
 
-  onChangeInput = (event) => {
-    const inputValue =  event.target.value;
-    this.setState({ url: inputValue })
-  }
+  // onChangeInput = (event) => {
+  //   const inputValue =  event.target.value;
+  //   this.setState({ url: inputValue })
+  // }
 
 
   render() {
-    const { isEdited } = this.props;
+    const { isEdited, name, data, handleChangeInput } = this.props;
     const { checked, url } = this.state;
 
     if (!isEdited && !checked) {
@@ -40,14 +40,15 @@ export default class ImageBlock extends Component {
           />
           <Input 
             placeholder='Add image url...'
-            defaultValue={url}
+            defaultValue={data[name] || url}
+            data-name={name}
             disabled={!checked}
-            onChange={this.onChangeInput}
+            onChange={handleChangeInput}
           />
         </div> :
         <Image
           className='image-block__image'
-          src={url}
+          src={data[name] || url}
           fallback={noImage} /*default picture*/
         /> }
       </div>

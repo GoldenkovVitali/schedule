@@ -17,20 +17,20 @@ export default class OrganizerBlock extends Component {
     this.setState({ checked: isChecked })
   }
 
-  onChangeInput = (event) => {
-    const inputValue =  event.target.value;
-    console.log(inputValue)
-    this.setState({ inputValue: inputValue })
-  }
+  // onChangeInput = (event) => {
+  //   const inputValue =  event.target.value;
+  //   console.log(inputValue)
+  //   this.setState({ inputValue: inputValue })
+  // }
 
-  onChangeTextarea = (event) => {
-    const textareaValue =  event.target.value;
-    this.setState({ textareaValue: textareaValue })
-  }
+  // onChangeTextarea = (event) => {
+  //   const textareaValue =  event.target.value;
+  //   this.setState({ textareaValue: textareaValue })
+  // }
 
   render() {
     const { TextArea } = Input;
-    const { isEdited } = this.props;
+    const { isEdited, name: { organizer, organizerDescription }, data, handleChangeInput } = this.props;
     const { inputValue, textareaValue, checked } = this.state;
 
     if (!isEdited && !checked) {
@@ -48,17 +48,19 @@ export default class OrganizerBlock extends Component {
             <Input 
               className='organizer-block__organizer' 
               placeholder='Write organizer...'
-              defaultValue={inputValue}
+              defaultValue={data[organizer] || ''}
+              data-name={organizer}
               disabled={!checked}
-              onChange={this.onChangeInput}
+              onChange={handleChangeInput}
             />
             <TextArea
               className='organizer-block__description'
               placeholder='Write description...'
-              defaultValue={textareaValue} 
+              defaultValue={data[organizerDescription] || ''}
+              data-name={organizerDescription}
               autoSize={{ minRows: 3, }}              
               disabled={!checked}
-              onChange={this.onChangeTextarea}
+              onChange={handleChangeInput}
             />
           </div>
       </div>

@@ -14,13 +14,13 @@ export default class VideoBlock extends Component {
     this.setState({ checked: isChecked })
   }
 
-  onChangeInput = (event) => {
-    const inputValue =  event.target.value;
-    this.setState({ url: inputValue })
-  }
+  // onChangeInput = (event) => {
+  //   const inputValue =  event.target.value;
+  //   this.setState({ url: inputValue })
+  // }
 
   render() {
-    const { isEdited } = this.props;    
+    const { isEdited, name, data, handleChangeInput } = this.props;    
     const { checked, url } = this.state;
 
     if (!isEdited && !checked) {
@@ -38,14 +38,15 @@ export default class VideoBlock extends Component {
             />
             <Input 
               placeholder='Add video url...'
-              defaultValue={url}
+              defaultValue={data[name] || url}
+              data-name={name}
               disabled={!checked}
-              onChange={this.onChangeInput}
+              onChange={handleChangeInput}
             />
           </div> :
           <iframe 
             className='video-block__video'
-            src={url}
+            src={data[name] || url}
             frameBorder="0" 
             // allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
             allowFullScreen

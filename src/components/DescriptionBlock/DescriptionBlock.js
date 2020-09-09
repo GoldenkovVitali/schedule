@@ -25,7 +25,7 @@ export default class DescriptionBlock extends Component {
 
   render() {
     const { TextArea } = Input;
-    const { isEdited } = this.props;
+    const { isEdited, name, data, handleChangeInput } = this.props;
     const { checked, descriptionValue } = this.state;
 
     if (!isEdited && !checked) {
@@ -43,11 +43,12 @@ export default class DescriptionBlock extends Component {
         <TextArea
           className='description-block__textarea'
           placeholder='Write description...' 
-          defaultValue={descriptionValue}
+          defaultValue={data[name]}
           autoSize={{ minRows: 3, }}
           disabled={!checked}
           readOnly={isEdited ? false : true}
-          onChange={this.onChangeTextarea}
+          data-name={name}
+          onChange={handleChangeInput}
         />
       </div>
     )

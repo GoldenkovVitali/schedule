@@ -9,13 +9,19 @@ import './dateBlock.css';
 export default class DateBlock extends Component  {
   render() {    
     const timeFormat = 'HH:mm';
+    const { isEdited, name: { startDate, satrtTime, deadline }, data, handleChangeInput } = this.props;
 
     return (
       <div className='date-block'>
         <div className='date-block__item' >
           <Checkbox className='date-block__checkbox'/>
           <p className='date-block__item-type'>Start:</p>
-          <DatePicker bordered={true}/> 
+          <DatePicker 
+            bordered={true}
+            value={data[startDate]}
+            data-name={startDate}
+            // onChange={handleChangeInput}
+          /> 
         </div>
         <div className='date-block__item'>
           <Checkbox className='date-block__checkbox'/>
