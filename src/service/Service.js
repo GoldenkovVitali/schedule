@@ -1,41 +1,43 @@
 export default class Service {
   constructor() {
-    this.base = 'https://rs-react-schedule.firebaseapp.com/api/team/18'
-  }           
+    this.base = 'https://rs-react-schedule.firebaseapp.com/api/team/18';
+  }
 
   getResource = async (url) => {
     const res = await fetch(`${this.base}${url}`);
 
     if (!res.ok) {
-      throw new Error(`Could not fetch ${url}, status: ${res.status}`)
+      throw new Error(`Could not fetch ${url}, status: ${res.status}`);
     }
 
-    return await res.json()
+    return await res.json();
   };
 
   getAllEvents = async () => {
-    const res = await this.getResource(`/events`);
-    return res.data.map(this._transformEvent)
+    const res = await this.getResource('/events');
+    return res.data.map(this._transformEvent);
   }
 
   getEvent = async (id) => {
-    const event = await this.getResource(`/event/${id}`)
-    return this._transformEvent(event)
+    const event = await this.getResource(`/event/${id}`);
+    return this._transformEvent(event);
   }
 
   getAllOrganizers = async () => {
-    const res = await this.getResource(`/organizers`);
-    return res.data.map(this._transformOrganizer)
+    const res = await this.getResource('/organizers');
+    return res.data.map(this._transformOrganizer);
   }
 
   getOrganizer = async (id) => {
-    const organizer = await this.getResource(`/organizer/${id}`)
-    return this._transformOrganizer(organizer)
+    const organizer = await this.getResource(`/organizer/${id}`);
+    return this._transformOrganizer(organizer);
   }
 
-  postEvent = async ({name = 'no data', description = 'no data', descriptionUrl = 'no data', type = 'no data', timeZone = 'no data', dateTime = 'no data', place = 'no data', comment = 'no data', video = 'no data', image = 'no data', link= 'no data'}) => {
-    let url = '/event';
-    let data = {
+  postEvent = async ({
+    name = 'no data', description = 'no data', descriptionUrl = 'no data', type = 'no data', timeZone = 'no data', dateTime = 'no data', place = 'no data', comment = 'no data', video = 'no data', image = 'no data', link = 'no data', lng = 'no data', lat = 'no data', zoom = 'no data',
+  }) => {
+    const url = '/event';
+    const data = {
       name,
       description,
       descriptionUrl,
@@ -45,17 +47,20 @@ export default class Service {
       place,
       comment,
       video,
-      image, 
+      image,
       link,
+      lng,
+      lat,
+      zoom,
     };
 
     try {
       const response = await fetch(`${this.base}${url}`, {
         method: 'POST',
         headers: {
-          'Content-type': 'application/json'
+          'Content-type': 'application/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       });
       const json = await response.json();
       const resId = JSON.stringify(json);
@@ -65,18 +70,18 @@ export default class Service {
     }
   }
 
-  postOrganizer = async ({ name = 'no data'}) => {
-    let url = '/organizer';
-    let data = {
-      name
+  postOrganizer = async ({ name = 'no data' }) => {
+    const url = '/organizer';
+    const data = {
+      name,
     };
     try {
       const response = await fetch(`${this.base}${url}`, {
         method: 'POST',
         headers: {
-          'Content-type': 'application/json'
+          'Content-type': 'application/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       });
       const json = await response.json();
       console.log('Успех:', JSON.stringify(json));
@@ -85,9 +90,11 @@ export default class Service {
     }
   }
 
-  updateEvent = async (id, {name = 'no data', description = 'no data', descriptionUrl = 'no data', type = 'no data', timeZone = 'no data', dateTime = 'no data', place = 'no data', comment = 'no data'}) => {
-    let url = `/event/${id}`
-    let data = {
+  updateEvent = async (id, {
+    name = 'no data', description = 'no data', descriptionUrl = 'no data', type = 'no data', timeZone = 'no data', dateTime = 'no data', place = 'no data', comment = 'no data', video = 'no data', image = 'no data', link = 'no data', lng = 'no data', lat = 'no data', zoom = 'no data',
+  }) => {
+    const url = `/event/${id}`;
+    const data = {
       name,
       description,
       descriptionUrl,
@@ -96,15 +103,21 @@ export default class Service {
       dateTime,
       place,
       comment,
+      video,
+      image,
+      link,
+      lng,
+      lat,
+      zoom,
     };
 
     try {
       const response = await fetch(`${this.base}${url}`, {
         method: 'PUT',
         headers: {
-          'Content-type': 'application/json'
+          'Content-type': 'application/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       });
       const json = await response.json();
       console.log('Обновлено:', JSON.stringify(json));
@@ -113,16 +126,16 @@ export default class Service {
     }
   }
 
-  updateOrganizer = async (id, {name}) => {
-    let url = `/organizer/${id}`
+  updateOrganizer = async (id, { name }) => {
+    const url = `/organizer/${id}`;
 
     try {
       const response = await fetch(`${this.base}${url}`, {
         method: 'PUT',
         headers: {
-          'Content-type': 'application/json'
+          'Content-type': 'application/json',
         },
-        body: JSON.stringify({name})
+        body: JSON.stringify({ name }),
       });
       const json = await response.json();
       console.log('Обновлено:', JSON.stringify(json));
@@ -132,11 +145,11 @@ export default class Service {
   }
 
   deleteEvent = async (id) => {
-    let url = `/event/${id}`
+    const url = `/event/${id}`;
 
     try {
       const response = await fetch(`${this.base}${url}`, {
-        method: 'DELETE'
+        method: 'DELETE',
       });
       const json = await response.json();
       console.log('Удалено:', JSON.stringify(json));
@@ -146,11 +159,11 @@ export default class Service {
   }
 
   deleteOrganizer = async (id) => {
-    let url = `/organizer/${id}`
+    const url = `/organizer/${id}`;
 
     try {
       const response = await fetch(`${this.base}${url}`, {
-        method: 'DELETE'
+        method: 'DELETE',
       });
       const json = await response.json();
       console.log('Удалено:', JSON.stringify(json));
@@ -162,34 +175,31 @@ export default class Service {
 
   isSet(data) {
     if (data) {
-        return data
-    } else {
-        return 'no data :('
+      return data;
     }
-  } 
-
-  _transformOrganizer = (organizer) => {
-    return {
-      id: this.isSet(organizer.id),
-      name: this.isSet(organizer.name),
-    };
+    return 'no data :(';
   }
 
-  _transformEvent = (event) => {
-    return {
-      id: this.isSet(event.id),
-      name: this.isSet(event.name),
-      description: this.isSet(event.description),
-      descriptionUrl: this.isSet(event.descriptionUrl),
-      type: this.isSet(event.type), 
-      timeZone: this.isSet(event.timeZone),
-      dateTime: this.isSet(event.dateTime),
-      place: this.isSet(event.place),
-      comment: this.isSet(event.comment),
-      video: this.isSet(event.video),
-      image: this.isSet(event.image),
-      link: this.isSet(event.link),
-    };
-  }
+  _transformOrganizer = organizer => ({
+    id: this.isSet(organizer.id),
+    name: this.isSet(organizer.name),
+  })
+
+  _transformEvent = event => ({
+    id: this.isSet(event.id),
+    name: this.isSet(event.name),
+    description: this.isSet(event.description),
+    descriptionUrl: this.isSet(event.descriptionUrl),
+    type: this.isSet(event.type),
+    timeZone: this.isSet(event.timeZone),
+    dateTime: this.isSet(event.dateTime),
+    place: this.isSet(event.place),
+    comment: this.isSet(event.comment),
+    video: this.isSet(event.video),
+    image: this.isSet(event.image),
+    link: this.isSet(event.link),
+    lng: this.isSet(event.lng),
+    lat: this.isSet(event.lat),
+    zoom: this.isSet(event.zoom),
+  })
 }
-

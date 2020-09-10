@@ -1,32 +1,27 @@
-.description-block {
+.map-block {
   margin-bottom: 30px;
-  display: flex;
+  margin-left: 20px;
 }
 
-.description-block__textarea {
-  resize: none;
-}
-
-.description-block__checkbox {
+.map-block__checkbox {
   margin-right: 10px;
 }
 
 .mapContainer {
   width: 100%;
   height: 100%;
-  margin: 0 auto;
-  }
+}
 
-  .sidebarStyle {
-    display: inline-block;
-    margin: 12px;
-    background-color: #324e68;
-    color: #ffffff;
-    z-index: 1 !important;
-    padding: 6px;
-    font-weight: bold;
-    }
+  .mapboxgl-ctrl-logo{
+   display: none !important;
+}
 
-    .mapboxgl-ctrl-logo{
-      display: none !important;
-  }
+
+.mapboxgl-canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.mapboxgl-canvas-container {
+  height: 50vh;
+}
