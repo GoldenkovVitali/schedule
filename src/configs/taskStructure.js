@@ -1,7 +1,7 @@
 // PS: we can remove keys with value 'false'
 
 const taskStructure = {
-  defaultTaskStructure: {
+  default: {
     type: true,
     header: true,
     date: {      
@@ -9,14 +9,14 @@ const taskStructure = {
       startTime: true,
       deadline: true,
     },
-    lectionDescription: true,
+    lectureDescription: true,
     image: true,
     video: true,
     link: true,
     taskDescription: true,
     map: true,
     organizer: true,
-    organizerInfo: true,
+    // organizerInfo: true,
     feedback: true,
   },
 
@@ -28,14 +28,14 @@ const taskStructure = {
       startTime: false,
       deadline: true,
     },
-    lectionDescription: false,
+    lectureDescription: false,
     image: true,
     video: false,
     link: true,
     taskDescription: true,
     map: false,
     organizer: true,
-    organizerInfo: true,
+    // organizerInfo: true,
     feedback: true,
   },
 
@@ -47,14 +47,14 @@ const taskStructure = {
       startTime: true,
       deadline: false,
     },
-    lectionDescription: true,
+    lectureDescription: true,
     image: false,
     video: true,
     link: true,
     taskDescription: false,
     map: false,
     organizer: true,
-    organizerInfo: true,
+    // organizerInfo: true,
     feedback: true,
   }
 }

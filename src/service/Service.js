@@ -33,11 +33,9 @@ export default class Service {
     return this._transformOrganizer(organizer);
   }
 
-  postEvent = async ({
-    name = 'no data', description = 'no data', descriptionUrl = 'no data', type = 'no data', timeZone = 'no data', dateTime = 'no data', place = 'no data', comment = 'no data', video = 'no data', image = 'no data', link = 'no data', lng = 'no data', lat = 'no data', zoom = 'no data',
-  }) => {
-    const url = '/event';
-    const data = {
+  postEvent = async ({name = 'no data', description = 'no data', descriptionUrl = 'no data', type = 'no data', timeZone = 'no data', dateTime = 'no data', place = 'no data', comment = 'no data', ...args}) => {
+    let url = '/event';
+    let data = {
       name,
       description,
       descriptionUrl,
@@ -46,12 +44,7 @@ export default class Service {
       dateTime,
       place,
       comment,
-      video,
-      image,
-      link,
-      lng,
-      lat,
-      zoom,
+      ...args,
     };
 
     try {
@@ -180,26 +173,22 @@ export default class Service {
     return 'no data :(';
   }
 
-  _transformOrganizer = organizer => ({
-    id: this.isSet(organizer.id),
-    name: this.isSet(organizer.name),
-  })
+  _transformEvent = (event) => {
+    const eventKeys = Object.keys(event);
+    eventKeys.forEach((key) => event[key] = this.isSet(event[key]));
 
-  _transformEvent = event => ({
-    id: this.isSet(event.id),
-    name: this.isSet(event.name),
-    description: this.isSet(event.description),
-    descriptionUrl: this.isSet(event.descriptionUrl),
-    type: this.isSet(event.type),
-    timeZone: this.isSet(event.timeZone),
-    dateTime: this.isSet(event.dateTime),
-    place: this.isSet(event.place),
-    comment: this.isSet(event.comment),
-    video: this.isSet(event.video),
-    image: this.isSet(event.image),
-    link: this.isSet(event.link),
-    lng: this.isSet(event.lng),
-    lat: this.isSet(event.lat),
-    zoom: this.isSet(event.zoom),
-  })
+    return event;
+
+    // return {
+    //   id: this.isSet(event.id),
+    //   name: this.isSet(event.name),
+    //   description: this.isSet(event.description),
+    //   descriptionUrl: this.isSet(event.descriptionUrl),
+    //   type: this.isSet(event.type), 
+    //   timeZone: this.isSet(event.timeZone),
+    //   dateTime: this.isSet(event.dateTime),
+    //   place: this.isSet(event.place),
+    //   comment: this.isSet(event.comment),
+    // };
+  }
 }

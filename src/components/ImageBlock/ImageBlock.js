@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Input, Checkbox, Image } from 'antd';
 import 'antd/dist/antd.css';
 import './imageBlock.css';
+import noImage from '../../assets/images/no_img.jpg'
 
 export default class ImageBlock extends Component {
   state = {
@@ -14,14 +15,14 @@ export default class ImageBlock extends Component {
     this.setState({ checked: isChecked })
   }
 
-  onChangeInput = (event) => {
-    const inputValue =  event.target.value;
-    this.setState({ url: inputValue })
-  }
+  // onChangeInput = (event) => {
+  //   const inputValue =  event.target.value;
+  //   this.setState({ url: inputValue })
+  // }
 
 
   render() {
-    const { isEdited } = this.props;
+    const { isEdited, name, data, handleChangeInput } = this.props;
     const { checked, url } = this.state;
 
     if (!isEdited && !checked) {
@@ -39,15 +40,16 @@ export default class ImageBlock extends Component {
           />
           <Input 
             placeholder='Add image url...'
-            defaultValue={url}
+            defaultValue={data[name] || url}
+            data-name={name}
             disabled={!checked}
-            onChange={this.onChangeInput}
+            onChange={handleChangeInput}
           />
         </div> :
         <Image
           className='image-block__image'
-          src={url}
-          fallback="" /*default picture*/
+          src={data[name] || url}
+          fallback={noImage} /*default picture*/
         /> }
       </div>
     )

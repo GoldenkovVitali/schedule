@@ -10,18 +10,24 @@ export default class Link extends Component {
 
   onChange = (event) => {
     const isChecked = event.target.checked;
-
-    this.setState({
-      checked: isChecked,
-      url: '',
-      linkTitle: '',
-    })
+    this.setState({ checked: isChecked })
   }
+  
+  // onChangeInput = (event) => {
+  //   const inputValue =  event.target.value;
+  //   this.setState({ linkTitle: inputValue })
+  // }
+
+  
+  // onChangeLinkInput = (event) => {
+  //   const url =  event.target.value;
+  //   this.setState({ url: url })
+  // }
 
   render() {
     const { Link } = Typography;
-    const { isEdited } = this.props;    ///////////
-    const { checked, url, linkTitle } = this.state;
+    const { isEdited, name: { link, linkTitle }, data, handleChangeInput } = this.props;
+    const { checked } = this.state;
 
     if (!isEdited && !checked) {
       return null;
@@ -39,22 +45,26 @@ export default class Link extends Component {
         <div className='link-block__content'>
           <Input 
             className='link-block__label' 
-            placeholder='Add link title...'
-            defaultValue={linkTitle}
+            placeholder='Add link title...'            
+            defaultValue={data[linkTitle] || ''}
+            data-name={linkTitle}
             disabled={!checked}
+            onChange={handleChangeInput}
           />
           { isEdited ?
           <Input 
             className='link-block__link-input' 
             placeholder='Add URL...'
-            defaultValue={url}
+            defaultValue={data[link] || ''}
+            data-name={link}
             disabled={!checked}
+            onChange={handleChangeInput}
           /> : 
           <Link 
             className='link-block__link'
-            href={url}
+            href={data[link]}
             target="_blank"
-          >https://ant.design</Link>   
+          >{data[link]}</Link>   
           }            
         </div>               
       </div>
