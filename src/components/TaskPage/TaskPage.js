@@ -158,7 +158,9 @@ export default class TaskPage extends Component {
           /> : null 
         }
         { map ? 
-        <MapBlock isEdited={isEdited} 
+        <MapBlock 
+        isEdited={isEdited} 
+        name='map'   
         />: null 
         }
         { organizer ? 
