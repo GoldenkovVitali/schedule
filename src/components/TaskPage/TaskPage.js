@@ -186,8 +186,6 @@ export default class TaskPage extends Component {
           <button>UPDATE</button>
           <button>DELETE</button>
         </div>
-
->>>>>>> feat(#8)-create-task-page
       </div>
     )
   }
