@@ -8,6 +8,7 @@ import DescriptionBlock from '../DescriptionBlock/DescriptionBlock';
 import ImageBlock from '../ImageBlock/ImageBlock';
 import VideoBlock from '../VideoBlock/VideoBlock';
 import OrganizerBlock from '../OrganizerBlock/OrganizerBlock';
+import MapBlock from '../MapBlock/MapBlock';
 import Link from '../Link/Link';
 import TaskPageHeader from '../TaskPageHeader/TaskPageHeader';
 import Service from '../../service/Service';
@@ -156,6 +157,12 @@ export default class TaskPage extends Component {
             handleChangeInput={this.handleChangeInput}
           /> : null 
         }
+        { map ? 
+        <MapBlock 
+        isEdited={isEdited} 
+        name='map'   
+        />: null 
+        }
         { organizer ? 
           <OrganizerBlock 
             isEdited={isEdited} 
@@ -181,7 +188,6 @@ export default class TaskPage extends Component {
           <button>UPDATE</button>
           <button>DELETE</button>
         </div>
-
       </div>
     )
   }
