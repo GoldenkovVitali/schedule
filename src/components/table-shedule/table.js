@@ -1,6 +1,6 @@
 import React from 'react';
 import './table.css';
-import { Table, Tag, Space } from 'antd';
+import { Table, Tag, Space, Button } from 'antd';
 import 'antd/dist/antd.css';
 
 class Tables extends React.Component {
@@ -10,11 +10,14 @@ class Tables extends React.Component {
   };
 
   onSelectChange = selectedRowKeys => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
+    // console.log('selectedRowKeys changed: ', selectedRowKeys);
     this.setState({ selectedRowKeys });
   };
 
+
+
   render() {
+
     // константы. которые будут входить!
     const { dataShedule } = this.props;
 
@@ -29,62 +32,9 @@ class Tables extends React.Component {
       fontSize: fontSize,
     };
 
-    let columns = [
-      {
-        title: 'Date',
-        dataIndex: 'dateTime',
-        key: 'dateTime',
-        render: text => <div style={styles}>{text}</div>,
-      },
-      {
-        title: 'Place',
-        dataIndex: 'place',
-        key: 'place',
-        render: text => <div style={styles}>{text}</div>,
-      },
-      {
-        title: 'Tags',
-        key: 'type',
-        dataIndex: 'type',
-        render: text => <Tag color="blue">{text}</Tag>,
-      },
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: text => <div style={styles}>{text}</div>,
-      },
-      {
-        title: 'Description',
-        dataIndex: 'description',
-        key: 'description',
-        render: text => <div style={styles}>{text}</div>,
-      },
-      {
-        title: 'Broadcast Url',
-        dataIndex: 'descriptionUrl',
-        key: 'descriptionUrl',
-        render: text => <a style={{ color: 'blue' }}>{text}</a>,
-      },
-      {
-        title: 'Comment',
-        dataIndex: 'comment',
-        key: 'comment',
-        render: text => <div style={styles}>{text}</div>,
-      },
-    ];
-
-    // МОи предложения по фильтрации
-    // let newCol = columns.filter((element, i) => {
-    //   if (element.title !== 'Comment') {
-    //     console.log(element.title);
-    //     return element;
-    //   }
-    // });
-    // console.log(newCol);
-
     // Выделение
     const { selectedRowKeys } = this.state;
+    const {columns} = this.props;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
@@ -120,9 +70,22 @@ class Tables extends React.Component {
       ],
     };
 
+    
+    
     return (
       <>
         <div> ITS a Table. GOOOO!! </div>
+        <Button onClick={this.props.addRow} type="primary" style={{ marginBottom: 16 }}>
+          Add a row
+        </Button>
+        <Button onClick={this.props.addColumn} type="primary" style={{ marginBottom: 16, marginLeft: 16 }}>
+          Add a column
+        </Button>
+
+        <Button onClick={() => this.props.hideSelectedRows(this.state.selectedRowKeys)} type="primary" style={{ marginBottom: 16, marginLeft: 16 }}>
+          Скрыть выделенные ячейки
+        </Button>
+
         <Table
           rowSelection={rowSelection} // выделение
           pagination={{ pageSize: 50 }} // количество строк на странице минимальное

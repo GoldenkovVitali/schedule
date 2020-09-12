@@ -15,22 +15,22 @@ export default class Service {
 
   getAllEvents = async () => {
     const res = await this.getResource(`/events`);
-    return res.data.map(this._transformEvent);
+    return res.data;
   };
 
   getEvent = async id => {
     const event = await this.getResource(`/event/${id}`);
-    return this._transformEvent(event);
+    return event;
   };
 
   getAllOrganizers = async () => {
     const res = await this.getResource(`/organizers`);
-    return res.data.map(this._transformOrganizer);
+    return res.data;
   };
 
   getOrganizer = async id => {
     const organizer = await this.getResource(`/organizer/${id}`);
-    return this._transformOrganizer(organizer);
+    return organizer;
   };
 
   postEvent = async obj => {
@@ -52,11 +52,9 @@ export default class Service {
     }
   };
 
-  postOrganizer = async ({ name = 'no data' }) => {
+  postOrganizer = async (obj) => {
     let url = '/organizer';
-    let data = {
-      name,
-    };
+    let data = obj
 
     try {
       const response = await fetch(`${this.base}${url}`, {
@@ -73,30 +71,9 @@ export default class Service {
     }
   };
 
-  updateEvent = async (
-    id,
-    {
-      name = 'no data',
-      description = 'no data',
-      descriptionUrl = 'no data',
-      type = 'no data',
-      timeZone = 'no data',
-      dateTime = 'no data',
-      place = 'no data',
-      comment = 'no data',
-    }
-  ) => {
-    let url = `/event/${id}`;
-    let data = {
-      name,
-      description,
-      descriptionUrl,
-      type,
-      timeZone,
-      dateTime,
-      place,
-      comment,
-    };
+  updateEvent = async (obj) => {
+    let url = `/event/${obj.id}`;
+    let data = JSON.parse(JSON.stringify(obj));
 
     try {
       const response = await fetch(`${this.base}${url}`, {
