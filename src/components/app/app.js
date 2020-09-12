@@ -7,7 +7,7 @@ export default class App extends Component {
   state = {
     data: null,
   }
-  
+
   service = new Service();
 
   async componentDidMount() {
