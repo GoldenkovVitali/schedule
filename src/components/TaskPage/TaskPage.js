@@ -1,3 +1,6 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable no-sequences */
+/* eslint-disable no-param-reassign */
 import React, { Component } from 'react';
 // import { Input, Checkbox, Image } from 'antd';
 import 'antd/dist/antd.css';
@@ -22,12 +25,6 @@ export default class TaskPage extends Component {
     isEdited: true,
     currentTaskType: 'default',
   }
-
-  changeMapData = (lng, lat, zoom) => {
-    this.setState(({ data }) => data.lng = lng);
-    this.setState(({ data }) => data.lat = lat);
-    this.setState(({ data }) => data.zoom = zoom);
-  };
 
   taskTypes = {
     lectureOnline: 'online lecture',
@@ -73,13 +70,19 @@ export default class TaskPage extends Component {
     this.setState({ isEdited: !this.state.isEdited });
   }
 
+  changeMapData = (lng, lat, zoom) => {
+    this.setState(({ data }) => (data.lng = lng,
+    data.lat = lat,
+    data.zoom = zoom));
+  };
+
   postEvent = () => {
     console.log(this.state.data);
     this.service.postEvent(this.state.data);
   }
 
   getEvent = async () => {
-    const ev = await this.service.getEvent('vojUhZFTchOx7nYZClZz');
+    const ev = await this.service.getEvent('uzXSzGlZ3AHvY23SXplW');
     console.log(ev);
   }
 
@@ -91,7 +94,7 @@ export default class TaskPage extends Component {
 
   render() {
     const { isEdited, currentTaskType, data } = this.state;
-    const { lng, lat, zoom } = { data };
+    const { lng, lat, zoom } = data;
 
     const longitude = !lng ? 27.56 : lng;
     const latitude = !lat ? 53.9 : lat;
