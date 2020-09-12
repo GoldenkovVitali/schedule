@@ -33,7 +33,7 @@ export default class Service {
     return this._transformOrganizer(organizer);
   }
 
-  postEvent = async ({name = 'no data', description = 'no data', descriptionUrl = 'no data', type = 'no data', timeZone = 'no data', dateTime = 'no data', place = 'no data', comment = 'no data'}) => {
+  postEvent = async ({name = 'no data', description = 'no data', descriptionUrl = 'no data', type = 'no data', timeZone = 'no data', dateTime = 'no data', place = 'no data', comment = 'no data', ...args}) => {
     let url = '/event';
     let data = {
       name,
