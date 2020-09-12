@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Service from '../../service/Service'
+import Service from '../../service/Service '
 import './app.css';
 
 export default class App extends Component {
@@ -9,13 +9,13 @@ export default class App extends Component {
 
   service = new Service()
   async componentDidMount() {
-  await this.service.postEvent({})
+  // await this.service.postEvent({})
   const res = await this.service.getAllEvents()
   // const res = await this.service.getEvent({})
   this.setState({
       data: res,
   })
-  //  res.forEach(element => this.service.deleteEvent(element.id))
+   res.forEach(element => this.service.deleteEvent(element.id))
   }
 
 render() {

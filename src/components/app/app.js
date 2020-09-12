@@ -15,6 +15,7 @@ export default class App extends Component {
     this.setState({
         data: res,
     })
+    // res.forEach(element => this.service.deleteEvent(element.id))
 }
 
   render() {
