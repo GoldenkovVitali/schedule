@@ -25,7 +25,8 @@ export default class App extends Component {
 
   render() {
     const { data, showTaskPage } = this.state;
-    const task = data.find(item => item.id === 'undefined')
+    // const task = data.find(item => item.id === 'undefined')
+    const task = data[0]
 
     console.log(data, task)
   

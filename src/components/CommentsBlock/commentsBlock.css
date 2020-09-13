@@ -3,6 +3,10 @@
   overflow-y: scroll;
 }
 
+.comments-block__checkbox {
+  margin-right: 5px;
+}
+
 /* .ant-list-items::-webkit-scrollbar {
   width: 8px;
   background-color: #eeeeee;

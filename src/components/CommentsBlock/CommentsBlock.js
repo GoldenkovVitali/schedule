@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import './commentsBlock.css';
-import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import { Comment, Avatar, Form, Button, List, Input, Checkbox } from 'antd';
 // import moment from 'moment';
 import Service from '../../service/Service';
 
@@ -30,12 +30,13 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
   </>
 );
 
-export default class CommentForm extends React.Component {
+export default class CommentForm extends Component {
   state = {
     data: this.props.data,
     comments: [],
     submitting: false,
     value: '',
+    checked: false,
   };
   data = this.props.data;
   id = this.props.data.id;
@@ -44,6 +45,10 @@ export default class CommentForm extends React.Component {
 
   componentDidMount() {
     const { data: { comments } } = this.props;
+
+    if (!comments) {
+      return;
+    }
 
     comments.forEach((comment) => {
       this.setState((state) => {
@@ -89,22 +94,47 @@ export default class CommentForm extends React.Component {
     this.setState({ value: event.target.value });
   };
 
+  onChangeCheckbox = (event) => {
+    const isChecked = event.target.checked;
+
+    this.data.commentsOn = isChecked;
+    this.setState({
+      checked: isChecked,
+    })
+  }
+
   render() {
-    const { comments, submitting, value } = this.state;
+    const { comments, submitting, value, checked } = this.state;
+    const { isEdited } = this.props;
 
     return (
       <>
-        {comments.length > 0 && <CommentList comments={comments} />}
-        <Comment
-          content={
-            <Editor
-              onChange={this.handleChange}
-              onSubmit={this.handleSubmit}
-              submitting={submitting}
-              value={value}
+        { isEdited ? 
+          <>
+            <Checkbox 
+              className='comments-block__checkbox' 
+              onChange={this.onChangeCheckbox}
+              checked={checked}
+            /> 
+            <span>Turn on comments</span>
+          </>: null 
+        }
+
+        {this.data.commentsOn ?
+          <div>
+            {comments.length > 0 && <CommentList comments={comments} />}
+            <Comment
+              content={
+                <Editor
+                  onChange={this.handleChange}
+                  onSubmit={this.handleSubmit}
+                  submitting={submitting}
+                  value={value}
+                />
+              }
             />
-          }
-        />
+          </div> : null
+        }
       </>
     );
   }

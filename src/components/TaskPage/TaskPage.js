@@ -12,14 +12,16 @@ import MapBlock from '../MapBlock/MapBlock';
 import Link from '../Link/Link';
 import TaskPageHeader from '../TaskPageHeader/TaskPageHeader';
 import Service from '../../service/Service';
-import Demo from '../../components/CommentsBlock/CommentsBlock';
+import CommentsBlock from '../../components/CommentsBlock/CommentsBlock';
 
 export default class TaskPage extends Component {
   constructor(props) {
     super(props);
     
     this.state = {
-      data: this.props.data || {},
+      data: this.props.data || {
+        type: 'default',
+      },
       isEdited: true,
       currentTaskType: 'default',
     }
@@ -44,15 +46,15 @@ export default class TaskPage extends Component {
 
   service = new Service();
 
-  componentDidMount() {
+  // componentDidMount() {
 
-    const data = this.props.data
-    console.log(this.props.data)
-    this.setState({data: data})
-  }
+  //   const data = this.props.data
+  //   console.log(this.props.data)
+  //   this.setState({data: data})
+  // }
 
   handleChangeSelect = (value) => {
-    console.log(value)
+    console.log(value, 'handleSel')
     this.setState(({ data }) => {
       return data.type = value
     });
@@ -65,26 +67,35 @@ export default class TaskPage extends Component {
     this.setState(({ data }) => data[dataAttr] = inputValue );
   }
 
-  handleChangeDate = (event) => {
-    // const inputValue =  event.target.value;
-    const dataAttr = event.target.dataset.name;
-    console.log(dataAttr) //
-    // this.setState(({ data }) => data[dataAttr] = dateString );
+  handleChangeStartDate = (date, dateString) => {
+    // const inputValue =  dateString;
+    // const dataAttr = event.target.dataset.name;
+    console.log(dateString) //
+    this.setState(({ data }) => data.startDate = dateString );
   }
+
+  handleChangeStartTime = (date, dateString) => {
+    this.setState(({ data }) => data.startTime = dateString );
+  }
+
+  handleChangeDeadline = (date, dateString) => {
+    this.setState(({ data }) => data.deadline = dateString );
+  }
+
 
   togglePageMode = () => {
     this.setState({ isEdited: !this.state.isEdited })
   }
 
   postEvent = () => {
-    console.log(this.state.data)
+    // console.log(this.state.data)
     this.service.postEvent(this.state.data)
   }
 
-  getEvent = async () => {
-    const ev = await this.service.getEvent('o2qlUYHL9CCv3DUKB84z')
-    console.log(ev)
-  }
+  // getEvent = async () => {
+  //   const ev = await this.service.getEvent('o2qlUYHL9CCv3DUKB84z')
+  //   console.log(ev)
+  // }
 
   getAllEvents = async () => {
     const ev = await this.service.getAllEvents()
@@ -92,16 +103,19 @@ export default class TaskPage extends Component {
   }
 
   render() {
-    const { isEdited, currentTaskType, data } = this.state;    
+    const { isEdited, data } = this.state;    
 
-    console.log(taskStructure)
-    console.log(data)
+    // console.log(taskStructure)
+    console.log(data, 'state')
 
-    // return <div/>
-    data.type = ''
+    const taskStructureKeys = Object.keys(taskStructure);
+    const currentTaskType = taskStructureKeys.find((key) => key === data.type)
+    if (!currentTaskType) {
+      data.type = 'default';
+    }
     
 
-    const { type, header, date, lectureDescription, image, video, link, taskDescription, map, organizer,organizerInfo, feedback } = taskStructure[data.type || 'default'];
+    const { date, lectureDescription, image, video, link, taskDescription, map, organizer, organizerInfo, feedback } = taskStructure[data.type];
 
     console.log(data, 'data')
     // const id = "o2qlUYHL9CCv3DUKB84z"
@@ -123,12 +137,14 @@ export default class TaskPage extends Component {
           isEdited={isEdited}
           name={{
             startDate: 'startDate', 
-            satrtTime: 'startTime', 
+            startTime: 'startTime', 
             deadline: 'deadline'
           }}
           date={date} 
           data={data}          
-          handleChangeInput={this.handleChangeDate}
+          handleChangeStartDate={this.handleChangeStartDate}
+          handleOnChangeStartTime={this.handleChangeStartTime}
+          handleOnChangeDeadline={this.handleChangeDeadline}
         />
         { lectureDescription ? 
           <DescriptionBlock 
@@ -190,8 +206,11 @@ export default class TaskPage extends Component {
             handleChangeInput={this.handleChangeInput}
           /> : null 
         }
-        <Demo data={data}/>
-
+        <CommentsBlock 
+          data={data}
+          feedback={feedback}
+          isEdited={isEdited}
+        />
 
         <div>
           <button
