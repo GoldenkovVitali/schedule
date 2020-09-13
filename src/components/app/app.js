@@ -7,7 +7,7 @@ export default class App extends Component {
   state = {
     data: null,
   }
-  
+
   service = new Service();
 
   async componentDidMount() {
@@ -15,6 +15,7 @@ export default class App extends Component {
     this.setState({
         data: res,
     })
+    // res.forEach(element => this.service.deleteEvent(element.id))
 }
 
   render() {

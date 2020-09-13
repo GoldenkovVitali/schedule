@@ -1,3 +1,6 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable no-sequences */
+/* eslint-disable no-param-reassign */
 import React, { Component } from 'react';
 // import { Input, Checkbox, Image } from 'antd';
 import 'antd/dist/antd.css';
@@ -15,8 +18,8 @@ import Service from '../../service/Service';
 
 export default class TaskPage extends Component {
   state = {
-    data: { 
-      type: 'default', 
+    data: {
+      type: 'default',
       name: '',
     },
     isEdited: true,
@@ -43,152 +46,184 @@ export default class TaskPage extends Component {
   service = new Service();
 
   handleChangeSelect = (value) => {
-    console.log(value)
-    this.setState(({ data }) => {
-      return data.type = value
-    });
+    console.log(value);
+    this.setState(({ data }) => data.type = value);
   }
 
   handleChangeInput = (event) => {
-    const inputValue =  event.target.value;
+    const inputValue = event.target.value;
     const dataAttr = event.target.dataset.name;
-    console.log(dataAttr) //
-    this.setState(({ data }) => data[dataAttr] = inputValue );
+    console.log(dataAttr); //
+
+    this.setState(({ data }) => data[dataAttr] = inputValue);
   }
 
   handleChangeDate = (event) => {
     // const inputValue =  event.target.value;
     const dataAttr = event.target.dataset.name;
-    console.log(dataAttr) //
+    console.log(dataAttr); //
     // this.setState(({ data }) => data[dataAttr] = dateString );
   }
 
+
   togglePageMode = () => {
-    this.setState({ isEdited: !this.state.isEdited })
+    this.setState({ isEdited: !this.state.isEdited });
   }
 
+  changeMapData = (lng, lat, zoom) => {
+    this.setState(({ data }) => (data.lng = lng,
+    data.lat = lat,
+    data.zoom = zoom));
+  };
+
   postEvent = () => {
-    console.log(this.state.data)
-    this.service.postEvent(this.state.data)
+    console.log(this.state.data);
+    this.service.postEvent(this.state.data);
   }
 
   getEvent = async () => {
-    const ev = await this.service.getEvent('o2qlUYHL9CCv3DUKB84z')
-    console.log(ev)
+    const ev = await this.service.getEvent('uzXSzGlZ3AHvY23SXplW');
+    console.log(ev);
   }
 
   getAllEvents = async () => {
-    const ev = await this.service.getAllEvents()
-    console.log(ev)
+    const ev = await this.service.getAllEvents();
+    console.log(ev);
   }
 
+
   render() {
-    const { isEdited, currentTaskType, data } = this.state;    
+    const { isEdited, currentTaskType, data } = this.state;
+    const { lng, lat, zoom } = data;
 
-    const { type, header, date, lectureDescription, image, video, link, taskDescription, map, organizer,organizerInfo, feedback } = taskStructure[data.type];
+    const longitude = !lng ? 27.56 : lng;
+    const latitude = !lat ? 53.9 : lat;
+    const zoomNew = !zoom ? 11 : zoom;
 
-    console.log(data, 'data')
+    const {
+      type, header, date, lectureDescription, image, video, link, taskDescription, map, organizer, organizerInfo, feedback,
+    } = taskStructure[data.type];
+
     // const id = "o2qlUYHL9CCv3DUKB84z"
 
     return (
-      <div className='task-page'>
-        <button onClick={this.togglePageMode} style={{ position:"absolute", top: '10px'}}>change mode</button>
+      <div className="task-page">
+        <button onClick={this.togglePageMode} style={{ position: 'absolute', top: '10px' }}>change mode</button>
 
-        <TaskPageHeader 
+        <TaskPageHeader
           isEdited={isEdited}
           // taskType={currentTaskType}
           taskType={data.type}
           data={data}
-          name='name'
+          name="name"
           handleChangeSelect={this.handleChangeSelect}
           handleChangeInput={this.handleChangeInput}
         />
-        <DateBlock 
+        <DateBlock
           isEdited={isEdited}
           name={{
-            startDate: 'startDate', 
-            satrtTime: 'startTime', 
-            deadline: 'deadline'
+            startDate: 'startDate',
+            satrtTime: 'startTime',
+            deadline: 'deadline',
           }}
-          date={date} 
-          data={data}          
+          date={date}
+          data={data}
           handleChangeInput={this.handleChangeDate}
         />
-        { lectureDescription ? 
-          <DescriptionBlock 
-            isEdited={isEdited} 
-            data={data}
-            name='lectureDescription'
-            handleChangeInput={this.handleChangeInput}
-          /> : null 
+        {lectureDescription
+          ? (
+            <DescriptionBlock
+              isEdited={isEdited}
+              data={data}
+              name="lectureDescription"
+              handleChangeInput={this.handleChangeInput}
+            />
+          ) : null
         }
-        { image ? 
-          <ImageBlock 
-            isEdited={isEdited} 
-            name='imageUrl'
-            data={data}
-            handleChangeInput={this.handleChangeInput}
-          /> : null 
+        {image
+          ? (
+            <ImageBlock
+              isEdited={isEdited}
+              name="imageUrl"
+              data={data}
+              handleChangeInput={this.handleChangeInput}
+            />
+          ) : null
         }
-        { video ? 
-          <VideoBlock 
-            isEdited={isEdited} 
-            name='videoUrl'
-            data={data}
-            handleChangeInput={this.handleChangeInput}
-          /> : null 
+        {video
+          ? (
+            <VideoBlock
+              isEdited={isEdited}
+              name="videoUrl"
+              data={data}
+              handleChangeInput={this.handleChangeInput}
+            />
+          ) : null
         }
-        { link ? 
-          <Link 
-            isEdited={isEdited} 
-            name={{
-              link:'descriptionUrl',
-              linkTitle:'descriptionUrlTitle',
-            }}
-            data={data}            
-            handleChangeInput={this.handleChangeInput}
-          /> : null 
+        {link
+          ? (
+            <Link
+              isEdited={isEdited}
+              name={{
+                link: 'descriptionUrl',
+                linkTitle: 'descriptionUrlTitle',
+              }}
+              data={data}
+              handleChangeInput={this.handleChangeInput}
+            />
+          ) : null
         }
-        { taskDescription ? 
-          <DescriptionBlock 
-            isEdited={isEdited} 
-            data={data}            
-            name='description'            
-            handleChangeInput={this.handleChangeInput}
-          /> : null 
+        {taskDescription
+          ? (
+            <DescriptionBlock
+              isEdited={isEdited}
+              data={data}
+              name="description"
+              handleChangeInput={this.handleChangeInput}
+            />
+          ) : null
         }
-        { map ? 
-        <MapBlock 
-        isEdited={isEdited} 
-        name='map'   
-        />: null 
+        {map
+          ? (
+            <MapBlock
+              lng={longitude}
+              lat={latitude}
+              zoom={zoomNew}
+              changeMapData={this.changeMapData}
+            />
+          ) : null
         }
-        { organizer ? 
-          <OrganizerBlock 
-            isEdited={isEdited} 
-            data={data}
-            name={{ 
-              organizer:'organizer', 
-              organizerDescription: 'organizerDescription'
-            }}            
-            handleChangeInput={this.handleChangeInput}
-          /> : null 
+        {organizer
+          ? (
+            <OrganizerBlock
+              isEdited={isEdited}
+              data={data}
+              name={{
+                organizer: 'organizer',
+                organizerDescription: 'organizerDescription',
+              }}
+              handleChangeInput={this.handleChangeInput}
+            />
+          ) : null
         }
 
         <div>
           <button
             onClick={this.postEvent}
-          >POST</button>
+          >POST
+          </button>
           <button
             onClick={this.getEvent}
-          >GET</button>
+          >GET
+          </button>
           <button
             onClick={this.getAllEvents}
-          >GET ALL</button>
+          >GET ALL
+          </button>
           <button>UPDATE</button>
           <button>DELETE</button>
         </div>
       </div>
-    )
+    );
   }
 }
