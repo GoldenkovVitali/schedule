@@ -14,10 +14,7 @@ class Tables extends React.Component {
     this.setState({ selectedRowKeys });
   };
 
-
-
   render() {
-
     // константы. которые будут входить!
     const { dataShedule } = this.props;
 
@@ -34,7 +31,7 @@ class Tables extends React.Component {
 
     // Выделение
     const { selectedRowKeys } = this.state;
-    const {columns} = this.props;
+    const { columns } = this.props;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
@@ -70,20 +67,40 @@ class Tables extends React.Component {
       ],
     };
 
-    
-    
     return (
       <>
         <div> ITS a Table. GOOOO!! </div>
-        <Button onClick={this.props.addRow} type="primary" style={{ marginBottom: 16 }}>
+        <Button
+          onClick={this.props.addRow}
+          type="primary"
+          style={{ marginBottom: 16 }}
+        >
           Add a row
         </Button>
-        <Button onClick={this.props.addColumn} type="primary" style={{ marginBottom: 16, marginLeft: 16 }}>
+        <Button
+          onClick={this.props.addColumn}
+          type="primary"
+          style={{ marginBottom: 16, marginLeft: 16 }}
+        >
           Add a column
         </Button>
 
-        <Button onClick={() => this.props.hideSelectedRows(this.state.selectedRowKeys)} type="primary" style={{ marginBottom: 16, marginLeft: 16 }}>
+        <Button
+          onClick={() =>
+            this.props.hideSelectedRows(this.state.selectedRowKeys)
+          }
+          type="primary"
+          style={{ marginBottom: 16, marginLeft: 16 }}
+        >
           Скрыть выделенные ячейки
+        </Button>
+
+        <Button
+          onClick={() => this.props.showSelectedRows()}
+          type="primary"
+          style={{ marginBottom: 16, marginLeft: 16 }}
+        >
+          Показать выделенные ячейки
         </Button>
 
         <Table
