@@ -5,8 +5,13 @@
 
 .description-block__textarea {
   resize: none;
+  overflow: hidden;
 }
 
 .description-block__checkbox {
   margin-right: 10px;
+}
+
+.ant-input {
+  resize: none;
 }

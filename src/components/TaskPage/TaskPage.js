@@ -12,15 +12,17 @@ import MapBlock from '../MapBlock/MapBlock';
 import Link from '../Link/Link';
 import TaskPageHeader from '../TaskPageHeader/TaskPageHeader';
 import Service from '../../service/Service';
+import Demo from '../../components/CommentsBlock/CommentsBlock';
 
 export default class TaskPage extends Component {
-  state = {
-    data: { 
-      type: 'default', 
-      name: '',
-    },
-    isEdited: true,
-    currentTaskType: 'default',
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      data: this.props.data || {},
+      isEdited: true,
+      currentTaskType: 'default',
+    }
   }
 
   taskTypes = {
@@ -41,6 +43,13 @@ export default class TaskPage extends Component {
   }
 
   service = new Service();
+
+  componentDidMount() {
+
+    const data = this.props.data
+    console.log(this.props.data)
+    this.setState({data: data})
+  }
 
   handleChangeSelect = (value) => {
     console.log(value)
@@ -85,7 +94,14 @@ export default class TaskPage extends Component {
   render() {
     const { isEdited, currentTaskType, data } = this.state;    
 
-    const { type, header, date, lectureDescription, image, video, link, taskDescription, map, organizer,organizerInfo, feedback } = taskStructure[data.type];
+    console.log(taskStructure)
+    console.log(data)
+
+    // return <div/>
+    data.type = ''
+    
+
+    const { type, header, date, lectureDescription, image, video, link, taskDescription, map, organizer,organizerInfo, feedback } = taskStructure[data.type || 'default'];
 
     console.log(data, 'data')
     // const id = "o2qlUYHL9CCv3DUKB84z"
@@ -174,6 +190,8 @@ export default class TaskPage extends Component {
             handleChangeInput={this.handleChangeInput}
           /> : null 
         }
+        <Demo data={data}/>
+
 
         <div>
           <button

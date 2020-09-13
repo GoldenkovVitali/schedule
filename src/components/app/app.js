@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import Service from '../../service/Service'
 import './app.css';
 import TaskPage from '../TaskPage/TaskPage';
+import UserSwitchButton from '../UserSwitchButton/UserSwitchButton';
 
 export default class App extends Component {
   state = {
-    data: null,
+    data: [],
+    showTaskPage: false,
   }
   
   service = new Service();
@@ -15,13 +17,24 @@ export default class App extends Component {
     this.setState({
         data: res,
     })
-}
+  }
+
+  toggleTaskPage = () => {
+    this.setState({showTaskPage: !this.state.showTaskPage})
+  }
 
   render() {
-    const { data } = this.state;
+    const { data, showTaskPage } = this.state;
+    const task = data.find(item => item.id === 'undefined')
+
+    console.log(data, task)
   
     return (
-      <TaskPage data={data} />
+      <>
+        <button onClick={this.toggleTaskPage}>show</button>
+        <UserSwitchButton />
+        {showTaskPage ? <TaskPage data={task} /> : null}
+      </>
     );
   }
 }
