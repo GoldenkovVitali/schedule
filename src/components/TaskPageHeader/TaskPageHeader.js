@@ -33,7 +33,7 @@ export default class TaskPageHeader extends Component {
       return { value: type, label: this.taskTypes[type] };
     })
 
-    console.log(data, 'select') //
+    // console.log(data, 'select') //
 
     return (
         <div className='task-page__header-block'>

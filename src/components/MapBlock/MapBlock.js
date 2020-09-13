@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
@@ -6,18 +7,10 @@ import mapboxgl from 'mapbox-gl';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidmlydGFsIiwiYSI6ImNrYWlpODNqbTAxMHUyeG13NHpkZnYwNXMifQ.Y8602VcUdPFt6jpTLC4Q8w';
 
-class SimpleMap extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      lng: 27.56,
-      lat: 53.9,
-      zoom: 11,
-    };
-  }
-
+export default class MapBlock extends Component {
   componentDidMount() {
-    const { lng, lat, zoom } = this.state;
+    const { lng, lat, zoom } = this.props;
+    const { changeMapData } = this.props;
     const map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/streets-v11',
@@ -28,25 +21,27 @@ class SimpleMap extends Component {
     });
 
     map.on('move', () => {
-      this.setState({
-        lng: map.getCenter().lng.toFixed(4),
-        lat: map.getCenter().lat.toFixed(4),
-        zoom: map.getZoom().toFixed(2),
-      });
+      changeMapData(map.getCenter().lng.toFixed(4),
+        map.getCenter().lat.toFixed(4),
+        map.getZoom().toFixed(2));
       if (this.marker) this.marker.remove();
-      this.marker = new mapboxgl.Marker().setLngLat([this.state.lng, this.state.lat]).addTo(map);
+      this.marker = new mapboxgl.Marker().setLngLat([this.props.lng, this.props.lat]).addTo(map);
     });
     this.marker = new mapboxgl.Marker(
     ).setLngLat([lng, lat]).addTo(map);
   }
 
   render() {
-    const { lng, lat, zoom } = this.state;
+    const { lng, lat, zoom } = this.props;
     return (
-      <div>
+      <div className="map-block">
+
         <div>
-          <div>Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}</div>
+          <div>
+            Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+          </div>
         </div>
+
         <div
           ref={(el) => {
             this.mapContainer = el;
@@ -54,16 +49,6 @@ class SimpleMap extends Component {
           }}
           className="mapContainer"
         />
-      </div>
-    );
-  }
-}
-
-export default class MapBlock extends Component {
-  render() {
-    return (
-      <div className="map-block">
-        <SimpleMap />
       </div>
     );
   }

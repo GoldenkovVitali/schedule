@@ -9,7 +9,7 @@ export default class App extends Component {
     data: [],
     showTaskPage: false,
   }
-  
+
   service = new Service();
 
   async componentDidMount() {
