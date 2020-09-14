@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css'
 import {Row, Col, Typography} from 'antd';
 import ModalButton from "./ModalButton";
@@ -7,33 +7,10 @@ import ControlPanel from "./ControlPanel";
 import { SettingOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
-const columnsData = [
-  {
-    title: 'Data',
-    dataIndex: 'description',
-    key: 'Data',
-  },
-  {
-    title: 'Time',
-    dataIndex: 'description',
-    key: 'Time',
-  },
-  {
-    title: 'One',
-    dataIndex: 'description',
-    key: 'One',
-  },
-  {
-    title: 'Two',
-    dataIndex: 'description',
-    key: 'Two',
-  },
-];
 
-const TableControls = () => {
-
-  const [columns, setColumns] = useState(columnsData);
-  const [targetKeys, setTargetKeys] = useState(['Time', 'Two']);
+const TableControls = (props) => {
+  const [col, setColumns] = useState([props.initColumns || []]);
+  const [targetKeys, setTargetKeys] = useState(['Date']);
   const [rowCount, setRowCount] = useState(10);
   const [fontSize, setFontSize] = useState(14);
   const [displayBgPicker, setDisplayBgPicker] = useState(false);
@@ -41,11 +18,23 @@ const TableControls = () => {
   const [displayFontPicker, setDisplayFontPicker] = useState(false);
   const [colorFontPicker, setColorFontPicker] = useState({ r: '241', g: '112', b: '19', a: '1',});
 
+  const { onHideColumns, initColumns} = props
+
+  useEffect(()=> {
+    if (initColumns) {
+      setColumns(props.initColumns)
+    }
+  }, [props])
+
+  const onSaveSettings = () => {
+    onHideColumns(targetKeys)
+  }
+
 
   return (
     <Row>
       <Col xs={{ span: 12, offset: 3 }} lg={{ span: 12, offset: 3 }}>
-        <ModalButton icon={<SettingOutlined />}>
+        <ModalButton onSaveSettings={onSaveSettings} icon={<SettingOutlined />}>
           <Row>
             <Col span={12} offset={1}>
               <Title level={5}>Отображение  колонок:</Title>
@@ -53,7 +42,7 @@ const TableControls = () => {
           </Row>
           <Row>
             <Col xs={{ span: 10, offset: 1 }} lg={{ span: 10, offset: 1 }}>
-               <ColTransfer columns={columns} targetKeys={targetKeys} setTargetKeys={setTargetKeys} />
+               <ColTransfer initColumns={col} targetKeys={targetKeys} setTargetKeys={setTargetKeys} />
             </Col>
             <Col xs={{ span: 8, offset: 1 }} lg={{ span: 8, offset: 1 }}>
                <ControlPanel

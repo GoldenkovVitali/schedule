@@ -3,7 +3,7 @@ import { Modal, Button } from 'antd';
 
 const ModalButton = (props) => {
   const [visible, setVisible] = useState(false)
-  const {children} = props;
+  const {children, onSaveSettings} = props;
 
   const showModal = () => {
     setVisible(true)
@@ -11,6 +11,7 @@ const ModalButton = (props) => {
 
   const handleOk = () => {
     setVisible(false)
+    onSaveSettings()
   };
 
   const handleCancel = () => {

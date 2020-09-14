@@ -3,7 +3,7 @@ import { Transfer } from 'antd';
 
 const loc = { itemUnit: 'Колонка', itemsUnit: 'Колонки', notFoundContent: 'Список пуст', searchPlaceholder: 'Искать...' }
 
-const ColTransfer = ({columns, targetKeys, setTargetKeys}) => {
+const ColTransfer = ({initColumns, targetKeys, setTargetKeys}) => {
 
   const onChange = (newTargetKeys, direction, moveKeys) => {
     console.log(newTargetKeys, direction, moveKeys);
@@ -16,8 +16,9 @@ const ColTransfer = ({columns, targetKeys, setTargetKeys}) => {
 
   return (
     <Transfer
-      dataSource={columns}
+      dataSource={initColumns}
       showSearch
+      operations={['скрыть', 'показать']}
       targetKeys={targetKeys}
       onChange={onChange}
       onSearch={handleSearch}
