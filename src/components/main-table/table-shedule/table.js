@@ -1,114 +1,110 @@
 import React from 'react';
 import './table.css';
-import { Table, Tag, Space, Button } from 'antd';
+import { Table, Button } from 'antd';
 import 'antd/dist/antd.css';
+import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
 
 class Tables extends React.Component {
-  state = {
-    selectedRowKeys: [], // Check here to configure the default column
-    editing: false, // редактирование можно или нет, это вторая часть таска для менторов
-  };
+  // pdfExportComponent;
+  // grid;
 
-  onSelectChange = selectedRowKeys => {
-    // console.log('selectedRowKeys changed: ', selectedRowKeys);
-    this.setState({ selectedRowKeys });
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedRowKeys: [], // Check here to configure the default column
+      editing: false, // редактирование можно или нет, это вторая часть таска для менторов
+      isShowDivTask: false,
+    };
+  }
+
+  exportPDFWithComponent = () => {
+    this.pdfExportComponent.save();
   };
 
   render() {
     // константы. которые будут входить!
-    const { dataShedule } = this.props;
-
-    //  Цвет, заливка, шрифт
-    const color = 'green';
-    const bgColor = 'none';
-    const fontSize = '14px';
-
-    let styles = {
-      color: color,
-      backgroundColor: bgColor,
-      fontSize: fontSize,
-    };
-
-    // Выделение
-    const { selectedRowKeys } = this.state;
-    const { columns } = this.props;
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange,
-      selections: [
-        Table.SELECTION_ALL,
-        Table.SELECTION_INVERT,
-        {
-          text: 'Select Odd Row',
-          onSelect: changableRowKeys => {
-            let newSelectedRowKeys = [];
-            newSelectedRowKeys = changableRowKeys.filter((key, index) => {
-              if (index % 2 !== 0) {
-                return false;
-              }
-              return true;
-            });
-            this.setState({ selectedRowKeys: newSelectedRowKeys });
-          },
-        },
-        {
-          text: 'Select Even Row',
-          onSelect: changableRowKeys => {
-            let newSelectedRowKeys = [];
-            newSelectedRowKeys = changableRowKeys.filter((key, index) => {
-              if (index % 2 !== 0) {
-                return true;
-              }
-              return false;
-            });
-            this.setState({ selectedRowKeys: newSelectedRowKeys });
-          },
-        },
-      ],
-    };
+    const { dataShedule, columns } = this.props;
 
     return (
       <>
-        <div> ITS a Table. GOOOO!! </div>
-        <Button
-          onClick={this.props.addRow}
-          type="primary"
-          style={{ marginBottom: 16 }}
-        >
-          Add a row
-        </Button>
-        <Button
-          onClick={this.props.addColumn}
-          type="primary"
-          style={{ marginBottom: 16, marginLeft: 16 }}
-        >
-          Add a column
-        </Button>
+        <div className="buttons">
+          <Button
+            onClick={this.props.addRow}
+            type="primary"
+            style={{ marginBottom: 16, marginLeft: 16 }}
+          >
+            Add a row
+          </Button>
 
-        <Button
-          onClick={() =>
-            this.props.hideSelectedRows(this.state.selectedRowKeys)
-          }
-          type="primary"
-          style={{ marginBottom: 16, marginLeft: 16 }}
-        >
-          Скрыть выделенные ячейки
-        </Button>
+          <Button
+            onClick={() =>
+              this.props.hideSelectedRows([
+                ...this.state.selectedRowKeys,
+                this.state.selectedKey,
+              ])
+            }
+            type="primary"
+            style={{ marginBottom: 16, marginLeft: 16 }}
+          >
+            Скрыть выделенные ячейки
+          </Button>
 
-        <Button
-          onClick={() => this.props.showSelectedRows()}
-          type="primary"
-          style={{ marginBottom: 16, marginLeft: 16 }}
-        >
-          Показать выделенные ячейки
-        </Button>
+          <Button
+            onClick={() => this.props.showSelectedRows()}
+            type="primary"
+            style={{ marginBottom: 16, marginLeft: 16 }}
+          >
+            Показать выделенные ячейки
+          </Button>
+          <button
+            className="k-button"
+            style={{ marginBottom: 16, marginLeft: 16 }}
+            onClick={this.exportPDFWithComponent}
+          >
+            Save table as PDF
+          </button>
+        </div>
 
-        <Table
-          rowSelection={rowSelection} // выделение
-          pagination={{ pageSize: 50 }} // количество строк на странице минимальное
-          dataSource={dataShedule}
-          columns={columns}
-        />
+        <PDFExport
+          ref={component => (this.pdfExportComponent = component)}
+          paperSize="A4"
+          scale={0.5}
+        >
+          <Table
+            rowClassName={(record, index) =>
+              record.key === this.state.selectedKey ||
+              this.state.selectedRowKeys.includes(record.key)
+                ? 'table-row-dark'
+                : 'table-row-light'
+            }
+            pagination={{ pageSize: 50 }} // количество строк на странице минимальное
+            dataSource={dataShedule}
+            columns={columns}
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: event => {
+                  if (event.shiftKey) {
+                    this.setState({
+                      selectedRowKeys: [
+                        ...this.state.selectedRowKeys,
+                        record.key,
+                      ],
+                    });
+                  } else {
+                    this.setState({
+                      selectedRowKeys: [],
+                      selectedKey: record.key,
+                    });
+                  }
+                  console.log(this.state);
+                },
+                onDoubleClick: event => {
+                  console.log('Double click');
+                },
+              };
+            }}
+          />
+        </PDFExport>
       </>
     );
   }
