@@ -12,16 +12,58 @@ class MainTable extends Component {
     columns: null,
     lastColumnIndex: null,
     lastRowIndex: null,
-    styles: {
-      color: 'green',
-      backgroundColor: 'yellow',
-      fontSize: '14px',
-    },
     hiddenKeys:[],
     initColumns: [],
+    fontSize: 14,
+    rowCount: 10,
+    colorBgPicker: { r: '241', g: '112', b: '19', a: '1',},
+    colorFontPicker: { r: '241', g: '112', b: '19', a: '1',},
   };
 
   service = new Service();
+
+  getColor = (type) => {
+    if(type === 'font') {
+      return `rgba(
+        ${this.state.colorFontPicker.r }, 
+        ${ this.state.colorFontPicker.g }, 
+        ${ this.state.colorFontPicker.b },
+        ${ this.state.colorFontPicker.a })`
+    }
+    return `rgba(
+    ${ this.state.colorBgPicker.r }, 
+    ${ this.state.colorBgPicker.g }, 
+    ${ this.state.colorBgPicker.b }, 
+    ${ this.state.colorBgPicker.a })`
+  };
+
+  onFontSizeChange = (size) => {
+    this.setState({
+      fontSize: size,
+    });
+   // this.updateTabel();
+  };
+
+  setRowCount = (value) => {
+    this.setState({
+      rowCount: value,
+    });
+  };
+
+  setColorBgPicker = (color) => {
+    this.setState({
+      colorBgPicker: color,
+    });
+   // this.updateTabel();
+  };
+
+  setColorFontPicker = (color) => {
+    this.setState({
+      colorFontPicker: color,
+    });
+   // this.updateTabel();
+  };
+
 
   onHideColumns = (hiddenColumns) => {
     let unique = [...this.state.initColumns];
@@ -40,6 +82,8 @@ class MainTable extends Component {
       hiddenKeys: hiddenColumns,
     });
   };
+
+
 
   updateTabel = async () => {
     const res = await this.service.getAllEvents();
@@ -65,17 +109,25 @@ class MainTable extends Component {
           },
         });
       } else {
+        const styles = {
+          color: this.getColor('font'),
+          backgroundColor: this.getColor(),
+          fontSize: `${this.state.fontSize}px`,
+        };
         arrayOfColumns.push({
           title: element.title,
           dataIndex: element.value,
           key: element.title,
-          render: text => <div style={this.state.styles}>{text}</div>,
+          render: text => <div style={styles}>{text}</div>,
         });
       }
     });
 
     this.setState({
-      data: res,
+      data: res.map((item, i) => {
+       const newData = {...item, key: i}
+       return newData
+      }),
       columns: [...arrayOfColumns],
       lastColumnIndex: +res2[res2.length - 1].key + 1,
       lastRowIndex: +res[res.length - 1].key + 1,
@@ -146,11 +198,23 @@ class MainTable extends Component {
 
   render() {
     const { data, columns } = this.state;
-    console.log(this.state);
     return (
       <>
         <div className="todo-app">WOWWWW</div>
-        <TableControls columns={columns} initColumns={this.state.initColumns} hiddenKeys={this.state.hiddenKeys} onHideColumns={this.onHideColumns}/>
+        <TableControls
+          columns={columns}
+          initColumns={this.state.initColumns}
+          hiddenKeys={this.state.hiddenKeys}
+          onHideColumns={this.onHideColumns}
+          onFontSizeChange={this.onFontSizeChange}
+          setRowCount={this.setRowCount}
+          rowCount={this.state.rowCount}
+          setColorBgPicker={this.setColorBgPicker}
+          colorBgPicker={this.state.colorBgPicker}
+          setColorFontPicker={this.setColorFontPicker}
+          colorFontPicker={this.state.colorFontPicker}
+          prefFontSize={this.state.fontSize}
+        />
         <Tables
           columns={columns}
           dataShedule={data}
@@ -158,6 +222,8 @@ class MainTable extends Component {
           addColumn={this.addColumn}
           hideSelectedRows={this.hideSelectedRows}
           showSelectedRows={this.showSelectedRows}
+          colorFontPicker={this.state.colorFontPicker}
+          colorBgPicker={this.state.colorBgPicker}
         />
       </>
     );

@@ -17,7 +17,8 @@ class Tables extends React.Component {
 
   render() {
     // константы. которые будут входить!
-    const { dataShedule } = this.props;
+    const { dataShedule, columns, colorFontPicker, colorBgPicker  } = this.props;
+
 
     //  Цвет, заливка, шрифт
     const color = 'green';
@@ -25,14 +26,14 @@ class Tables extends React.Component {
     const fontSize = '14px';
 
     let styles = {
-      color: color,
-      backgroundColor: bgColor,
+      color: colorFontPicker,
+      backgroundColor: colorBgPicker,
       fontSize: fontSize,
     };
 
     // Выделение
     const { selectedRowKeys } = this.state;
-    const { columns } = this.props;
+
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,

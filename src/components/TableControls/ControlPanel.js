@@ -17,6 +17,7 @@ const ControlPanel = ({
                         setDisplayFontPicker,
                         colorFontPicker,
                         setColorFontPicker,
+                        prefFontSize,
                         setFontSize}) => {
 
   const onChange = (value) => {
@@ -56,7 +57,7 @@ const ControlPanel = ({
           <Title level={5}>Размер шрифта:</Title>
         </Col>
         <Col span={8}>
-          <FontSizeControl setFontSize={setFontSize}/>
+          <FontSizeControl setFontSize={setFontSize} prefFontSize={prefFontSize}/>
         </Col>
       </Row>
     <Row>

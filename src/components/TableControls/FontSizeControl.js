@@ -4,17 +4,17 @@ import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
-const FontSizeControl = ({setFontSize}) => {
+const FontSizeControl = ({setFontSize, prefFontSize}) => {
   const [fontLevel, setFontLevel] = useState(3);
 
   const handleLess = () => {
-    setFontSize((prevSize) => prevSize > 5 ? prevSize - 1 : 5)
-    setFontLevel((prevSize) => prevSize > 1 ? prevSize - 1 : 1)
+    setFontSize(prefFontSize > 5 ? prefFontSize - 1 : 5)
+    setFontLevel((prevSize) => prevSize < 5 ? prevSize + 1 : 5)
   };
 
   const handleMore = () => {
-    setFontSize((prevSize) => prevSize < 50 ? prevSize + 1 : 50)
-    setFontLevel((prevSize) => prevSize < 5 ? prevSize + 1 : 5)
+    setFontSize(prefFontSize < 50 ? prefFontSize + 1 : 50)
+    setFontLevel((prevSize) => prevSize > 1 ? prevSize - 1 : 1)
   };
 
     return (
