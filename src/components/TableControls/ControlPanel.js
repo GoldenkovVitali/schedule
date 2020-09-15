@@ -55,7 +55,7 @@ const ControlPanel = ({
       </Row>
       <Row>
         <Col span={8}>
-          <Title level={5}>Размер шрифта:</Title>
+          <Title level={5}>Шрифт:</Title>
         </Col>
         <Col span={8}>
           <FontSizeControl setFontSize={setFontSize} prefFontSize={prefFontSize}/>

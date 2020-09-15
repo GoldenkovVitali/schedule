@@ -25,7 +25,7 @@ const FontSizeControl = ({setFontSize, prefFontSize}) => {
             </Button>
           </Col>
           <Col span={6}>
-              <Title style={{textAlign: 'center'}} level={fontLevel}>A</Title>
+              <Title style={{textAlign: 'center'}} level={fontLevel}>{prefFontSize + 1}</Title>
           </Col>
           <Col span={6}>
             <Button onClick={handleMore} type="primary" shape="circle">
