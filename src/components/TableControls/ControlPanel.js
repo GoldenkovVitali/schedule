@@ -67,6 +67,7 @@ const ControlPanel = ({
         </Col>
         <Col span={8}>
           <AccesebilityButton/>
+          <FontSizeControl setFontSize={setFontSize}/>
         </Col>
       </Row>
     <Row>

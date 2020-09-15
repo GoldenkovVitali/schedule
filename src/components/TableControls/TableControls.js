@@ -43,7 +43,6 @@ const TableControls = (props) => {
     setColoBgFontSize()
   };
 
-
   return (
     <Row>
       <Col xs={{ span: 12, offset: 3 }} lg={{ span: 12, offset: 3 }}>

@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
 import Service from '../../service/Service';
 import './main-table.css';
-
-import { Tag } from 'antd';
+import { Tag, Button } from 'antd';
 import Tables from './table-shedule/table';
-import TableControls from "../TableControls";
+import TableControls from '../TableControls';
+import Select from 'react-select';
+import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
+
+const options = [
+  { value: 'Europe/London', label: 'Europe/London' },
+  { value: 'Europe/Warsaw', label: 'Europe/Warsaw' },
+  { value: 'Europe/Kiev', label: 'Europe/Kiev' },
+  { value: 'Europe/Minsk', label: 'Europe/Minsk' },
+  { value: 'Europe/Moscow', label: 'Europe/Moscow' },
+  { value: 'Europe/Volgograd', label: 'Europe/Volgograd' },
+  { value: 'Europe/Yekaterinburg', label: 'Europe/Yekaterinburg' },
+  { value: 'Asia/Tashkent', label: 'Asia/Tashkent' },
+  { value: 'Asia/Tbilisi', label: 'Asia/Tbilisi' },
+];
+
+const MyComponent = () => <Select options={options} />;
 
 class MainTable extends Component {
   state = {
@@ -14,15 +29,16 @@ class MainTable extends Component {
     lastRowIndex: null,
     hiddenKeys:[],
     initColumns: [],
-    styles: {
-      color: 'red',
-      backgroundColor: 'green',
-      fontSize: 12,
-    },
     fontSize: 14,
     rowCount: 10,
     colorBgPicker: { r: '241', g: '112', b: '19', a: '1',},
     colorFontPicker: { r: '241', g: '112', b: '19', a: '1',},
+    styles: {
+      color: 'green',
+      backgroundColor: 'yellow',
+      fontSize: '14px',
+    },
+    selectedRowKeys: [],
   };
 
   service = new Service();
@@ -96,8 +112,6 @@ class MainTable extends Component {
     });
   };
 
-
-
   updateTabel = async () => {
     const res = await this.service.getAllEvents();
     const res2 = await this.service.getAllOrganizers();
@@ -109,7 +123,6 @@ class MainTable extends Component {
       backgroundColor: this.getColor(),
       fontSize: `${this.state.fontSize}px`,
     };
-
     res2.forEach(element => {
       if (element.value === 'type') {
         arrayOfColumns.push({
@@ -118,10 +131,38 @@ class MainTable extends Component {
           key: element.title,
           render: text => {
             let color;
-            if (text === 'string') {
-              color = 'volcano';
-            } else {
+            if (
+              text === 'lecture' ||
+              text === 'lectureMixed' ||
+              text === 'lectureSelfstudy' ||
+              text === 'lectureOffline' ||
+              text === 'lectureOnline'
+            ) {
               color = 'blue';
+            } else if (
+              text === 'interview' ||
+              text === 'test' ||
+              text === 'warmup'
+            ) {
+              color = '#63ab91';
+            } else if (
+              text === 'codejam' ||
+              text === 'codewars' ||
+              text === 'htmltask' ||
+              text === 'jstask'
+            ) {
+              color = 'green';
+            } else if (
+              text === 'test' ||
+              text === 'codewars' ||
+              text === 'htmltask' ||
+              text === 'jstask'
+            ) {
+              color = 'green';
+            } else if (text === 'meetup' || text === 'workshop') {
+              color = '#bde04a';
+            } else {
+              color = 'black';
             }
             return <Tag color={color}>{text}</Tag>;
           },
@@ -137,14 +178,11 @@ class MainTable extends Component {
     });
 
     this.setState({
-      data: res.map((item, i) => {
-       const newData = {...item, key: i}
-       return newData
-      }),
+      data: res,
       columns: [...arrayOfColumns],
       lastColumnIndex: +res2[res2.length - 1].key + 1,
       lastRowIndex: +res[res.length - 1].key + 1,
-      initColumns: [...arrayOfColumns]
+      initColumns: [...arrayOfColumns],
     });
   };
 
@@ -174,26 +212,6 @@ class MainTable extends Component {
     this.updateTabel();
   };
 
-  addColumn = async () => {
-    const { data, lastColumnIndex } = this.state;
-    const newColumn = {
-      title: `Column ${lastColumnIndex}`,
-      value: `Column ${lastColumnIndex}`,
-      key: lastColumnIndex,
-    };
-
-    this.service.postOrganizer(newColumn);
-    const newArray = data.map(element =>
-      this.service.updateEvent({
-        ...element,
-        [`Column ${lastColumnIndex}`]: 'no data',
-      })
-    );
-    await Promise.all(newArray);
-
-    this.updateTabel();
-  };
-
   hideSelectedRows = rows => {
     rows.forEach(element => {
       let dataSource = [...this.state.data];
@@ -209,11 +227,17 @@ class MainTable extends Component {
     this.updateTabel();
   };
 
+  // exportPDFWithComponent = () => {
+  //   this.pdfExportComponent.save();
+  // };
+
   render() {
     const { data, columns } = this.state;
+    console.log(this.state);
     return (
       <>
         <div className="todo-app">WOWWWW</div>
+        <MyComponent />
         <TableControls
           columns={columns}
           initColumns={this.state.initColumns}
@@ -236,6 +260,9 @@ class MainTable extends Component {
           addColumn={this.addColumn}
           hideSelectedRows={this.hideSelectedRows}
           showSelectedRows={this.showSelectedRows}
+          hideSelectedRows={this.hideSelectedRows}
+          showSelectedRows={this.showSelectedRows}
+          pdfExportComponent={this.pdfExportComponent}
         />
       </>
     );
