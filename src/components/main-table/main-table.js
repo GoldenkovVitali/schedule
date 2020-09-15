@@ -14,6 +14,11 @@ class MainTable extends Component {
     lastRowIndex: null,
     hiddenKeys:[],
     initColumns: [],
+    styles: {
+      color: 'red',
+      backgroundColor: 'green',
+      fontSize: 12,
+    },
     fontSize: 14,
     rowCount: 10,
     colorBgPicker: { r: '241', g: '112', b: '19', a: '1',},
@@ -54,16 +59,24 @@ class MainTable extends Component {
     this.setState({
       colorBgPicker: color,
     });
-   // this.updateTabel();
   };
 
   setColorFontPicker = (color) => {
+    console.log(color)
     this.setState({
       colorFontPicker: color,
     });
-   // this.updateTabel();
   };
 
+  setColoBgFontSize = () => {
+    this.setState({
+      styles: {
+        color: this.getColor('font'),
+        backgroundColor: this.getColor(),
+        fontSize: `${this.state.fontSize}px`,
+      }
+    });
+  }
 
   onHideColumns = (hiddenColumns) => {
     let unique = [...this.state.initColumns];
@@ -91,6 +104,11 @@ class MainTable extends Component {
     res2.sort((a, b) => a.key - b.key);
     res.sort((a, b) => a.key - b.key);
     let arrayOfColumns = [];
+    const styles = {
+      color: this.getColor('font'),
+      backgroundColor: this.getColor(),
+      fontSize: `${this.state.fontSize}px`,
+    };
 
     res2.forEach(element => {
       if (element.value === 'type') {
@@ -109,16 +127,11 @@ class MainTable extends Component {
           },
         });
       } else {
-        const styles = {
-          color: this.getColor('font'),
-          backgroundColor: this.getColor(),
-          fontSize: `${this.state.fontSize}px`,
-        };
         arrayOfColumns.push({
           title: element.title,
           dataIndex: element.value,
           key: element.title,
-          render: text => <div style={styles}>{text}</div>,
+          render: text => <div style={this.state.styles}>{text}</div>,
         });
       }
     });
@@ -214,6 +227,7 @@ class MainTable extends Component {
           setColorFontPicker={this.setColorFontPicker}
           colorFontPicker={this.state.colorFontPicker}
           prefFontSize={this.state.fontSize}
+          setColoBgFontSize={this.setColoBgFontSize}
         />
         <Tables
           columns={columns}
@@ -222,8 +236,6 @@ class MainTable extends Component {
           addColumn={this.addColumn}
           hideSelectedRows={this.hideSelectedRows}
           showSelectedRows={this.showSelectedRows}
-          colorFontPicker={this.state.colorFontPicker}
-          colorBgPicker={this.state.colorBgPicker}
         />
       </>
     );

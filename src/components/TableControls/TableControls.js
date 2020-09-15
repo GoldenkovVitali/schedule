@@ -28,6 +28,7 @@ const TableControls = (props) => {
     setRowCount,
     onFontSizeChange,
     prefFontSize,
+    setColoBgFontSize,
     rowCount } = props;
 
   useEffect(() => {
@@ -39,6 +40,7 @@ const TableControls = (props) => {
 
   const onSaveSettings = () => {
     onHideColumns(targetKeys)
+    setColoBgFontSize()
   };
 
 

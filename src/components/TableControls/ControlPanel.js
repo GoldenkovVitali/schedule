@@ -3,6 +3,7 @@ import { Slider, InputNumber, Row, Col, Typography } from 'antd';
 import FontColorPicker from "./FontColorPicker";
 import BackgroundColorPicker from "./BackgroundColorPicker";
 import FontSizeControl from "./FontSizeControl";
+import AccesebilityButton from "./AccesebilityButton";
 
 const { Title } = Typography;
 
@@ -58,6 +59,14 @@ const ControlPanel = ({
         </Col>
         <Col span={8}>
           <FontSizeControl setFontSize={setFontSize} prefFontSize={prefFontSize}/>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={8}>
+          <Title level={5}>Для слабовидящих:</Title>
+        </Col>
+        <Col span={8}>
+          <AccesebilityButton/>
         </Col>
       </Row>
     <Row>

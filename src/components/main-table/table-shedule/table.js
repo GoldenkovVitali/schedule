@@ -68,7 +68,7 @@ class Tables extends React.Component {
         },
       ],
     };
-
+console.log('columns', columns)
     return (
       <>
         <div> ITS a Table. GOOOO!! </div>
