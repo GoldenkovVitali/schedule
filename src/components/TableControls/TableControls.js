@@ -27,8 +27,10 @@ const TableControls = (props) => {
     colorBgPicker,
     setRowCount,
     onFontSizeChange,
-    prefFontSize,
+    prevFontSize,
     setColoBgFontSize,
+    onHandleAccessible,
+    isAccessible,
     rowCount } = props;
 
   useEffect(() => {
@@ -44,8 +46,6 @@ const TableControls = (props) => {
   };
 
   return (
-    <Row>
-      <Col xs={{ span: 12, offset: 3 }} lg={{ span: 12, offset: 3 }}>
         <ModalButton onSaveSettings={onSaveSettings} icon={<SettingOutlined />}>
           <Row>
             <Col span={12} offset={1}>
@@ -68,14 +68,14 @@ const TableControls = (props) => {
                  setDisplayFontPicker={setDisplayFontPicker}
                  colorFontPicker={colorFontPicker}
                  setColorFontPicker={setColorFontPicker}
-                 setFontSize={setFontSize}
-                 prefFontSize={prefFontSize}
+                 onFontSizeChange={onFontSizeChange}
+                 prevFontSize={prevFontSize}
+                 onHandleAccessible={onHandleAccessible}
+                 isAccessible={isAccessible}
                />
             </Col>
           </Row>
         </ModalButton>
-      </Col>
-    </Row>
   )
 }
 

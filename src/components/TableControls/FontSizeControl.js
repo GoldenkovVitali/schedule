@@ -1,34 +1,31 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Row, Col, Typography, Button } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
-const FontSizeControl = ({setFontSize, prefFontSize}) => {
-  const [fontLevel, setFontLevel] = useState(3);
+const FontSizeControl = ({onFontSizeChange, prevFontSize}) => {
 
   const handleLess = () => {
-    setFontSize(prefFontSize > 5 ? prefFontSize - 1 : 5)
-    setFontLevel((prevSize) => prevSize < 5 ? prevSize + 1 : 5)
+    onFontSizeChange('less')
   };
 
   const handleMore = () => {
-    setFontSize(prefFontSize < 50 ? prefFontSize + 1 : 50)
-    setFontLevel((prevSize) => prevSize > 1 ? prevSize - 1 : 1)
+    onFontSizeChange('more')
   };
 
     return (
         <Row>
           <Col span={6}>
-            <Button onClick={handleLess} type="primary" shape="circle">
+            <Button onClick={handleLess} type="primary" >
               <MinusOutlined />
             </Button>
           </Col>
-          <Col span={6}>
-              <Title style={{textAlign: 'center'}} level={fontLevel}>A</Title>
+          <Col span={7}>
+              <Title style={{textAlign: 'center'}} level={5}>{prevFontSize}</Title>
           </Col>
           <Col span={6}>
-            <Button onClick={handleMore} type="primary" shape="circle">
+            <Button onClick={handleMore} type="primary" >
               <PlusOutlined />
             </Button>
           </Col>
