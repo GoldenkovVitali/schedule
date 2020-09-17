@@ -1,0 +1,25 @@
+.video-block {
+  margin-bottom: 30px;
+}
+
+.video-block__edite-block {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.video-block__checkbox {
+  margin-right: 10px;
+}
+
+.video-block__video {
+  margin: 0 auto;
+  width: 90%;
+  height: 430px;
+  max-width: 700px;
+  display: block;
+}
+
+.video-block__video {
+  height: 50vw
+}
