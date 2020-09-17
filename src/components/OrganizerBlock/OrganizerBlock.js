@@ -50,8 +50,6 @@ export default class OrganizerBlock extends Component {
       return null;
     }
 
-    console.log(data)
-
     return (
       <div className='organizer-block'>      
         {isEdited ?         

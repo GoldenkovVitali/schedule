@@ -1,0 +1,25 @@
+.ant-table-wrapper {
+  margin: 20px;
+}
+
+.urlshref {
+  color: blue;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+.table-row-light {
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.table-row-dark {
+  background-color: #c4e7ff;
+  cursor: pointer;
+}
