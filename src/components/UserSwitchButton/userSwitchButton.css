@@ -1,0 +1,8 @@
+.user-switch-btn {
+  font-weight: 700;
+  color: #92cad1;
+  text-transform: uppercase;
+  position: absolute;
+  right: 40px;
+  top: 5px;
+}
