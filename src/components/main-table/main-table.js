@@ -97,8 +97,7 @@ class MainTable extends Component {
             } else if (
               text === 'test' ||
               text === 'codewars' ||
-              text === 'htmltask' ||
-              text === 'jstask'
+              text === 'htmltask'
             ) {
               color = 'green';
             } else if (text === 'meetup' || text === 'workshop') {

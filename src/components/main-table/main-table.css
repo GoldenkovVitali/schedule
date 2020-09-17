@@ -13,3 +13,18 @@
   -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
 }
+
+.table-row-light {
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.table-row-dark {
+  background-color: #c4e7ff;
+  cursor: pointer;
+}
+
+.table-row-dark a:hover {
+  background-color: #c4e7ff !important;
+  cursor: pointer;
+}
