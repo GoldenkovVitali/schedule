@@ -1,11 +1,4 @@
-/* eslint-disable no-return-assign */
-/* eslint-disable no-sequences */
-/* eslint-disable no-param-reassign */
 import React, { Component } from 'react';
-// import { Input, Checkbox, Image } from 'antd';
-import 'antd/dist/antd.css';
-import './taskPage.css';
-import taskStructure from '../../configs/taskStructure';
 import DateBlock from '../DateBlock/DateBlock';
 import DescriptionBlock from '../DescriptionBlock/DescriptionBlock';
 import ImageBlock from '../ImageBlock/ImageBlock';
@@ -16,45 +9,41 @@ import Link from '../Link/Link';
 import TaskPageHeader from '../TaskPageHeader/TaskPageHeader';
 import Service from '../../service/Service';
 import CommentsBlock from '../../components/CommentsBlock/CommentsBlock';
+import Button from '../Button/Button';
+import TaskStructure from '../../configs/TaskStructure';
+import { EditOutlined, EyeOutlined, CloseOutlined } from '@ant-design/icons';
+import { Popover } from 'antd';
+
+import 'antd/dist/antd.css';
+import './taskPage.css';
 
 export default class TaskPage extends Component {
   constructor(props) {
     super(props);
     
     this.state = {
-      data: this.props.data || {
-        type: 'default',
-      },
+      data: { type: 'default' },
       isEdited: true,
-      currentTaskType: 'default',
     }
-  }
-
-  taskTypes = {
-    lectureOnline: 'online lecture',
-    // lecture_offline: 'offline lecture',
-    // lecture_mixed: 'mixed lecture',
-    // lecture_self_study: 'self study',
-    // warmup: 'warm-up',
-    jsTask: 'js task',
-    // kotlintask: 'kotlin task',
-    // objctask: 'objc task',
-    // htmltask: 'html task',
-    // codejam: 'code jam',
-    // externaltask: 'external task',
-    // codewars: 'codewars',
-    // selfeducation: 'self education',
-    default: 'default',
   }
 
   service = new Service();
 
-  // componentDidMount() {
+  componentWillMount() {
+    const { data } = this.props;
+    const taskTypesArr = Object.keys(TaskStructure);
+    let currentTaskType = taskTypesArr.find((type) => type === data.type);
 
-  //   const data = this.props.data
-  //   console.log(this.props.data)
-  //   this.setState({data: data})
-  // }
+    if (!currentTaskType) {
+      currentTaskType = 'default';
+    }
+
+    this.setState((state) => state.data = data);
+    this.setState((state) => {
+      state.data.type = currentTaskType;
+      state.isEdited = true;
+    });
+  }
 
   handleChangeSelect = (value) => {
     console.log(value);
@@ -64,80 +53,73 @@ export default class TaskPage extends Component {
   handleChangeInput = (event) => {
     const inputValue = event.target.value;
     const dataAttr = event.target.dataset.name;
-    console.log(dataAttr); //
 
     this.setState(({ data }) => data[dataAttr] = inputValue);
   }
 
-  handleChangeStartDate = (date, dateString) => {
-    // const inputValue =  dateString;
-    // const dataAttr = event.target.dataset.name;
-    console.log(dateString) //
-    this.setState(({ data }) => data.startDate = dateString );
+  changeData = (key, value) => {
+    this.setState(({ data }) => data[key] = value);
   }
-
-  handleChangeStartTime = (date, dateString) => {
-    this.setState(({ data }) => data.startTime = dateString );
-  }
-
-  handleChangeDeadline = (date, dateString) => {
-    this.setState(({ data }) => data.deadline = dateString );
-  }
-
 
   togglePageMode = () => {
     this.setState({ isEdited: !this.state.isEdited });
   }
 
   changeMapData = (lng, lat, zoom) => {
-    this.setState(({ data }) => (data.lng = lng,
-    data.lat = lat,
-    data.zoom = zoom));
+    this.setState(({ data }) => (
+      data.lng = lng,
+      data.lat = lat,
+      data.zoom = zoom
+    ));
   };
 
   postEvent = () => {
-    // console.log(this.state.data)
     this.service.postEvent(this.state.data)
   }
 
-  // getEvent = async () => {
-  //   const ev = await this.service.getEvent('o2qlUYHL9CCv3DUKB84z')
-  //   console.log(ev)
-  // }
+  updateEvent = () => {
+    this.service.updateEvent(this.state.data.id, this.state.data)
+  }
 
   getAllEvents = async () => {
     const ev = await this.service.getAllEvents();
     console.log(ev);
   }
 
-
   render() {
     const { isEdited, data } = this.state; 
     const { lng, lat, zoom } = data;   
 
-    console.log(data, 'state')
-
-    const taskStructureKeys = Object.keys(taskStructure);
-    const currentTaskType = taskStructureKeys.find((key) => key === data.type)
-    if (!currentTaskType) {
-      data.type = 'default';
-    }
+    localStorage.data = this.props.data; 
     
     const longitude = !lng ? 27.56 : lng;
     const latitude = !lat ? 53.9 : lat;
     const zoomNew = !zoom ? 11 : zoom;    
 
-    const { date, lectureDescription, image, video, link, taskDescription, map, organizer, organizerInfo, feedback } = taskStructure[data.type];
-
-    // const id = "o2qlUYHL9CCv3DUKB84z"
+    const { date, lectureDescription, image, video, link, taskDescription, map, organizer, organizerInfo, feedback } = TaskStructure[data.type];
 
     return (
       <div className="task-page">
-        <button onClick={this.togglePageMode} style={{ position: 'absolute', top: '10px' }}>change mode</button>
-
+          <Button 
+            shape='circle'
+            danger={true}
+            type="dashed"
+            icon={<CloseOutlined />}
+            btnClassName='task-page__close-btn'
+            btnWrapperClassName = 'task-page__close-btn-wrapper'
+            handlerOnClick={null}
+          />
+          <Button 
+            shape='circle'
+            type={'primary'}
+            icon={isEdited ? <EyeOutlined /> : <EditOutlined />}
+            btnClassName='task-page__preview-btn'
+            btnWrapperClassName = 'task-page__preview-btn-wrapper'
+            ghost={true}
+            handlerOnClick={this.togglePageMode}
+          />
         <TaskPageHeader
           isEdited={isEdited}
-          // taskType={currentTaskType}
           taskType={data.type}
           data={data}
           name="name"
@@ -147,23 +129,22 @@ export default class TaskPage extends Component {
         <DateBlock
           isEdited={isEdited}
           name={{
-            startDate: 'startDate', 
-            startTime: 'startTime', 
-            deadline: 'deadline'
+            startDateName: 'startDate', 
+            startTimeName: 'startTime', 
+            deadlineName: 'deadline'
           }}
           date={date} 
           data={data}          
-          handleChangeStartDate={this.handleChangeStartDate}
-          handleOnChangeStartTime={this.handleChangeStartTime}
-          handleOnChangeDeadline={this.handleChangeDeadline}
+          changeData={this.changeData}
         />
-        {lectureDescription
+        {lectureDescription 
           ? (
             <DescriptionBlock
               isEdited={isEdited}
               data={data}
               name="lectureDescription"
               handleChangeInput={this.handleChangeInput}
+              changeData={this.changeData}
             />
           ) : null
         }
@@ -174,6 +155,7 @@ export default class TaskPage extends Component {
               name="imageUrl"
               data={data}
               handleChangeInput={this.handleChangeInput}
+              changeData={this.changeData}
             />
           ) : null
         }
@@ -184,6 +166,7 @@ export default class TaskPage extends Component {
               name="videoUrl"
               data={data}
               handleChangeInput={this.handleChangeInput}
+              changeData={this.changeData}
             />
           ) : null
         }
@@ -197,6 +180,7 @@ export default class TaskPage extends Component {
               }}
               data={data}
               handleChangeInput={this.handleChangeInput}
+              changeData={this.changeData}
             />
           ) : null
         }
@@ -207,12 +191,14 @@ export default class TaskPage extends Component {
               data={data}
               name="description"
               handleChangeInput={this.handleChangeInput}
+              changeData={this.changeData}
             />
           ) : null
         }
         {map
           ? (
             <MapBlock
+              isEdited={isEdited}
               lng={longitude}
               lat={latitude}
               zoom={zoomNew}
@@ -230,6 +216,7 @@ export default class TaskPage extends Component {
                 organizerDescription: 'organizerDescription',
               }}
               handleChangeInput={this.handleChangeInput}
+              changeData={this.changeData}
             />
           ) : null
         }
@@ -238,23 +225,14 @@ export default class TaskPage extends Component {
           feedback={feedback}
           isEdited={isEdited}
         />
-
-        <div>
-          <button
-            onClick={this.postEvent}
-          >POST
-          </button>
-          <button
-            onClick={this.getEvent}
-          >GET
-          </button>
-          <button
-            onClick={this.getAllEvents}
-          >GET ALL
-          </button>
-          <button>UPDATE</button>
-          <button>DELETE</button>
-        </div>
+        <Button 
+          type='primary'
+          size='default'
+          btnClassName='task-page__confirm-btn'
+          btnWrapperClassName = 'task-page__confirm-btn-wrapper'
+          text='Confirm'
+          handlerOnClick={this.updateEvent}
+        />
       </div>
     );
   }

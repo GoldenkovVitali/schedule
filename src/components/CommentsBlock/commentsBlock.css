@@ -1,5 +1,7 @@
+
+
 .ant-list-items {
-  height: 250px;
+  max-height: 250px;
   overflow-y: scroll;
 }
 
@@ -7,38 +9,39 @@
   margin-right: 5px;
 }
 
-/* .ant-list-items::-webkit-scrollbar {
-  width: 8px;
-  background-color: #eeeeee;
-  border-radius: 5px;
+.comments-block__checkbox-wrapper {
+  margin-bottom: 10px;
 }
 
-.ant-list-items::-webkit-scrollbar-thumb {
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #949494;
+.comments-block .ant-collapse-content-box {  
+  padding: 50px;
+  background-color: #f2f7ff;
 }
 
-.ant-input::-webkit-scrollbar {
-  width: 10px;
-  background-color: #eeeeee;
-  border-radius: 5px;
+.comments-block__content-wrapper,
+.comments-block .ant-spin-nested-loading, 
+.comments-block .ant-list .ant-comment-inner {
+  background-color: #fff;
 }
 
-.ant-input::-webkit-scrollbar-thumb {
-	border-radius: 8px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #949494;
+.comments-block {
+  margin-bottom: 30px;
 }
 
-.task-page *::-webkit-scrollbar {
-  width: 10px;
-  background-color: #eeeeee;
-  border-radius: 5px;
+.ant-list.comments-block.ant-list-split {
+  margin: 0;
 }
 
-.task-page *::-webkit-scrollbar-thumb {
-	border-radius: 8px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #949494;
-} */
+.comments-block .ant-comment-inner {
+  background-color: #f2f7ff;
+}
+
+.comments-block .ant-list {
+  padding: 10px;
+}
+
+@media (max-width: 768px) {
+  .comments-block .ant-collapse-content-box {  
+    padding: 15px;
+  }
+}

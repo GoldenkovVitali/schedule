@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'antd';
+
 import './userSwitchButton.css';
 
 export default class UserSwitchButton extends Component {
@@ -29,6 +30,7 @@ export default class UserSwitchButton extends Component {
 
   render() {
     const { user } = this.state;
+    
     return (
       <Button 
         type='dashed' 

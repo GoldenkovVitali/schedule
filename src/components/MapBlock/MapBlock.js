@@ -32,9 +32,10 @@ export default class MapBlock extends Component {
   }
 
   render() {
-    const { lng, lat, zoom } = this.props;
+    const { lng, lat, zoom, isEdited } = this.props;
+    
     return (
-      <div className="map-block">
+      <div className={isEdited ? "map-block_edited" : "map-block"}>
 
         <div>
           <div>

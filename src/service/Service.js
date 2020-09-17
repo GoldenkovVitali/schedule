@@ -165,9 +165,9 @@ export default class Service {
 
   isSet(data) {
     if (data) {
-        return data
+        return data;
     } else {
-        return 'no data :('
+        return '';
     }
   } 
 

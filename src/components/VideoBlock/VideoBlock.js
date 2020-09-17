@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Input, Checkbox } from 'antd';
+
 import 'antd/dist/antd.css';
 import './videoBlock.css';
 
@@ -9,15 +10,15 @@ export default class VideoBlock extends Component {
     url: '',
   }
 
+  componentDidMount() {
+    const { data, name } = this.props;
+    this.setState({ checked: !!data[name] })
+  }
+
   onChangeCheckbox = (event) => {
     const isChecked = event.target.checked;
     this.setState({ checked: isChecked })
   }
-
-  // onChangeInput = (event) => {
-  //   const inputValue =  event.target.value;
-  //   this.setState({ url: inputValue })
-  // }
 
   render() {
     const { isEdited, name, data, handleChangeInput } = this.props;    
@@ -48,7 +49,7 @@ export default class VideoBlock extends Component {
             className='video-block__video'
             src={data[name] || url}
             frameBorder="0" 
-            // allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
             allowFullScreen
           /> }
       </div>

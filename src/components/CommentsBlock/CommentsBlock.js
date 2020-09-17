@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { Comment, Form, Button, List, Input, Checkbox } from 'antd';
+import Service from '../../service/Service';
+import { Collapse } from 'antd';
+
 import 'antd/dist/antd.css';
 import './commentsBlock.css';
-import { Comment, Avatar, Form, Button, List, Input, Checkbox } from 'antd';
-// import moment from 'moment';
-import Service from '../../service/Service';
 
 const { TextArea } = Input;
+const { Panel } = Collapse;
 
 const CommentList = ({ comments }) => {
   return <List
@@ -32,18 +34,18 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 
 export default class CommentForm extends Component {
   state = {
-    data: this.props.data,
     comments: [],
     submitting: false,
     value: '',
-    checked: false,
+    checked: this.props.data.commentsOn,
   };
+
   data = this.props.data;
   id = this.props.data.id;
 
   service = new Service();
 
-  componentDidMount() {
+  componentWillMount() {
     const { data: { comments } } = this.props;
 
     if (!comments) {
@@ -106,34 +108,44 @@ export default class CommentForm extends Component {
   render() {
     const { comments, submitting, value, checked } = this.state;
     const { isEdited } = this.props;
+    const { commentsOn } = this.data;
 
     return (
       <>
         { isEdited ? 
-          <>
+          <div className='comments-block__checkbox-wrapper'>
             <Checkbox 
               className='comments-block__checkbox' 
               onChange={this.onChangeCheckbox}
               checked={checked}
             /> 
             <span>Turn on comments</span>
-          </>: null 
+          </div>: null 
         }
 
-        {this.data.commentsOn ?
-          <div>
-            {comments.length > 0 && <CommentList comments={comments} />}
-            <Comment
-              content={
-                <Editor
-                  onChange={this.handleChange}
-                  onSubmit={this.handleSubmit}
-                  submitting={submitting}
-                  value={value}
+        {commentsOn ?
+          <Collapse className='comments-block'>
+            <Panel 
+              header="Add feedback" 
+              expandIconPosition={'right'}
+              disabled={isEdited} 
+              key="1"
+            >
+              <div className='comments-block__content-wrapper'>
+              {comments.length > 0 && <CommentList comments={comments} />}
+                <Comment
+                  content={
+                    <Editor
+                      onChange={this.handleChange}
+                      onSubmit={this.handleSubmit}
+                      submitting={submitting}
+                      value={value}
+                    />
+                  }
                 />
-              }
-            />
-          </div> : null
+              </div>
+            </Panel>
+          </Collapse> : null
         }
       </>
     );

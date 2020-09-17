@@ -1,13 +1,11 @@
-// PS: we can remove keys with value 'false'
-
 const taskStructure = {
   default: {
     type: true,
     header: true,
     date: {      
-      startDate: true,
-      startTime: true,
-      deadline: true,
+      isStartDate: true,
+      isStartTime: true,
+      isDeadlineDate: true,
     },
     lectureDescription: true,
     image: true,
@@ -24,9 +22,9 @@ const taskStructure = {
     type: true,
     header: true,
     date: {      
-      startDate: true,
-      startTime: false,
-      deadline: true,
+      isStartDate: true,
+      isStartTime: false,
+      isDeadlineDate: true,
     },
     lectureDescription: false,
     image: true,
@@ -43,9 +41,9 @@ const taskStructure = {
     type: true,
     header: true,
     date: {      
-      startDate: true,
-      startTime: true,
-      deadline: false,
+      isStartDate: true,
+      isStartTime: true,
+      isDeadlineDate: false,
     },
     lectureDescription: true,
     image: false,

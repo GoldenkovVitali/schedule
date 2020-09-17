@@ -1,0 +1,15 @@
+.task-page__confirm-btn-wrapper, .task-page__preview-btn-wrapper,  .task-page__close-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.task-page__preview-btn, .task-page__close-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.task-page__preview-btn-wrapper {
+  position: relative;
+  top: 25px
+}

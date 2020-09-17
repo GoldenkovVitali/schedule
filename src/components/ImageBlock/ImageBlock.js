@@ -1,26 +1,25 @@
 import React, { Component } from 'react';
 import { Input, Checkbox, Image } from 'antd';
+import noImage from '../../assets/images/no_img.jpg';
+
 import 'antd/dist/antd.css';
 import './imageBlock.css';
-import noImage from '../../assets/images/no_img.jpg'
 
 export default class ImageBlock extends Component {
   state = {
-    checked: false,
     url: '',
+  }
+
+  componentWillMount() {
+    const { data, name } = this.props;
+    this.setState({ checked: !!data[name] })
   }
 
   onChangeCheckbox = (event) => {
     const isChecked = event.target.checked;
     this.setState({ checked: isChecked })
   }
-
-  // onChangeInput = (event) => {
-  //   const inputValue =  event.target.value;
-  //   this.setState({ url: inputValue })
-  // }
-
-
+  
   render() {
     const { isEdited, name, data, handleChangeInput } = this.props;
     const { checked, url } = this.state;
@@ -49,7 +48,7 @@ export default class ImageBlock extends Component {
         <Image
           className='image-block__image'
           src={data[name] || url}
-          fallback={noImage} /*default picture*/
+          fallback={noImage} 
         /> }
       </div>
     )
