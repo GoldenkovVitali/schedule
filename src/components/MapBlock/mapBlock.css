@@ -1,0 +1,31 @@
+.map-block {
+  margin-bottom: 30px;
+}
+
+.map-block_edited {
+  margin-bottom: 30px;
+  margin-left: 20px;
+}
+
+.map-block__checkbox {
+  margin-right: 10px;
+}
+
+.mapContainer {
+  width: 100%;
+  height: 100%;
+}
+
+  .mapboxgl-ctrl-logo{
+   display: none !important;
+}
+
+
+.mapboxgl-canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.mapboxgl-canvas-container {
+  height: 50vh;
+}

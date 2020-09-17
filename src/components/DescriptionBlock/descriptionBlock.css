@@ -1,0 +1,17 @@
+.description-block {
+  margin-bottom: 30px;
+  display: flex;
+}
+
+.description-block__textarea {
+  resize: none;
+  overflow: hidden;
+}
+
+.description-block__checkbox {
+  margin-right: 10px;
+}
+
+.ant-input {
+  resize: none;
+}
