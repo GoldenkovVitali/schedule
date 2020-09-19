@@ -57,6 +57,15 @@ class Tables extends React.Component {
           >
             Показать выделенные ячейки
           </Button>
+
+          <Button
+            
+            type="primary"
+            style={{ marginBottom: 16, marginLeft: 16 }}
+          >
+            Календарь
+          </Button>
+
           <button
             className="k-button"
             style={{ marginBottom: 16, marginLeft: 16 }}

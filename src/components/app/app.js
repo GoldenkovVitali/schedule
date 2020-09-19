@@ -5,13 +5,15 @@ import TaskPage from '../TaskPage/TaskPage';
 import UserSwitchButton from '../UserSwitchButton/UserSwitchButton';
 
 import MainTable from '../main-table/main-table';
+import Calendar from '../Calendar/calendar';
 
 export default class App extends Component {
   render() {
     return (
       <>
         <div className="todo-app">WOWWWW</div>
-        <MainTable />
+        {/*<MainTable/> */}
+        <Calendar />
       </>
     );
   }
