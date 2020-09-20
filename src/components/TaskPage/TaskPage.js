@@ -10,41 +10,22 @@ import TaskPageHeader from '../TaskPageHeader/TaskPageHeader';
 import Service from '../../service/Service';
 import CommentsBlock from '../../components/CommentsBlock/CommentsBlock';
 import Button from '../Button/Button';
-import TaskStructure from '../../configs/TaskStructure';
+import LocalStorageSettings from '../../service/LocalStorageSettings';
 
 import 'antd/dist/antd.css';
 import './taskPage.css';
 
 export default class TaskPage extends Component {
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      data: { type: 'default' },
-      isEdited: false,
-    }
+  state = {
+    incomingData: this.props.data,
+    data: JSON.parse(JSON.stringify(this.props.data)),
+    isEdited: false,
   }
 
   service = new Service();
-
-  componentWillMount() {
-    const { data } = this.props;
-    const taskTypesArr = Object.keys(TaskStructure);
-    let currentTaskType = taskTypesArr.find((type) => type === data.type);
-
-    if (!currentTaskType) {
-      currentTaskType = 'default';
-    }
-
-    this.setState((state) => state.data = data);
-    this.setState((state) => {
-      state.data.type = currentTaskType;
-      state.isEdited = true;
-    });
-  }
+  localStorageSettings = new LocalStorageSettings();
 
   handleChangeSelect = (value) => {
-    console.log(value);
     this.setState(({ data }) => data.type = value);
   }
 
@@ -72,37 +53,36 @@ export default class TaskPage extends Component {
   };
 
   postEvent = () => {
-    this.service.postEvent(this.state.data)
+    this.service.postEvent(this.state.data);
   }
 
   updateEvent = () => {
-    this.service.updateEvent(this.state.data.id, this.state.data)
-  }
-
-  getAllEvents = async () => {
-    const ev = await this.service.getAllEvents();
-    console.log(ev);
+    this.service.updateEvent(this.state.data);
+    this.props.closeTaskPage();
+    this.props.updateTable(); // ??
   }
 
   render() {
     const { isEdited, data } = this.state; 
     const { lng, lat, zoom } = data;   
 
-    localStorage.data = this.props.data; 
+    const taskStructure = this.localStorageSettings.getTaskStructure();
     
     const longitude = !lng ? 27.56 : lng;
     const latitude = !lat ? 53.9 : lat;
     const zoomNew = !zoom ? 11 : zoom;    
 
-    const { date, lectureDescription, image, video, link, taskDescription, map, organizer, feedback } = TaskStructure[data.type];
+    const dataType = taskStructure[data.type] ? data.type : 'default';
+
+    const { date, lectureDescription, image, video, link, taskDescription, map, organizer, feedback } = taskStructure[dataType];
 
     return (
       <div className='task-page'>
         <TaskPageHeader
           isEdited={isEdited}
-          taskType={data.type}
+          taskType={dataType}
           data={data}
-          name="name"
+          name='name'
           handleChangeSelect={this.handleChangeSelect}
           handleChangeInput={this.handleChangeInput}
           editBtnHandlerOnClick={this.togglePageMode}
@@ -123,7 +103,7 @@ export default class TaskPage extends Component {
             <DescriptionBlock
               isEdited={isEdited}
               data={data}
-              name="lectureDescription"
+              name='lectureDescription'
               handleChangeInput={this.handleChangeInput}
               changeData={this.changeData}
             />
@@ -133,7 +113,7 @@ export default class TaskPage extends Component {
           ? (
             <ImageBlock
               isEdited={isEdited}
-              name="imageUrl"
+              name='imageUrl'
               data={data}
               handleChangeInput={this.handleChangeInput}
               changeData={this.changeData}
@@ -144,7 +124,7 @@ export default class TaskPage extends Component {
           ? (
             <VideoBlock
               isEdited={isEdited}
-              name="videoUrl"
+              name='videoUrl'
               data={data}
               handleChangeInput={this.handleChangeInput}
               changeData={this.changeData}
@@ -170,7 +150,7 @@ export default class TaskPage extends Component {
             <DescriptionBlock
               isEdited={isEdited}
               data={data}
-              name="description"
+              name='description'
               handleChangeInput={this.handleChangeInput}
               changeData={this.changeData}
             />
@@ -180,10 +160,13 @@ export default class TaskPage extends Component {
           ? (
             <MapBlock
               isEdited={isEdited}
+              name='place'
+              data={data}
               lng={longitude}
               lat={latitude}
               zoom={zoomNew}
               changeMapData={this.changeMapData}
+              handleChangeInput={this.handleChangeInput}
             />
           ) : null
         }

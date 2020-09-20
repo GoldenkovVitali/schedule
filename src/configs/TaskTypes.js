@@ -12,7 +12,7 @@ const taskTypes = {
   externaltask: 'external task',
   codewars: 'codewars',
   // selfeducation: 'self education',
-  default: 'default',
+  default: 'not set',
 }
 
 export default taskTypes;

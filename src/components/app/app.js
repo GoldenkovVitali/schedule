@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import './app.css';
-import TaskPage from '../TaskPage/TaskPage';
 import { Modal } from 'antd';
-
+import TaskPage from '../TaskPage/TaskPage';
 import MainTable from '../main-table/main-table';
+import LocalStorageSettings from '../../service/LocalStorageSettings';
+
+const localStorageSettings = new LocalStorageSettings();
+localStorageSettings.init();
 
 export default class App extends Component {
   state = {
@@ -11,34 +14,43 @@ export default class App extends Component {
     data: {},
   }
 
-  toggleTaskPage = (data) => {
+  openTaskPage = (data, updateTable) => {
     this.setState({
-      isTaskPageOpen: !this.state.isTaskPageOpen,
+      isTaskPageOpen: true,
       data: data,
+      updateTable: updateTable,
+    })
+  }
+
+  closeTaskPage = () => {    
+    this.setState({
+      isTaskPageOpen: false,
+      data: {},
     })
   }
 
   render() {
-    const { isTaskPageOpen, data } = this.state;
+    const { isTaskPageOpen, data, updateTable } = this.state;
 
     return (
       <>
         <div className="todo-app">WOWWWW</div>
-        <MainTable toggleTaskPage={this.toggleTaskPage} />
-         <Modal
+        <MainTable openTaskPage={this.openTaskPage} />
+        <Modal
           className='task-page__content'
-          centered
-          style={{ padding:0 }}
           wrapClassName='task-page__wrapper'
+          style={{ padding:0 }}
           width={null}
           footer={null}
+          centered
+          destroyOnClose={true}
           visible={isTaskPageOpen}
-          onOk={this.toggleTaskPage}
-          onCancel={this.toggleTaskPage}
+          onCancel={this.closeTaskPage}
         >
           <TaskPage  
-            toggleTaskPage={this.toggleTaskPage} 
+            closeTaskPage={this.closeTaskPage}
             data={data} 
+            updateTable={updateTable}
           /> 
         </Modal>
       </>

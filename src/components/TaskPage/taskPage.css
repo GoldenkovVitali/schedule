@@ -1,9 +1,16 @@
+button:focus {
+  outline: none;
+}
+
 .task-page { 
   padding: 40px 60px 10px;
   width: 90vw;
   max-width: 100%;
   font-size: 16px;
   height: fit-content;
+}
+
+.task-page input, .task-page textarea, .task-page div { 
   font-size: 16px;
 }
 
@@ -21,7 +28,7 @@
   border-bottom: 1px solid #7E7E7E;
 }
 
-.task-page__header {
+.task-page .task-page__header {
   width: 100%;
   font-size: 30px;
   line-height: 1.5;  
@@ -37,7 +44,7 @@
     padding: 40px 20px 10px;
   }
 
-  .task-page__header {
+  .task-page .task-page__header {
     font-size: 24px;
   }
 }
@@ -48,7 +55,7 @@
     font-size: 14px;
   }
   
-  .task-page__header {
+  .task-page .task-page__header {
     font-size: 18px;
   }
 }

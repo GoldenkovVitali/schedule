@@ -1,0 +1,27 @@
+.task-type-constructor {
+  padding-top: 30px;
+}
+
+.task-type-constructor__name-wrapper {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-type-constructor__color-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.task-type-constructor__color-label {
+  margin: 0 10px 0 0;
+}
+
+.task-type-constructor__color {
+  padding: 0;
+  width: 30px;
+  height: 25px;
+  min-height: 25px;
+  border: none;
+  outline: none;
+}
