@@ -11,8 +11,6 @@ import Service from '../../service/Service';
 import CommentsBlock from '../../components/CommentsBlock/CommentsBlock';
 import Button from '../Button/Button';
 import TaskStructure from '../../configs/TaskStructure';
-import { EditOutlined, EyeOutlined, CloseOutlined } from '@ant-design/icons';
-import { Popover } from 'antd';
 
 import 'antd/dist/antd.css';
 import './taskPage.css';
@@ -23,7 +21,7 @@ export default class TaskPage extends Component {
     
     this.state = {
       data: { type: 'default' },
-      isEdited: true,
+      isEdited: false,
     }
   }
 
@@ -96,28 +94,10 @@ export default class TaskPage extends Component {
     const latitude = !lat ? 53.9 : lat;
     const zoomNew = !zoom ? 11 : zoom;    
 
-    const { date, lectureDescription, image, video, link, taskDescription, map, organizer, organizerInfo, feedback } = TaskStructure[data.type];
+    const { date, lectureDescription, image, video, link, taskDescription, map, organizer, feedback } = TaskStructure[data.type];
 
     return (
-      <div className="task-page">
-          <Button 
-            shape='circle'
-            danger={true}
-            type="dashed"
-            icon={<CloseOutlined />}
-            btnClassName='task-page__close-btn'
-            btnWrapperClassName = 'task-page__close-btn-wrapper'
-            handlerOnClick={null}
-          />
-          <Button 
-            shape='circle'
-            type={'primary'}
-            icon={isEdited ? <EyeOutlined /> : <EditOutlined />}
-            btnClassName='task-page__preview-btn'
-            btnWrapperClassName = 'task-page__preview-btn-wrapper'
-            ghost={true}
-            handlerOnClick={this.togglePageMode}
-          />
+      <div className='task-page'>
         <TaskPageHeader
           isEdited={isEdited}
           taskType={data.type}
@@ -125,6 +105,7 @@ export default class TaskPage extends Component {
           name="name"
           handleChangeSelect={this.handleChangeSelect}
           handleChangeInput={this.handleChangeInput}
+          editBtnHandlerOnClick={this.togglePageMode}
         />
         <DateBlock
           isEdited={isEdited}

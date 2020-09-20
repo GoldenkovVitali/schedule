@@ -17,7 +17,7 @@
   margin-right: 5px;
 }
 
-.date-block__item-type {
+.task-page .date-block__item-type {
   margin-right: 10px;
   width: fit-content;
   font-weight: 700;
@@ -32,5 +32,11 @@
 @media (max-width: 768px) {
   .date-block {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 375px) {
+  .date-block__item {
+    margin-bottom: 5px;
   }
 }
