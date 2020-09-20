@@ -16,7 +16,7 @@ export default class OrganizerBlock extends Component {
   }
 
   onChangeCheckbox = (event) => {
-    const { data, name, changeData } = this.props;
+    const { name, changeData } = this.props;
     const { organizer, organizerDescription } = this.state;
 
     const isChecked = event.target.checked;
@@ -43,7 +43,7 @@ export default class OrganizerBlock extends Component {
 
   render() {
     const { TextArea } = Input;
-    const { isEdited, name, data, handleChangeInput } = this.props;
+    const { isEdited, name } = this.props;
     const { checked,  organizer, organizerDescription  } = this.state;
 
     if (!isEdited && !checked) {
