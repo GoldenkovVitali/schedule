@@ -26,6 +26,7 @@ export default class TaskTypeConstructor extends Component {
 
     this.localStorageSettings.addTaskType(taskTypeName, tagName);
     this.localStorageSettings.addTaskTypeColor(taskTypeName, color);
+    this.localStorageSettings.addTaskStructure(taskTypeName);
 
     this.props.onCancel();
   }
@@ -42,6 +43,7 @@ export default class TaskTypeConstructor extends Component {
         width={300}
         centered
         destroyOnClose={true}
+        closable={false}
         visible={visible}
         onCancel={onCancel}
         onOk={this.saveTaskType}
