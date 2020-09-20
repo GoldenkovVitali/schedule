@@ -11,29 +11,41 @@ const { Title } = Typography;
 const TableControls = (props) => {
   const [col, setColumns] = useState([props.initColumns || []]);
   const [targetKeys, setTargetKeys] = useState(['Date']);
-  const [rowCount, setRowCount] = useState(10);
+  //const [rowCount, setRowCount] = useState(10);
   const [fontSize, setFontSize] = useState(14);
   const [displayBgPicker, setDisplayBgPicker] = useState(false);
-  const [colorBgPicker, setColorBgPicker] = useState({ r: '241', g: '112', b: '19', a: '1',});
   const [displayFontPicker, setDisplayFontPicker] = useState(false);
-  const [colorFontPicker, setColorFontPicker] = useState({ r: '241', g: '112', b: '19', a: '1',});
+  // const [colorBgPicker, setColorBgPicker] = useState({ r: '241', g: '112', b: '19', a: '1',});
+  // const [colorFontPicker, setColorFontPicker] = useState({ r: '241', g: '112', b: '19', a: '1',});
 
-  const { onHideColumns, initColumns} = props
+  const {
+    onHideColumns,
+    initColumns,
+    setColorFontPicker,
+    colorFontPicker,
+    setColorBgPicker,
+    colorBgPicker,
+    setRowCount,
+    onFontSizeChange,
+    prevFontSize,
+    setColoBgFontSize,
+    onHandleAccessible,
+    isAccessible,
+    rowCount } = props;
 
-  useEffect(()=> {
+  useEffect(() => {
     if (initColumns) {
       setColumns(props.initColumns)
     }
-  }, [props])
+    onFontSizeChange(fontSize)
+  }, [initColumns]);
 
   const onSaveSettings = () => {
     onHideColumns(targetKeys)
-  }
-
+    setColoBgFontSize()
+  };
 
   return (
-    <Row>
-      <Col xs={{ span: 12, offset: 3 }} lg={{ span: 12, offset: 3 }}>
         <ModalButton onSaveSettings={onSaveSettings} icon={<SettingOutlined />}>
           <Row>
             <Col span={12} offset={1}>
@@ -56,13 +68,14 @@ const TableControls = (props) => {
                  setDisplayFontPicker={setDisplayFontPicker}
                  colorFontPicker={colorFontPicker}
                  setColorFontPicker={setColorFontPicker}
-                 setFontSize={setFontSize}
+                 onFontSizeChange={onFontSizeChange}
+                 prevFontSize={prevFontSize}
+                 onHandleAccessible={onHandleAccessible}
+                 isAccessible={isAccessible}
                />
             </Col>
           </Row>
         </ModalButton>
-      </Col>
-    </Row>
   )
 }
 

@@ -23,7 +23,12 @@ class Tables extends React.Component {
 
   render() {
     // константы. которые будут входить!
+<<<<<<< HEAD
     const { dataShedule, columns, toggleTaskPage } = this.props;
+=======
+    //const { dataShedule, columns, colorFontPicker, colorBgPicker  } = this.props;
+    const { dataShedule, columns, TableControls, MentorToggleButton } = this.props;
+>>>>>>> develop
 
     return (
       <>
@@ -63,6 +68,8 @@ class Tables extends React.Component {
           >
             Save table as PDF
           </button>
+          {TableControls}
+          {MentorToggleButton}
         </div>
 
         <PDFExport

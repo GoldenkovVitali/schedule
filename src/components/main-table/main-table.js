@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Service from '../../service/Service';
 import './main-table.css';
-
-import { Tag, Button } from 'antd';
+import { Tag } from 'antd';
 import Tables from './table-shedule/table';
 import TableControls from '../TableControls';
 import Select from 'react-select';
 import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
+import MentorToggleButton from "../MentorToggle";
 
 const options = [
   { value: 'Europe/London', label: 'Europe/London' },
@@ -28,26 +28,135 @@ class MainTable extends Component {
     columns: null,
     lastColumnIndex: null,
     lastRowIndex: null,
+    hiddenKeys:[],
+    initColumns: [],
+    fontSize: 14,
+    rowCount: 10,
+    colorBgPicker: { r: '250', g: '250', b: '250', a: '1',},
+    colorFontPicker: { r: '241', g: '112', b: '19', a: '1',},
     styles: {
       color: 'green',
       backgroundColor: 'yellow',
       fontSize: '14px',
     },
-    hiddenKeys: [],
-    initColumns: [],
     selectedRowKeys: [],
+    isAccessible: 'Выкл',
+    isMentor: 'Ментор',
   };
 
   service = new Service();
 
-  onHideColumns = hiddenColumns => {
-    let unique = [...this.state.initColumns];
-    hiddenColumns.forEach(key => {
-      unique.forEach((item, i) => {
-        if (item.key == key) {
-          unique.splice(i, 1);
+  getColor = (type) => {
+    if(type === 'font') {
+      return `rgba(
+        ${this.state.colorFontPicker.r }, 
+        ${ this.state.colorFontPicker.g }, 
+        ${ this.state.colorFontPicker.b },
+        ${ this.state.colorFontPicker.a })`
+    }
+    return `rgba(
+    ${ this.state.colorBgPicker.r }, 
+    ${ this.state.colorBgPicker.g }, 
+    ${ this.state.colorBgPicker.b }, 
+    ${ this.state.colorBgPicker.a })`
+  };
+
+  onHandleAccessible = (value) => {
+    if (value === 'Вкл') {
+      this.setState({
+        styles: {
+          color: `rgba(250, 250, 250, 1)`,
+          backgroundColor: `rgb(0, 0, 0)`,
+          fontSize: `24px`,
+        },
+        isAccessible: value,
+      });
+    } else {
+      this.setState({
+        styles: {
+          color: this.getColor('font'),
+          backgroundColor: this.getColor(),
+          fontSize: `${this.state.fontSize}px`,
+        },
+        isAccessible: value,
+      });
+    }
+
+  };
+
+  onHandleMentor = (value) => {
+    if (value === 'Ментор') {
+      this.setState({
+        isMentor: 'Ментор',
+      });
+    } else {
+      this.setState({
+        isMentor: 'Студент',
+      });
+    }
+
+  };
+
+  onFontSizeChange = (value) => {
+    console.log('size', value, this.state.fontSize)
+    const size = value === 'less' ? this.state.fontSize -1 : this.state.fontSize + 1
+
+    this.setState({
+      styles: {
+        color: this.getColor('font'),
+        backgroundColor: this.getColor(),
+        fontSize: `${size}px`,
+      },
+      fontSize: size,
+      isAccessible: 'Выкл',
+    });
+   // this.updateTabel();
+  };
+
+  setRowCount = (value) => {
+    this.setState({
+      rowCount: value,
+    });
+  };
+
+  setColorBgPicker = (color) => {
+    this.setState({
+      colorBgPicker: color,
+      isAccessible: 'Выкл',
+    });
+  };
+
+  setColorFontPicker = (color) => {
+    this.setState({
+      colorFontPicker: color,
+      isAccessible: 'Выкл',
+    });
+  };
+
+  setColoBgFontSize = () => {
+
+    if (this.state.isAccessible === 'Выкл') {
+      this.setState({
+        styles: {
+          color: this.getColor('font'),
+          backgroundColor: this.getColor(),
+          fontSize: `${this.state.fontSize}px`,
         }
       });
+    } else {
+      this.onHandleAccessible('Вкл')
+    }
+
+  }
+
+  onHideColumns = (hiddenColumns) => {
+    let unique = [...this.state.initColumns];
+    hiddenColumns.forEach((key) => {
+      unique.forEach((item, i) => {
+        if (item.key == key) {
+          unique.splice(i,1)
+        }
+      })
     });
     this.setState({
       data: this.state.data,
@@ -64,7 +173,6 @@ class MainTable extends Component {
     res2.sort((a, b) => a.key - b.key);
     res.sort((a, b) => a.key - b.key);
     let arrayOfColumns = [];
-
     res2.forEach(element => {
       if (element.value === 'type') {
         arrayOfColumns.push({
@@ -180,14 +288,7 @@ class MainTable extends Component {
     return (
       <>
         <div className="todo-app">WOWWWW</div>
-
         <MyComponent />
-        <TableControls
-          columns={columns}
-          initColumns={this.state.initColumns}
-          hiddenKeys={this.state.hiddenKeys}
-          onHideColumns={this.onHideColumns}
-        />
         <Tables
           columns={columns}
           dataShedule={data}
@@ -195,7 +296,30 @@ class MainTable extends Component {
           hideSelectedRows={this.hideSelectedRows}
           showSelectedRows={this.showSelectedRows}
           pdfExportComponent={this.pdfExportComponent}
+<<<<<<< HEAD
           toggleTaskPage={toggleTaskPage}
+=======
+
+          TableControls={<TableControls
+            columns={columns}
+            initColumns={this.state.initColumns}
+            hiddenKeys={this.state.hiddenKeys}
+            onHideColumns={this.onHideColumns}
+            onFontSizeChange={this.onFontSizeChange}
+            setRowCount={this.setRowCount}
+            rowCount={this.state.rowCount}
+            setColorBgPicker={this.setColorBgPicker}
+            colorBgPicker={this.state.colorBgPicker}
+            setColorFontPicker={this.setColorFontPicker}
+            colorFontPicker={this.state.colorFontPicker}
+            prevFontSize={this.state.fontSize}
+            setColoBgFontSize={this.setColoBgFontSize}
+            onHandleAccessible={this.onHandleAccessible}
+            isAccessible={this.state.isAccessible}
+          />}
+          MentorToggleButton={<MentorToggleButton
+            onHandleMentor={this.onHandleMentor} isMentor={this.state.isMentor}/>}
+>>>>>>> develop
         />
       </>
     );
