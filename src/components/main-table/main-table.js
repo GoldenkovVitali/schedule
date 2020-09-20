@@ -295,9 +295,7 @@ class MainTable extends Component {
           hideSelectedRows={this.hideSelectedRows}
           showSelectedRows={this.showSelectedRows}
           pdfExportComponent={this.pdfExportComponent}
-<<<<<<< HEAD
           toggleTaskPage={toggleTaskPage}
-=======
 
           TableControls={<TableControls
             columns={columns}
@@ -318,7 +316,6 @@ class MainTable extends Component {
           />}
           MentorToggleButton={<MentorToggleButton
             onHandleMentor={this.onHandleMentor} isMentor={this.state.isMentor}/>}
->>>>>>> develop
         />
       </>
     );
