@@ -1,13 +1,13 @@
 import React from 'react';
 import './table.css';
-import { Table, Button } from 'antd';
+import { Button } from 'antd';
 import 'antd/dist/antd.css';
 import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
 
-class Tables extends React.Component {
-  // pdfExportComponent;
-  // grid;
+// import { FixedSizeList } from 'react-window';
+import { Table } from 'ant-table-extensions';
 
+class Tables extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,8 +57,21 @@ class Tables extends React.Component {
           >
             Показать выделенные ячейки
           </Button>
+          <Button
+            onClick={() => this.props.showSelectedRows()}
+            type="primary"
+            style={{ marginBottom: 16, marginLeft: 16 }}
+          >
+            <a
+              href="https://www.youtube.com/channel/UC578nebW2Mn-mNgjEArGZug"
+              target="_blank"
+            >
+              RSS YouTube chanel
+            </a>
+          </Button>
           <button
             className="k-button"
+            type="primary"
             style={{ marginBottom: 16, marginLeft: 16 }}
             onClick={this.exportPDFWithComponent}
           >
@@ -74,6 +87,14 @@ class Tables extends React.Component {
           scale={0.5}
         >
           <Table
+            searchable
+            exportableProps={{
+              showColumnPicker: true,
+              btnProps: {
+                type: 'primary',
+                children: <span>Export to CSV</span>,
+              },
+            }}
             rowClassName={(record, index) =>
               record.key === this.state.selectedKey ||
               this.state.selectedRowKeys.includes(record.key)
