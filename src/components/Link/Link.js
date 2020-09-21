@@ -5,8 +5,13 @@ import 'antd/dist/antd.css';
 import './link.css';
 
 export default class Link extends Component {
+  state = {
+    checked: false,
+    descriptionUrlTitle: '',
+    descriptionUrl: '',
+  }
   
-  componentWillMount() {
+  componentDidMount() {
     const { data, name: { link, linkTitle } } = this.props;
     this.setState({ 
       checked: !!data[link],
@@ -61,7 +66,7 @@ export default class Link extends Component {
 
         <div className='link-block__content'>
           <Input 
-            className='link-block__label' 
+            className={isEdited ? 'link-block__label_edited' : 'link-block__label' }
             placeholder='Add link title...'          
             value={descriptionUrlTitle}
             data-name={linkTitle}
@@ -78,11 +83,13 @@ export default class Link extends Component {
             disabled={!checked}
             onChange={this.handleChangeInput}
           /> : 
-          <Link 
-            className='link-block__link'
-            href={data[link]}
-            target="_blank"
-          >{data[link]}</Link>   
+          <p className='link-block__link-wrap'>
+            <Link 
+              className='link-block__link'
+              href={data[link]}
+              target="_blank"
+            >{data[link]}</Link>   
+          </p>
           }            
         </div>               
       </div>

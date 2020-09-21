@@ -24,7 +24,7 @@ class Tables extends React.Component {
   render() {
     // константы. которые будут входить!
     //const { dataShedule, columns, colorFontPicker, colorBgPicker  } = this.props;
-    const { dataShedule, columns, TableControls, MentorToggleButton, toggleTaskPage } = this.props;
+    const { dataShedule, columns, TableControls, MentorToggleButton, openTaskPage, updateTable } = this.props;
 
     return (
       <>
@@ -123,7 +123,7 @@ class Tables extends React.Component {
                   console.log(this.state);
                 },
                 onDoubleClick: () => {
-                  toggleTaskPage(record);
+                  openTaskPage(record, updateTable);
                 },
               };
             }}

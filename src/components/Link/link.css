@@ -11,11 +11,22 @@
 .link-block__content {
   width: 100%;
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .link-block__label {
+  padding-left: 0;
+  padding-right: 0;
+  margin-right: 10px;
+  width: 110px;
+  font-weight: 700;
+}
+
+.link-block__label_edited {
   margin-right: 10px;
   width: fit-content;
+  font-weight: 700;
 }
 
 .link-block__link {
@@ -26,3 +37,8 @@
   width: 90%;
 }
 
+.link-block__link-wrap {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

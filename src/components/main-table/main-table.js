@@ -282,7 +282,7 @@ class MainTable extends Component {
 
   render() {
     const { data, columns } = this.state;
-    const { toggleTaskPage } = this.props;
+    const { openTaskPage } = this.props;
     console.log(this.state);
     return (
       <>
@@ -295,7 +295,8 @@ class MainTable extends Component {
           hideSelectedRows={this.hideSelectedRows}
           showSelectedRows={this.showSelectedRows}
           pdfExportComponent={this.pdfExportComponent}
-          toggleTaskPage={toggleTaskPage}
+          openTaskPage={openTaskPage}
+          updateTable={this.updateTabel}
 
           TableControls={<TableControls
             columns={columns}
