@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import Service from '../../service/Service';
 import './main-table.css';
 
-import { Tag, Button } from 'antd';
 import Tables from './table-shedule/table';
 import TableControls from '../TableControls';
 import Select from 'react-select';
-import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
 
 const options = [
   { value: 'Europe/London', label: 'Europe/London' },
@@ -25,8 +23,56 @@ const MyComponent = () => <Select options={options} />;
 class MainTable extends Component {
   state = {
     data: null,
-    columns: null,
-    lastColumnIndex: null,
+    columns: [
+      {
+        title: 'Date',
+        dataIndex: 'dateTime',
+        key: 'date',
+        editable: true,
+      },
+      {
+        title: 'Time',
+        dataIndex: 'time',
+        key: 'time',
+        editable: true,
+      },
+      {
+        title: 'Place',
+        dataIndex: 'place',
+        key: 'place',
+        editable: true,
+      },
+      {
+        title: 'Tags',
+        dataIndex: 'type',
+        key: 'type',
+        editable: true,
+      },
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        editable: true,
+      },
+      {
+        title: 'Description',
+        dataIndex: 'description',
+        key: 'description',
+        editable: true,
+      },
+      {
+        title: 'BroadcastUrl',
+        dataIndex: 'descriptionUrl',
+        key: 'descriptionUrl',
+        editable: true,
+      },
+      {
+        title: 'Comment',
+        dataIndex: 'comment',
+        key: 'comment',
+        editable: true,
+      },
+    ],
     lastRowIndex: null,
     styles: {
       color: 'green',
@@ -34,8 +80,58 @@ class MainTable extends Component {
       fontSize: '14px',
     },
     hiddenKeys: [],
-    initColumns: [],
+    initColumns: [
+      {
+        title: 'Date',
+        dataIndex: 'dateTime',
+        key: 'date',
+        editable: true,
+      },
+      {
+        title: 'Time',
+        dataIndex: 'time',
+        key: 'time',
+        editable: true,
+      },
+      {
+        title: 'Place',
+        dataIndex: 'place',
+        key: 'place',
+        editable: true,
+      },
+      {
+        title: 'Tags',
+        dataIndex: 'type',
+        key: 'type',
+        editable: true,
+      },
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        editable: true,
+      },
+      {
+        title: 'Description',
+        dataIndex: 'description',
+        key: 'description',
+        editable: true,
+      },
+      {
+        title: 'BroadcastUrl',
+        dataIndex: 'descriptionUrl',
+        key: 'descriptionUrl',
+        editable: true,
+      },
+      {
+        title: 'Comment',
+        dataIndex: 'comment',
+        key: 'comment',
+        editable: true,
+      },
+    ],
     selectedRowKeys: [],
+    ifMentor: true,
   };
 
   service = new Service();
@@ -60,70 +156,11 @@ class MainTable extends Component {
 
   updateTabel = async () => {
     const res = await this.service.getAllEvents();
-    const res2 = await this.service.getAllOrganizers();
-    res2.sort((a, b) => a.key - b.key);
     res.sort((a, b) => a.key - b.key);
-    let arrayOfColumns = [];
-
-    res2.forEach(element => {
-      if (element.value === 'type') {
-        arrayOfColumns.push({
-          title: element.title,
-          dataIndex: element.value,
-          key: element.title,
-          render: text => {
-            let color;
-            if (
-              text === 'lecture' ||
-              text === 'lectureMixed' ||
-              text === 'lectureSelfstudy' ||
-              text === 'lectureOffline' ||
-              text === 'lectureOnline'
-            ) {
-              color = 'blue';
-            } else if (
-              text === 'interview' ||
-              text === 'test' ||
-              text === 'warmup'
-            ) {
-              color = '#63ab91';
-            } else if (
-              text === 'codejam' ||
-              text === 'codewars' ||
-              text === 'htmltask' ||
-              text === 'jstask'
-            ) {
-              color = 'green';
-            } else if (
-              text === 'test' ||
-              text === 'codewars' ||
-              text === 'htmltask'
-            ) {
-              color = 'green';
-            } else if (text === 'meetup' || text === 'workshop') {
-              color = '#bde04a';
-            } else {
-              color = 'black';
-            }
-            return <Tag color={color}>{text}</Tag>;
-          },
-        });
-      } else {
-        arrayOfColumns.push({
-          title: element.title,
-          dataIndex: element.value,
-          key: element.title,
-          render: text => <div style={this.state.styles}>{text}</div>,
-        });
-      }
-    });
 
     this.setState({
       data: res,
-      columns: [...arrayOfColumns],
-      lastColumnIndex: +res2[res2.length - 1].key + 1,
       lastRowIndex: +res[res.length - 1].key + 1,
-      initColumns: [...arrayOfColumns],
     });
   };
 
@@ -142,7 +179,7 @@ class MainTable extends Component {
             ? Object.keys(item)[1]
             : Object.keys(item)[0];
         var value = item[key];
-        acc[value] = 'no data';
+        acc[value] = '';
         return acc;
       },
       { key: lastRowIndex }
@@ -151,10 +188,11 @@ class MainTable extends Component {
     await this.service.postEvent(result);
 
     this.updateTabel();
+    this.forceUpdate();
   };
 
   hideSelectedRows = rows => {
-    rows.forEach(element => {
+    rows.forEach(() => {
       let dataSource = [...this.state.data];
       dataSource = dataSource.filter(item => !rows.includes(item.key));
 
@@ -167,10 +205,6 @@ class MainTable extends Component {
   showSelectedRows = rows => {
     this.updateTabel();
   };
-
-  // exportPDFWithComponent = () => {
-  //   this.pdfExportComponent.save();
-  // };
 
   render() {
     const { data, columns } = this.state;
@@ -193,6 +227,7 @@ class MainTable extends Component {
           hideSelectedRows={this.hideSelectedRows}
           showSelectedRows={this.showSelectedRows}
           pdfExportComponent={this.pdfExportComponent}
+          ifMentor={this.state.ifMentor}
         />
       </>
     );
