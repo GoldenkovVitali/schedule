@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Service from '../../service/Service';
 import './main-table.css';
-import { Tag } from 'antd';
+import {Col, Row, Tag} from 'antd';
 import Tables from './table-shedule/table';
 import TableControls from '../TableControls';
 import Select from 'react-select';
 import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
 import MentorToggleButton from "../MentorToggle";
+import ModalButton from "../TableControls/ModalButton";
 
 const options = [
   { value: 'Europe/London', label: 'Europe/London' },
@@ -60,6 +61,13 @@ class MainTable extends Component {
     ${ this.state.colorBgPicker.b }, 
     ${ this.state.colorBgPicker.a })`
   };
+
+  // setRowByPage = () => {
+  //   console.log('rowCount', [...this.state.data.slice(0, this.state.rowCount)])
+  //   this.setState({
+  //     data: [...this.state.initData.slice(0, this.state.rowCount)],
+  //   });
+  // };
 
   onHandleAccessible = (value) => {
     if (value === 'Вкл') {
@@ -286,7 +294,11 @@ class MainTable extends Component {
     console.log(this.state);
     return (
       <>
-        <div className="todo-app">WOWWWW</div>
+        <Row justify="end">
+          <Col span={4} offset={1}>
+            <MentorToggleButton onHandleMentor={this.onHandleMentor} isMentor={this.state.isMentor}/>
+          </Col>
+        </Row>
         <MyComponent />
         <Tables
           columns={columns}
@@ -297,6 +309,7 @@ class MainTable extends Component {
           pdfExportComponent={this.pdfExportComponent}
           openTaskPage={openTaskPage}
           updateTable={this.updateTabel}
+          rowCount={this.state.rowCount}
 
           TableControls={<TableControls
             columns={columns}
@@ -315,8 +328,6 @@ class MainTable extends Component {
             onHandleAccessible={this.onHandleAccessible}
             isAccessible={this.state.isAccessible}
           />}
-          MentorToggleButton={<MentorToggleButton
-            onHandleMentor={this.onHandleMentor} isMentor={this.state.isMentor}/>}
         />
       </>
     );

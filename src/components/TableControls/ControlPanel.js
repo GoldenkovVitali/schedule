@@ -85,8 +85,8 @@ const ControlPanel = ({
     <Row>
       <Col span={12}>
         <Slider
-          min={10}
-          step={10}
+          min={1}
+          step={1}
           max={150}
           onChange={onChange}
           value={typeof rowCount === 'number' ? rowCount : 0}
@@ -94,8 +94,8 @@ const ControlPanel = ({
       </Col>
       <Col span={4}>
         <InputNumber
-          min={10}
-          step={10}
+          min={1}
+          step={1}
           max={150}
           style={{ margin: '0 16px' }}
           value={rowCount}

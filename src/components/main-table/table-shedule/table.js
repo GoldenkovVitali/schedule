@@ -24,11 +24,12 @@ class Tables extends React.Component {
   render() {
     // константы. которые будут входить!
     //const { dataShedule, columns, colorFontPicker, colorBgPicker  } = this.props;
-    const { dataShedule, columns, TableControls, MentorToggleButton, openTaskPage, updateTable } = this.props;
+    const { dataShedule, columns, TableControls, openTaskPage, updateTable, rowCount } = this.props;
 
     return (
       <>
         <div className="buttons">
+          {TableControls}
           <Button
             onClick={this.props.addRow}
             type="primary"
@@ -77,8 +78,6 @@ class Tables extends React.Component {
           >
             Save table as PDF
           </button>
-          {TableControls}
-          {MentorToggleButton}
         </div>
 
         <PDFExport
@@ -101,7 +100,7 @@ class Tables extends React.Component {
                 ? 'table-row-dark'
                 : 'table-row-light'
             }
-            pagination={{ pageSize: 50 }} // количество строк на странице минимальное
+            pagination={{ pageSize: rowCount }} // количество строк на странице минимальное
             dataSource={dataShedule}
             columns={columns}
             onRow={(record, rowIndex) => {
