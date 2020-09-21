@@ -5,8 +5,13 @@ import 'antd/dist/antd.css';
 import './organizerBlock.css';
 
 export default class OrganizerBlock extends Component { 
+  state = {
+    checked: false,
+    organizer: '',
+    organizerDescription: '',
+  }
 
-  componentWillMount() {
+  componentDidMount() {
     const { data, name: { organizer, organizerDescription } } = this.props;
     this.setState({ 
       checked: !!data[organizer] || !!data[organizerDescription],
@@ -16,7 +21,7 @@ export default class OrganizerBlock extends Component {
   }
 
   onChangeCheckbox = (event) => {
-    const { data, name, changeData } = this.props;
+    const { name, changeData } = this.props;
     const { organizer, organizerDescription } = this.state;
 
     const isChecked = event.target.checked;
@@ -43,8 +48,8 @@ export default class OrganizerBlock extends Component {
 
   render() {
     const { TextArea } = Input;
-    const { isEdited, name, data, handleChangeInput } = this.props;
-    const { checked,  organizer, organizerDescription  } = this.state;
+    const { isEdited, name } = this.props;
+    const { checked,  organizer, organizerDescription } = this.state;
 
     if (!isEdited && !checked) {
       return null;
@@ -61,7 +66,7 @@ export default class OrganizerBlock extends Component {
         }
         <div className='organizer-block__data'>  
           <Input 
-            className='organizer-block__organizer' 
+            className={isEdited ? 'organizer-block__organizer_edited' : 'organizer-block__organizer' }
             placeholder='Write organizer name...'
             value={organizer}
             data-name={name.organizer}
@@ -70,7 +75,7 @@ export default class OrganizerBlock extends Component {
             onChange={this.handleChangeInput}
           />
           <TextArea
-            className='organizer-block__description'
+            className={isEdited ? 'organizer-block__description_edited' : 'organizer-block__description'}
             placeholder='Write description...'
             value={organizerDescription}
             data-name={name.organizerDescription}

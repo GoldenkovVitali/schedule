@@ -3,7 +3,13 @@
   display: flex;
 }
 
+.description-block__textarea_edited {
+  resize: none;
+  overflow: hidden;
+}
+
 .description-block__textarea {
+  padding-left: 0;
   resize: none;
   overflow: hidden;
 }

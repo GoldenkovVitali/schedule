@@ -16,8 +16,8 @@
   height: 100%;
 }
 
-  .mapboxgl-ctrl-logo{
-   display: none !important;
+.mapboxgl-ctrl-logo{
+  display: none !important;
 }
 
 
@@ -28,4 +28,19 @@
 
 .mapboxgl-canvas-container {
   height: 50vh;
+}
+
+.map__address {
+  padding-left: 0;
+}
+
+.task-page .map__address-title {
+  margin-right: 15px;
+  font-weight: 700;
+}
+
+.map__address-wrapper {  
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
 }

@@ -205,8 +205,7 @@ class MainTable extends Component {
             } else if (
               text === 'test' ||
               text === 'codewars' ||
-              text === 'htmltask' ||
-              text === 'jstask'
+              text === 'htmltask'
             ) {
               color = 'green';
             } else if (text === 'meetup' || text === 'workshop') {
@@ -283,6 +282,7 @@ class MainTable extends Component {
 
   render() {
     const { data, columns } = this.state;
+    const { openTaskPage } = this.props;
     console.log(this.state);
     return (
       <>
@@ -295,6 +295,8 @@ class MainTable extends Component {
           hideSelectedRows={this.hideSelectedRows}
           showSelectedRows={this.showSelectedRows}
           pdfExportComponent={this.pdfExportComponent}
+          openTaskPage={openTaskPage}
+          updateTable={this.updateTabel}
 
           TableControls={<TableControls
             columns={columns}

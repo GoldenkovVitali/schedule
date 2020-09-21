@@ -23,3 +23,11 @@
   background-color: #c4e7ff;
   cursor: pointer;
 }
+
+.ant-table-tbody > tr.table-row-dark:hover > td {
+  background: none;
+}
+
+.ant-table-tbody > tr.table-row-light:hover > td {
+  background: none;
+}

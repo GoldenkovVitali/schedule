@@ -8,11 +8,7 @@ import './imageBlock.css';
 export default class ImageBlock extends Component {
   state = {
     url: '',
-  }
-
-  componentWillMount() {
-    const { data, name } = this.props;
-    this.setState({ checked: !!data[name] })
+    checked: !!this.props.data[this.props.name],
   }
 
   onChangeCheckbox = (event) => {

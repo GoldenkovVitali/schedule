@@ -6,12 +6,13 @@ import './button.css';
 export default class UserSwitchButton extends Component {
 
   render() {
-    const { type, size, shape, btnClassName, btnWrapperClassName, handlerOnClick, text, icon, ghost, danger } = this.props;
+    const { type, size, shape, btnClassName, btnWrapperClassName, handlerOnClick, text, icon, ghost, danger, title } = this.props;
     
     return (
       <div className={btnWrapperClassName}>
         <Button 
-          type={type} 
+          type={type}
+          title={title} 
           size={size}
           shape={shape}
           icon={icon}

@@ -1,15 +1,17 @@
-.task-page {
-  margin: auto;  
-  margin-top: 50px; /* delete */
-  margin-bottom: 50px;
-  padding: 45px 60px;
-  width: 100%;
-  max-width: 1120px;
+button:focus {
+  outline: none;
+}
+
+.task-page { 
+  padding: 40px 60px 10px;
+  width: 90vw;
+  max-width: 100%;
   font-size: 16px;
-  border: 1px solid #E5E5E5;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px #00000040;  
-  box-sizing: border-box;
+  height: fit-content;
+}
+
+.task-page input, .task-page textarea, .task-page div { 
+  font-size: 16px;
 }
 
 .task-page * {
@@ -26,9 +28,9 @@
   border-bottom: 1px solid #7E7E7E;
 }
 
-.task-page__header {
+.task-page .task-page__header {
   width: 100%;
-  font-size: 36px;
+  font-size: 30px;
   line-height: 1.5;  
   color: #848484;  
   font-weight: 700;
@@ -39,10 +41,21 @@
 
 @media (max-width: 768px) {
   .task-page {
-    padding: 20px 10px;
+    padding: 40px 20px 10px;
   }
 
-  .task-page__header {
-    font-size: 26px;
+  .task-page .task-page__header {
+    font-size: 24px;
+  }
+}
+
+
+@media (max-width: 375px) {
+  .task-page {
+    font-size: 14px;
+  }
+  
+  .task-page .task-page__header {
+    font-size: 18px;
   }
 }
