@@ -8,10 +8,11 @@
 
 .red {
   color: red;
+  background-color: #000;
 }
 
 .green {
-  color: green;
+  background-color: green;
 }
 
 .table-row-light {
@@ -20,14 +21,24 @@
 }
 
 .table-row-dark {
-  background-color: #c4e7ff;
+  background-color: #c4e7ff !important;
   cursor: pointer;
 }
 
-.ant-table-tbody > tr.table-row-dark:hover > td {
-  background: none;
+.table-row-dark:hover {
+  background-color: #c4e7ff !important;
+  cursor: pointer;
 }
 
-.ant-table-tbody > tr.table-row-light:hover > td {
-  background: none;
+
+.custom {
+  background-color: #63ab91;
+}
+
+.custom2 {
+  background-color: #bde04a;
+}
+
+.black {
+  background-color: rgb(206, 193, 193);
 }

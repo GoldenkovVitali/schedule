@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import 'antd/dist/antd.css';
 import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
 
-// import { FixedSizeList } from 'react-window';
+import EditableTable from './MentorTable';
 import { Table } from 'ant-table-extensions';
 
 class Tables extends React.Component {
@@ -57,11 +57,7 @@ class Tables extends React.Component {
           >
             Показать выделенные ячейки
           </Button>
-          <Button
-            onClick={() => this.props.showSelectedRows()}
-            type="primary"
-            style={{ marginBottom: 16, marginLeft: 16 }}
-          >
+          <Button type="primary" style={{ marginBottom: 16, marginLeft: 16 }}>
             <a
               href="https://www.youtube.com/channel/UC578nebW2Mn-mNgjEArGZug"
               target="_blank"
@@ -71,7 +67,6 @@ class Tables extends React.Component {
           </Button>
           <button
             className="k-button"
-            type="primary"
             style={{ marginBottom: 16, marginLeft: 16 }}
             onClick={this.exportPDFWithComponent}
           >
@@ -86,6 +81,8 @@ class Tables extends React.Component {
           paperSize="A4"
           scale={0.5}
         >
+
+                 {!this.props.ifMentor ? (
           <Table
             searchable
             exportableProps={{
@@ -103,7 +100,7 @@ class Tables extends React.Component {
             }
             pagination={{ pageSize: 50 }} // количество строк на странице минимальное
             dataSource={dataShedule}
-            columns={columns}
+           
             onRow={(record, rowIndex) => {
               return {
                 onClick: event => {
@@ -124,10 +121,54 @@ class Tables extends React.Component {
                 },
                 onDoubleClick: () => {
                   openTaskPage(record, updateTable);
+
                 },
-              };
-            }}
-          />
+              }}
+              bordered
+              rowClassName={(record, index) => {
+                if (
+                  record.key === this.state.selectedKey ||
+                  this.state.selectedRowKeys.includes(record.key)
+                ) {
+                  return 'table-row-dark';
+                }
+                if (
+                  record.type === 'lecture' ||
+                  record.type === 'lectureMixed' ||
+                  record.type === 'lectureSelfstudy' ||
+                  record.type === 'lectureOffline' ||
+                  record.type === 'lectureOnline'
+                ) {
+                  return 'blue';
+                } else if (
+                  record.type === 'interview' ||
+                  record.type === 'test' ||
+                  record.type === 'warmup'
+                ) {
+                  return 'custom';
+                } else if (
+                  record.type === 'codejam' ||
+                  record.type === 'codewars' ||
+                  record.type === 'htmltask' ||
+                  record.type === 'jstask'
+                ) {
+                  return 'green';
+                } else if (
+                  record.type === 'meetup' ||
+                  record.type === 'workshop'
+                ) {
+                  return 'custom2';
+                } else {
+                  return 'black';
+                }
+              }}
+             
+              columns={columns}
+             
+            />
+          ) : (
+            <EditableTable dataShedule={dataShedule} columns={columns} />
+          )}
         </PDFExport>
       </>
     );
