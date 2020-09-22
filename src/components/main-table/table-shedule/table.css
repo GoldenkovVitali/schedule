@@ -25,10 +25,11 @@
   cursor: pointer;
 }
 
-.table-row-dark:hover {
+.table-row-dark:hover td {
   background-color: #c4e7ff !important;
   cursor: pointer;
 }
+
 
 
 .custom {
