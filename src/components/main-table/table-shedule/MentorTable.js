@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
+import { Input, InputNumber, Popconfirm, Form } from 'antd';
 import Service from '../../../service/Service';
+import { Table } from 'ant-table-extensions';
+
+const service = new Service();
 
 const EditableCell = ({
   editing,
@@ -37,13 +40,14 @@ const EditableCell = ({
   );
 };
 
-const service = new Service();
 
-const EditableTable = ({ dataShedule, columns }) => {
+const EditableTable = ({ dataShedule, columns, openTaskPage, updateTable, rowCount }) => {
   if (dataShedule !== null) {
     const [form] = Form.useForm();
     const [data, setData] = useState(dataShedule);
     const [editingKey, setEditingKey] = useState('');
+    const [selectedKey, setSelectedKey] = useState(null);
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
     const isEditing = record => record.key === editingKey;
 
@@ -54,7 +58,6 @@ const EditableTable = ({ dataShedule, columns }) => {
         place: '',
         ...record,
       });
-      console.log(record);
       setEditingKey(record.key);
     };
 
@@ -158,13 +161,31 @@ const EditableTable = ({ dataShedule, columns }) => {
           pagination={{
             onChange: cancel,
           }}
-          // onRow={(record, rowIndex) => {
-          //   return {
-          //     onChange: event => {
-          //       console.log(record)
-          //     }
-          //   }
-          // }}
+          rowClassName={(record, index) =>
+            record.key === selectedKey ||
+            selectedRowKeys.includes(record.key)
+              ? 'table-row-dark'
+              : 'table-row-light'
+          }
+          pagination={{ pageSize: rowCount }}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: event => {
+                if (event.shiftKey) {
+                  setSelectedRowKeys(() => {
+                    return [...selectedRowKeys, record.key]
+                  })
+                } else {
+                  setSelectedRowKeys([])
+                  setSelectedKey(record.key)
+                }
+              },
+              onDoubleClick: () => {
+                openTaskPage(record, updateTable);
+                console.log('sadasdasd')
+              },
+            };
+          }}
         />
       </Form>
     );
