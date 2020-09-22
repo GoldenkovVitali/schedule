@@ -7,8 +7,15 @@ import 'antd/dist/antd.css';
 import './dateBlock.css';
 
 export default class DateBlock extends Component  {
+  state = { 
+    checked: {
+      startDate: false, 
+      startTime: false, 
+      deadline: false,
+    },
+  }
 
-  componentWillMount() {
+  componentDidMount() {
     const { data, name: { startDateName, startTimeName, deadlineName } } = this.props;
     this.setState({ 
       checked: {
@@ -16,9 +23,9 @@ export default class DateBlock extends Component  {
         startTime: !!data[startTimeName], 
         deadline: !!data[deadlineName],
       },
-      startDate: data[startDateName] ? data[startDateName] : '2020-09-01',
-      startTime: data[startTimeName] ? data[startTimeName] : '00:00',
-      deadline: data[deadlineName] ? data[deadlineName] : '2020-09-01',
+      startDate: data[startDateName] ? data[startDateName] : null,
+      startTime: data[startTimeName] ? data[startTimeName] : null,
+      deadline: data[deadlineName] ? data[deadlineName] : null,
     })
   }
 
@@ -64,7 +71,7 @@ export default class DateBlock extends Component  {
 
     return (
       <div className='date-block'>
-        {isStartDate ?
+        {isStartDate && !(!isEdited && !checked[startDateName]) ?
           <div className='date-block__item' >
             {isEdited ? 
               <Checkbox 
@@ -73,23 +80,21 @@ export default class DateBlock extends Component  {
                 checked={checked[startDateName]}
                 onChange={this.onChangeCheckbox}
               /> : null 
-            }
-            {(!isEdited && !checked[startDateName]) ? null : (            
-              <>
-                <p className='date-block__item-type'>Start: </p>
-                <DatePicker 
-                  bordered={isEdited ? true : false}
-                  value={moment(startDate, dateFormat)}
-                  data-name={startDateName}
-                  onChange={this.handleChangeStartDate}
-                  disabled={(isEdited && checked[startDateName]) ? false : true}
-                  suffixIcon={isEdited ? <CalendarOutlined /> : null}
-                /> 
-              </>
-            )}
+            }            
+            <>
+              <p className='date-block__item-type'>Start: </p>
+              <DatePicker 
+                bordered={isEdited ? true : false}
+                value={startDate ? moment(startDate, dateFormat) : null}
+                data-name={startDateName}
+                onChange={this.handleChangeStartDate}
+                disabled={(isEdited && checked[startDateName]) ? false : true}
+                suffixIcon={isEdited ? <CalendarOutlined /> : null}
+              /> 
+            </>
           </div> : null
         }
-        {isStartTime ?
+        {isStartTime && !(!isEdited && !checked[startTimeName]) ?
           <div className='date-block__item'>
             {isEdited ? 
               <Checkbox  
@@ -98,24 +103,22 @@ export default class DateBlock extends Component  {
                 checked={checked[startTimeName]}
                 onChange={this.onChangeCheckbox}
               /> : null 
-            }
-            {(!isEdited && !checked[startTimeName]) ? null : ( 
-              <>
-                <p className='date-block__item-type'>Time: </p>
-                <TimePicker
-                  defaultValue={moment(startTime, timeFormat)}
-                  format={timeFormat}
-                  bordered={isEdited ? true : false} 
-                  data-name={startTimeName}
-                  onChange={this.handleChangeStartTime}            
-                  disabled={(isEdited && checked[startTimeName]) ? false : true}
-                  suffixIcon={isEdited ? <ClockCircleOutlined /> : null}
-                /> 
-              </> 
-            )}
+            }            
+            <>
+              <p className='date-block__item-type'>Time: </p>
+              <TimePicker
+                value={startTime ? moment(startTime, timeFormat) : null}
+                format={timeFormat}
+                bordered={isEdited ? true : false} 
+                data-name={startTimeName}
+                onChange={this.handleChangeStartTime}            
+                disabled={(isEdited && checked[startTimeName]) ? false : true}
+                suffixIcon={isEdited ? <ClockCircleOutlined /> : null}
+              /> 
+            </> 
           </div> : null
         }
-        {isDeadlineDate ? 
+        {isDeadlineDate && !(!isEdited && !checked[deadlineName]) ? 
           <div className='date-block__item'>
             {isEdited ? 
               <Checkbox 
@@ -125,19 +128,17 @@ export default class DateBlock extends Component  {
                 onChange={this.onChangeCheckbox}
               /> : null 
             }
-            {(!isEdited && !checked[startTimeName]) ? null : ( 
-              <>
-                <p className='date-block__item-type'>Deadline: </p>             
-                <DatePicker 
-                  bordered={isEdited ? true : false}
-                  value={moment(deadline, dateFormat)}
-                  data-name={deadlineName} 
-                  onChange={this.handleChangeDeadline}
-                  disabled={(isEdited && checked[deadlineName]) ? false : true}
-                  suffixIcon={isEdited ? <CalendarOutlined /> : null}
-                /> 
-              </>
-            )}
+            <>
+              <p className='date-block__item-type'>Deadline: </p>             
+              <DatePicker 
+                bordered={isEdited ? true : false}
+                value={deadline ? moment(deadline, dateFormat) : null}
+                data-name={deadlineName} 
+                onChange={this.handleChangeDeadline}
+                disabled={(isEdited && checked[deadlineName]) ? false : true}
+                suffixIcon={isEdited ? <CalendarOutlined /> : null}
+              /> 
+            </>
           </div> : null
         }
       </div>

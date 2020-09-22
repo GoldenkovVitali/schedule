@@ -45,24 +45,23 @@ export default class CommentForm extends Component {
 
   service = new Service();
 
-  componentWillMount() {
+  componentDidMount() {
     const { data: { comments } } = this.props;
 
     if (!comments) {
       return;
     }
 
-    comments.forEach((comment) => {
-      this.setState((state) => {
-        state.comments = [          
-          ...this.state.comments,
-          {
-            author: comment.author,
-            content: <p>{comment.content.props.children}</p>,
-          },
-        ];
-      });
-    })
+    const commentsArr = comments.map((comment) => {
+      return {
+        author: comment.author,
+        content: <p>{comment.content.props.children}</p>,
+      }
+    });
+
+    this.setState({
+        comments: [...commentsArr],      
+    });
   }  
 
   handleSubmit = () => {
@@ -88,7 +87,7 @@ export default class CommentForm extends Component {
       });
       this.data.comments = this.state.comments;
       
-      this.service.updateEvent(this.id, this.data);
+      this.service.updateEvent(this.data);
     }, 100);
   };
 
@@ -123,7 +122,7 @@ export default class CommentForm extends Component {
           </div>: null 
         }
 
-        {commentsOn ?
+        {commentsOn && !isEdited ?
           <Collapse className='comments-block'>
             <Panel 
               header="Add feedback" 

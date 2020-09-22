@@ -23,7 +23,8 @@ class Tables extends React.Component {
 
   render() {
     // константы. которые будут входить!
-    const { dataShedule, columns } = this.props;
+    //const { dataShedule, columns, colorFontPicker, colorBgPicker  } = this.props;
+    const { dataShedule, columns, TableControls, MentorToggleButton, openTaskPage, updateTable } = this.props;
 
     return (
       <>
@@ -71,6 +72,8 @@ class Tables extends React.Component {
           >
             Save table as PDF
           </button>
+          {TableControls}
+          {MentorToggleButton}
         </div>
 
         <PDFExport
@@ -78,14 +81,47 @@ class Tables extends React.Component {
           paperSize="A4"
           scale={0.5}
         >
-          {!this.props.ifMentor ? (
-            <Table
-              searchable
-              exportableProps={{
-                showColumnPicker: true,
-                btnProps: {
-                  type: 'primary',
-                  children: <span>Export to CSV</span>,
+
+                 {!this.props.ifMentor ? (
+          <Table
+            searchable
+            exportableProps={{
+              showColumnPicker: true,
+              btnProps: {
+                type: 'primary',
+                children: <span>Export to CSV</span>,
+              },
+            }}
+            rowClassName={(record, index) =>
+              record.key === this.state.selectedKey ||
+              this.state.selectedRowKeys.includes(record.key)
+                ? 'table-row-dark'
+                : 'table-row-light'
+            }
+            pagination={{ pageSize: 50 }} // количество строк на странице минимальное
+            dataSource={dataShedule}
+           
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: event => {
+                  if (event.shiftKey) {
+                    this.setState({
+                      selectedRowKeys: [
+                        ...this.state.selectedRowKeys,
+                        record.key,
+                      ],
+                    });
+                  } else {
+                    this.setState({
+                      selectedRowKeys: [],
+                      selectedKey: record.key,
+                    });
+                  }
+                  console.log(this.state);
+                },
+                onDoubleClick: () => {
+                  openTaskPage(record, updateTable);
+
                 },
               }}
               bordered
@@ -126,32 +162,9 @@ class Tables extends React.Component {
                   return 'black';
                 }
               }}
-              pagination={{ pageSize: 50 }} // количество строк на странице минимальное
-              dataSource={dataShedule}
+             
               columns={columns}
-              onRow={(record, rowIndex) => {
-                return {
-                  onClick: event => {
-                    if (event.shiftKey) {
-                      this.setState({
-                        selectedRowKeys: [
-                          ...this.state.selectedRowKeys,
-                          record.key,
-                        ],
-                      });
-                    } else {
-                      this.setState({
-                        selectedRowKeys: [],
-                        selectedKey: record.key,
-                      });
-                    }
-                    console.log(this.state);
-                  },
-                  onDoubleClick: event => {
-                    console.log('Double click');
-                  },
-                };
-              }}
+             
             />
           ) : (
             <EditableTable dataShedule={dataShedule} columns={columns} />

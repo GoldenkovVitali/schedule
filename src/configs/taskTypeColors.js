@@ -1,4 +1,4 @@
-const EventTypeColors =  {
+const taskTypeColors =  {
   deadline: 'red',
   test: '#63ab91',
   jsTask: 'green',
@@ -20,4 +20,4 @@ const EventTypeColors =  {
   interview: '#63ab91',
 }
 
-export default EventTypeColors;
+export default taskTypeColors;

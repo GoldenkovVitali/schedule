@@ -1,0 +1,23 @@
+.task-page__tag {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-page__add-tag {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.task-page__add-tag-wrap {
+  padding: 8px;
+}
+
+.task-page__plus-icon {
+  margin-right: 10px;
+}

@@ -4,10 +4,15 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import './mapBlock.css';
 import mapboxgl from 'mapbox-gl';
+import { Input } from 'antd';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidmlydGFsIiwiYSI6ImNrYWlpODNqbTAxMHUyeG13NHpkZnYwNXMifQ.Y8602VcUdPFt6jpTLC4Q8w';
 
 export default class MapBlock extends Component {
+  state = {
+    place: this.props.data.place || '',
+  }
+
   componentDidMount() {
     const { lng, lat, zoom } = this.props;
     const { changeMapData } = this.props;
@@ -31,11 +36,34 @@ export default class MapBlock extends Component {
     ).setLngLat([lng, lat]).addTo(map);
   }
 
+  handleChangeInput = (event) => {
+    const inputValue = event.target.value;
+    const dataAttr = event.target.dataset.name;
+
+    this.props.handleChangeInput(event);
+
+    this.setState((state) => state[dataAttr] = inputValue);
+  }
+
   render() {
-    const { lng, lat, zoom, isEdited } = this.props;
+    const { lng, lat, zoom, isEdited, name } = this.props;
+    const { place } = this.state;
     
     return (
       <div className={isEdited ? "map-block_edited" : "map-block"}>
+        <div className='map__address-wrapper'>
+          <p className='map__address-title'>
+            Adress: 
+          </p>
+          <Input 
+            className={isEdited ? null : 'map__address' }
+            placeholder='Write address...'
+            value={place}
+            data-name={name}
+            bordered={isEdited ? true : false}
+            onChange={this.handleChangeInput}
+          />
+        </div>
 
         <div>
           <div>

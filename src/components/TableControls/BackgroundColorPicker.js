@@ -2,7 +2,7 @@ import React from 'react'
 import reactCSS from 'reactcss'
 import { SketchPicker } from 'react-color'
 
-const BackgroundColorPicker = ({displayBgPicker, setDisplayBgPicker, colorBgPicker, setColorBgPicker}) => {
+const BackgroundColorPicker = ({displayBgPicker, setDisplayBgPicker, colorBgPicker, setColorBgPicker, onHandleAccessible}) => {
 
   const handleClick = () => {
     setDisplayBgPicker(!displayBgPicker)

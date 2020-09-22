@@ -6,17 +6,13 @@ import './descriptionBlock.css';
 
 
 export default class DescriptionBlock extends Component {
-
-  componentWillMount() {
-    const { data, name } = this.props;
-    this.setState({ 
-      checked: !!data[name],
-      textareaValue: data[name] 
-    })
+  state ={
+    checked: !!this.props.data[this.props.name],
+    textareaValue: this.props.data[this.props.name],
   }
 
   onChangeCheckbox = (event) => {
-    const { data, name, changeData } = this.props;
+    const { name, changeData } = this.props;
     const { textareaValue } = this.state;
 
     const isChecked = event.target.checked;
@@ -55,7 +51,7 @@ export default class DescriptionBlock extends Component {
           /> : null 
         }
         <TextArea
-          className='description-block__textarea'
+          className={isEdited ? 'description-block__textarea-edited' : 'description-block__textarea'}
           placeholder='Write description...' 
           defaultValue={textareaValue}
           value={checked ? data[name] : textareaValue}
