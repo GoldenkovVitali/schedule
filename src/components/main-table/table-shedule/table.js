@@ -26,9 +26,7 @@ class Tables extends React.Component {
       dataShedule,
       columns,
       TableControls,
-      MentorToggleButton,
       openTaskPage,
-      updateTable,
       updateRow,
       rowCount
     } = this.props;
@@ -36,6 +34,7 @@ class Tables extends React.Component {
     return (
       <>
         <div className="buttons">
+          {TableControls}
           <Button
             onClick={this.props.addRow}
             type="primary"
@@ -80,8 +79,6 @@ class Tables extends React.Component {
           >
             Save table as PDF
           </Button>
-          {TableControls}
-          {MentorToggleButton}
         </div>
 
         <PDFExport
