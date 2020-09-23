@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import './app.css';
 import { Modal } from 'antd';
 import TaskPage from '../TaskPage/TaskPage';
-
 import UserSwitchButton from '../UserSwitchButton/UserSwitchButton';
 import EditableTable from '../main-table/table-shedule/MentorTable'
 import MainTable from '../main-table/main-table';
 import LocalStorageSettings from '../../service/LocalStorageSettings';
-
 
 
 const localStorageSettings = new LocalStorageSettings();
@@ -19,11 +17,11 @@ export default class App extends Component {
     data: {},
   }
 
-  openTaskPage = (data, updateTable) => {
+  openTaskPage = (data, updateRow) => {
     this.setState({
       isTaskPageOpen: true,
       data: data,
-      updateTable: updateTable,
+      updateRow: updateRow,
     })
   }
 
@@ -35,7 +33,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { isTaskPageOpen, data, updateTable } = this.state;
+    const { isTaskPageOpen, data, updateRow } = this.state;
 
     return (
       <>
@@ -56,7 +54,7 @@ export default class App extends Component {
           <TaskPage  
             closeTaskPage={this.closeTaskPage}
             data={data} 
-            updateTable={updateTable}
+            updateRow={updateRow}
           /> 
         </Modal>
       </>

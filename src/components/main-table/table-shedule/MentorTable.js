@@ -41,7 +41,7 @@ const EditableCell = ({
 };
 
 
-const EditableTable = ({ dataShedule, columns, openTaskPage, updateTable, rowCount }) => {
+const EditableTable = ({ dataShedule, columns, openTaskPage, updateRow, rowCount }) => {
   if (dataShedule !== null) {
     const [form] = Form.useForm();
     const [data, setData] = useState(dataShedule);
@@ -181,7 +181,7 @@ const EditableTable = ({ dataShedule, columns, openTaskPage, updateTable, rowCou
                 }
               },
               onDoubleClick: () => {
-                openTaskPage(record, updateTable);
+                openTaskPage(record, updateRow);
                 console.log('sadasdasd')
               },
             };

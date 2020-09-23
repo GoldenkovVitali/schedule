@@ -57,11 +57,8 @@ export default class TaskPage extends Component {
   }
 
   updateEvent = () => {
-    this.service.updateEvent(this.state.data);
-    this.props.updateTable(); 
+    this.props.updateRow(this.state.data); 
     this.props.closeTaskPage();
-    console.log(this.state.data)
-  // ??
   }
 
   render() {
@@ -191,14 +188,17 @@ export default class TaskPage extends Component {
           feedback={feedback}
           isEdited={isEdited}
         />
-        <Button 
-          type='primary'
-          size='default'
-          btnClassName='task-page__confirm-btn'
-          btnWrapperClassName = 'task-page__confirm-btn-wrapper'
-          text='Confirm'
-          handlerOnClick={this.updateEvent}
-        />
+        {isEdited ? 
+          <Button 
+            type='primary'
+            size='default'
+            btnClassName='task-page__confirm-btn'
+            btnWrapperClassName = 'task-page__confirm-btn-wrapper'
+            text='Confirm'
+            handlerOnClick={this.updateEvent}
+          /> : 
+          null 
+        }
       </div>
     );
   }

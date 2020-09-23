@@ -29,6 +29,7 @@ class Tables extends React.Component {
       MentorToggleButton,
       openTaskPage,
       updateTable,
+      updateRow,
       rowCount
     } = this.props;
 
@@ -125,7 +126,7 @@ class Tables extends React.Component {
                     console.log(this.state);
                   },
                   onDoubleClick: () => {
-                    openTaskPage(record, updateTable);
+                    openTaskPage(record, updateRow);
                   },
                 };
               }}
@@ -174,7 +175,7 @@ class Tables extends React.Component {
               dataShedule={dataShedule} 
               columns={columns} 
               openTaskPage={openTaskPage} 
-              updateTable={updateTable}
+              updateRow={updateRow}
               rowCount={rowCount}
               />
           )}

@@ -315,12 +315,25 @@ class MainTable extends Component {
     this.updateTabel();
   };
 
+  updateRow = (row) => {
+    const { data } = this.state;
+    const localData = JSON.parse(JSON.stringify(data)); 
+
+    const rowIndex = localData.findIndex((event) => event.id === row.id);
+    localData.splice(rowIndex, 1, row); 
+
+    this.setState({data: localData});
+    this.service.updateEvent(row);
+  } 
+
   render() {
     const { data, columns } = this.state;
     const { openTaskPage } = this.props;
     const newColumns = this.state.columns.map(column => {
       return {...column, render: text => <div style={this.state.styles}>{text}</div>}
     }) 
+
+    console.log(data, 'st T')
     return (
       <>
         <div className="todo-app">WOWWWW</div>
@@ -334,7 +347,7 @@ class MainTable extends Component {
           pdfExportComponent={this.pdfExportComponent}
           isMentor={this.state.isMentor}
           openTaskPage={openTaskPage}
-          updateTable={this.updateTabel}
+          updateRow={this.updateRow}
           rowCount={this.state.rowCount}
           TableControls={
             <TableControls
