@@ -92,6 +92,7 @@ export default class TaskPageHeader extends Component {
         <TaskTypeConstructor 
           visible={isTaskTypeConstructor}
           onCancel={this.closeTaskTypeConstructor}
+          handleChangeSelect={handleChangeSelect}
         />
       </>
     )

@@ -44,7 +44,7 @@ export default class App extends Component {
           footer={null}
           centered
           destroyOnClose={true}
-          closable={false}
+          maskClosable={false}
           visible={isTaskPageOpen}
           onCancel={this.closeTaskPage}
         >

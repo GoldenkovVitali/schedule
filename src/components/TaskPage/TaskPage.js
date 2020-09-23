@@ -58,8 +58,10 @@ export default class TaskPage extends Component {
 
   updateEvent = () => {
     this.service.updateEvent(this.state.data);
+    this.props.updateTable(); 
     this.props.closeTaskPage();
-    this.props.updateTable(); // ??
+    console.log(this.state.data)
+  // ??
   }
 
   render() {
