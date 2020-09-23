@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import Service from '../../service/Service';
 import './main-table.css';
-import { Tag } from 'antd';
+
 import Tables from './table-shedule/table';
 import TableControls from '../TableControls';
 import Select from 'react-select';
-import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
-import MentorToggleButton from "../MentorToggle";
+import MentorToggleButton from '../MentorToggle';
 
 const options = [
   { value: 'Europe/London', label: 'Europe/London' },
@@ -25,20 +24,119 @@ const MyComponent = () => <Select options={options} />;
 class MainTable extends Component {
   state = {
     data: null,
-    columns: null,
-    lastColumnIndex: null,
+    columns: [
+      {
+        title: 'Date',
+        dataIndex: 'dateTime',
+        key: 'date',
+        editable: true,
+      },
+      {
+        title: 'Time',
+        dataIndex: 'time',
+        key: 'time',
+        editable: true,
+      },
+      {
+        title: 'Place',
+        dataIndex: 'place',
+        key: 'place',
+        editable: true,
+      },
+      {
+        title: 'Tags',
+        dataIndex: 'type',
+        key: 'type',
+        editable: true,
+      },
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        editable: true,
+      },
+      {
+        title: 'Description',
+        dataIndex: 'description',
+        key: 'description',
+        editable: true,
+      },
+      {
+        title: 'BroadcastUrl',
+        dataIndex: 'descriptionUrl',
+        key: 'descriptionUrl',
+        editable: true,
+      },
+      {
+        title: 'Comment',
+        dataIndex: 'comment',
+        key: 'comment',
+        editable: true,
+      },
+    ],
     lastRowIndex: null,
-    hiddenKeys:[],
+    hiddenKeys: [],
     initColumns: [],
     fontSize: 14,
     rowCount: 10,
-    colorBgPicker: { r: '250', g: '250', b: '250', a: '1',},
-    colorFontPicker: { r: '241', g: '112', b: '19', a: '1',},
+    colorBgPicker: { r: '250', g: '250', b: '250', a: '1' },
+    colorFontPicker: { r: '241', g: '112', b: '19', a: '1' },
     styles: {
       color: 'green',
       backgroundColor: 'yellow',
       fontSize: '14px',
     },
+    hiddenKeys: [],
+    initColumns: [
+      {
+        title: 'Date',
+        dataIndex: 'dateTime',
+        key: 'date',
+        editable: true,
+      },
+      {
+        title: 'Time',
+        dataIndex: 'time',
+        key: 'time',
+        editable: true,
+      },
+      {
+        title: 'Place',
+        dataIndex: 'place',
+        key: 'place',
+        editable: true,
+      },
+      {
+        title: 'Tags',
+        dataIndex: 'type',
+        key: 'type',
+        editable: true,
+      },
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        editable: true,
+      },
+      {
+        title: 'Description',
+        dataIndex: 'description',
+        key: 'description',
+        editable: true,
+      },
+      {
+        title: 'BroadcastUrl',
+        dataIndex: 'descriptionUrl',
+        key: 'descriptionUrl',
+        editable: true,
+      },
+      {
+        title: 'Comment',
+        dataIndex: 'comment',
+        key: 'comment',
+        editable: true,
+      },
+    ],
     selectedRowKeys: [],
     isAccessible: 'Выкл',
     isMentor: 'Ментор',
@@ -46,22 +144,22 @@ class MainTable extends Component {
 
   service = new Service();
 
-  getColor = (type) => {
-    if(type === 'font') {
+  getColor = type => {
+    if (type === 'font') {
       return `rgba(
-        ${this.state.colorFontPicker.r }, 
-        ${ this.state.colorFontPicker.g }, 
-        ${ this.state.colorFontPicker.b },
-        ${ this.state.colorFontPicker.a })`
+        ${this.state.colorFontPicker.r}, 
+        ${this.state.colorFontPicker.g}, 
+        ${this.state.colorFontPicker.b},
+        ${this.state.colorFontPicker.a})`;
     }
     return `rgba(
-    ${ this.state.colorBgPicker.r }, 
-    ${ this.state.colorBgPicker.g }, 
-    ${ this.state.colorBgPicker.b }, 
-    ${ this.state.colorBgPicker.a })`
+    ${this.state.colorBgPicker.r}, 
+    ${this.state.colorBgPicker.g}, 
+    ${this.state.colorBgPicker.b}, 
+    ${this.state.colorBgPicker.a})`;
   };
 
-  onHandleAccessible = (value) => {
+  onHandleAccessible = value => {
     if (value === 'Вкл') {
       this.setState({
         styles: {
@@ -81,10 +179,9 @@ class MainTable extends Component {
         isAccessible: value,
       });
     }
-
   };
 
-  onHandleMentor = (value) => {
+  onHandleMentor = value => {
     if (value === 'Ментор') {
       this.setState({
         isMentor: 'Ментор',
@@ -94,12 +191,11 @@ class MainTable extends Component {
         isMentor: 'Студент',
       });
     }
-
   };
 
-  onFontSizeChange = (value) => {
-    console.log('size', value, this.state.fontSize)
-    const size = value === 'less' ? this.state.fontSize -1 : this.state.fontSize + 1
+  onFontSizeChange = value => {
+    const size =
+      value === 'less' ? this.state.fontSize - 1 : this.state.fontSize + 1;
 
     this.setState({
       styles: {
@@ -110,23 +206,22 @@ class MainTable extends Component {
       fontSize: size,
       isAccessible: 'Выкл',
     });
-   // this.updateTabel();
   };
 
-  setRowCount = (value) => {
+  setRowCount = value => {
     this.setState({
       rowCount: value,
     });
   };
 
-  setColorBgPicker = (color) => {
+  setColorBgPicker = color => {
     this.setState({
       colorBgPicker: color,
       isAccessible: 'Выкл',
     });
   };
 
-  setColorFontPicker = (color) => {
+  setColorFontPicker = color => {
     this.setState({
       colorFontPicker: color,
       isAccessible: 'Выкл',
@@ -134,29 +229,28 @@ class MainTable extends Component {
   };
 
   setColoBgFontSize = () => {
-
     if (this.state.isAccessible === 'Выкл') {
       this.setState({
         styles: {
           color: this.getColor('font'),
           backgroundColor: this.getColor(),
           fontSize: `${this.state.fontSize}px`,
-        }
+        },
       });
+      console.log(this.state.styles)
     } else {
-      this.onHandleAccessible('Вкл')
+      this.onHandleAccessible
     }
+  };
 
-  }
-
-  onHideColumns = (hiddenColumns) => {
+  onHideColumns = hiddenColumns => {
     let unique = [...this.state.initColumns];
-    hiddenColumns.forEach((key) => {
+    hiddenColumns.forEach(key => {
       unique.forEach((item, i) => {
         if (item.key == key) {
-          unique.splice(i,1)
+          unique.splice(i, 1);
         }
-      })
+      });
     });
     this.setState({
       data: this.state.data,
@@ -169,69 +263,15 @@ class MainTable extends Component {
 
   updateTabel = async () => {
     const res = await this.service.getAllEvents();
-    const res2 = await this.service.getAllOrganizers();
-    res2.sort((a, b) => a.key - b.key);
     res.sort((a, b) => a.key - b.key);
-    let arrayOfColumns = [];
-    res2.forEach(element => {
-      if (element.value === 'type') {
-        arrayOfColumns.push({
-          title: element.title,
-          dataIndex: element.value,
-          key: element.title,
-          render: text => {
-            let color;
-            if (
-              text === 'lecture' ||
-              text === 'lectureMixed' ||
-              text === 'lectureSelfstudy' ||
-              text === 'lectureOffline' ||
-              text === 'lectureOnline'
-            ) {
-              color = 'blue';
-            } else if (
-              text === 'interview' ||
-              text === 'test' ||
-              text === 'warmup'
-            ) {
-              color = '#63ab91';
-            } else if (
-              text === 'codejam' ||
-              text === 'codewars' ||
-              text === 'htmltask' ||
-              text === 'jstask'
-            ) {
-              color = 'green';
-            } else if (
-              text === 'test' ||
-              text === 'codewars' ||
-              text === 'htmltask'
-            ) {
-              color = 'green';
-            } else if (text === 'meetup' || text === 'workshop') {
-              color = '#bde04a';
-            } else {
-              color = 'black';
-            }
-            return <Tag color={color}>{text}</Tag>;
-          },
-        });
-      } else {
-        arrayOfColumns.push({
-          title: element.title,
-          dataIndex: element.value,
-          key: element.title,
-          render: text => <div style={this.state.styles}>{text}</div>,
-        });
-      }
-    });
+    const newColumns = this.state.columns.map(column => {
+      return {...column, render: text => <div style={this.state.styles}>{text}</div>}
+    })
 
     this.setState({
       data: res,
-      columns: [...arrayOfColumns],
-      lastColumnIndex: +res2[res2.length - 1].key + 1,
       lastRowIndex: +res[res.length - 1].key + 1,
-      initColumns: [...arrayOfColumns],
+      columns: [...newColumns]
     });
   };
 
@@ -242,7 +282,6 @@ class MainTable extends Component {
   addRow = async () => {
     const { columns, lastRowIndex } = this.state;
 
-    console.log(columns);
     let result = columns.reduce(
       (acc, item) => {
         var key =
@@ -250,7 +289,7 @@ class MainTable extends Component {
             ? Object.keys(item)[1]
             : Object.keys(item)[0];
         var value = item[key];
-        acc[value] = 'no data';
+        acc[value] = '';
         return acc;
       },
       { key: lastRowIndex }
@@ -262,7 +301,7 @@ class MainTable extends Component {
   };
 
   hideSelectedRows = rows => {
-    rows.forEach(element => {
+    rows.forEach(() => {
       let dataSource = [...this.state.data];
       dataSource = dataSource.filter(item => !rows.includes(item.key));
 
@@ -272,51 +311,56 @@ class MainTable extends Component {
     });
   };
 
-  showSelectedRows = rows => {
+  showSelectedRows = () => {
     this.updateTabel();
   };
-
-  // exportPDFWithComponent = () => {
-  //   this.pdfExportComponent.save();
-  // };
 
   render() {
     const { data, columns } = this.state;
     const { openTaskPage } = this.props;
-    console.log(this.state);
+    const newColumns = this.state.columns.map(column => {
+      return {...column, render: text => <div style={this.state.styles}>{text}</div>}
+    }) 
     return (
       <>
         <div className="todo-app">WOWWWW</div>
         <MyComponent />
         <Tables
-          columns={columns}
+          columns={newColumns}
           dataShedule={data}
           addRow={this.addRow}
           hideSelectedRows={this.hideSelectedRows}
           showSelectedRows={this.showSelectedRows}
           pdfExportComponent={this.pdfExportComponent}
+          isMentor={this.state.isMentor}
           openTaskPage={openTaskPage}
           updateTable={this.updateTabel}
-
-          TableControls={<TableControls
-            columns={columns}
-            initColumns={this.state.initColumns}
-            hiddenKeys={this.state.hiddenKeys}
-            onHideColumns={this.onHideColumns}
-            onFontSizeChange={this.onFontSizeChange}
-            setRowCount={this.setRowCount}
-            rowCount={this.state.rowCount}
-            setColorBgPicker={this.setColorBgPicker}
-            colorBgPicker={this.state.colorBgPicker}
-            setColorFontPicker={this.setColorFontPicker}
-            colorFontPicker={this.state.colorFontPicker}
-            prevFontSize={this.state.fontSize}
-            setColoBgFontSize={this.setColoBgFontSize}
-            onHandleAccessible={this.onHandleAccessible}
-            isAccessible={this.state.isAccessible}
-          />}
-          MentorToggleButton={<MentorToggleButton
-            onHandleMentor={this.onHandleMentor} isMentor={this.state.isMentor}/>}
+          rowCount={this.state.rowCount}
+          TableControls={
+            <TableControls
+              columns={newColumns}
+              initColumns={this.state.initColumns}
+              hiddenKeys={this.state.hiddenKeys}
+              onHideColumns={this.onHideColumns}
+              onFontSizeChange={this.onFontSizeChange}
+              setRowCount={this.setRowCount}
+              rowCount={this.state.rowCount}
+              setColorBgPicker={this.setColorBgPicker}
+              colorBgPicker={this.state.colorBgPicker}
+              setColorFontPicker={this.setColorFontPicker}
+              colorFontPicker={this.state.colorFontPicker}
+              prevFontSize={this.state.fontSize}
+              setColoBgFontSize={this.setColoBgFontSize}
+              onHandleAccessible={this.onHandleAccessible}
+              isAccessible={this.state.isAccessible}
+            />
+          }
+          MentorToggleButton={
+            <MentorToggleButton
+              onHandleMentor={this.onHandleMentor}
+              isMentor={this.state.isMentor}
+            />
+          }
         />
       </>
     );
