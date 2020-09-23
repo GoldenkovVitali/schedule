@@ -1,3 +1,4 @@
+
 .idea
 node_modules
 *.bundle.js
@@ -5,4 +6,3 @@ node_modules
 dist
 coverage
 config.js
-gi
