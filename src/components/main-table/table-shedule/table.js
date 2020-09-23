@@ -26,7 +26,6 @@ class Tables extends React.Component {
       dataShedule,
       columns,
       TableControls,
-      MentorToggleButton,
       openTaskPage,
       updateTable,
       rowCount
@@ -35,6 +34,7 @@ class Tables extends React.Component {
     return (
       <>
         <div className="buttons">
+          {TableControls}
           <Button
             onClick={this.props.addRow}
             type="primary"
@@ -79,8 +79,6 @@ class Tables extends React.Component {
           >
             Save table as PDF
           </Button>
-          {TableControls}
-          {MentorToggleButton}
         </div>
 
         <PDFExport
@@ -170,10 +168,10 @@ class Tables extends React.Component {
               columns={columns}
             />
           ) : (
-            <EditableTable 
-              dataShedule={dataShedule} 
-              columns={columns} 
-              openTaskPage={openTaskPage} 
+            <EditableTable
+              dataShedule={dataShedule}
+              columns={columns}
+              openTaskPage={openTaskPage}
               updateTable={updateTable}
               rowCount={rowCount}
               />

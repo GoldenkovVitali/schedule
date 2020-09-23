@@ -8,8 +8,8 @@ const MentorToggleButton = ({ onHandleMentor, isMentor }) => {
   };
 
   const options = [
-    { label: 'Ментор', value: 'Ментор' },
-    { label: 'Студент', value: 'Студент' },
+    { label: 'Mentor', value: 'Ментор' },
+    { label: 'Student', value: 'Студент' },
   ];
 
   return (
