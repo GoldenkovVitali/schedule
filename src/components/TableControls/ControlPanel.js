@@ -32,7 +32,7 @@ const ControlPanel = ({
     <>
       <Row>
         <Col span={8}>
-          <Title level={5}>Цвет фона:</Title>
+          <Title level={5}>Background:</Title>
         </Col>
         <Col span={8}>
         <BackgroundColorPicker
@@ -46,7 +46,7 @@ const ControlPanel = ({
       </Row>
       <Row>
         <Col span={8}>
-          <Title level={5}>Цвет шрифта:</Title>
+          <Title level={5}>Font color:</Title>
         </Col>
         <Col span={8}>
           <FontColorPicker
@@ -60,7 +60,7 @@ const ControlPanel = ({
       </Row>
       <Row>
         <Col span={8} style={{marginBottom: 10}}>
-          <Title level={5}>Шрифт:</Title>
+          <Title level={5}>Font size:</Title>
         </Col>
         <Col span={12}>
           <FontSizeControl
@@ -71,7 +71,7 @@ const ControlPanel = ({
       </Row>
       <Row>
         <Col span={12}>
-          <Title level={5}>Для слабовидящих:</Title>
+          <Title level={5}>Accessibility:</Title>
         </Col>
         <Col span={12}>
           <AccesebilityButton onHandleAccessible={onHandleAccessible} isAccessible={isAccessible} />
@@ -79,7 +79,7 @@ const ControlPanel = ({
       </Row>
     <Row>
       <Col span={12}>
-        <Title level={5}>Количество строк:</Title>
+        <Title level={5}>Rows:</Title>
       </Col>
     </Row>
     <Row>

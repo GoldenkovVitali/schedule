@@ -264,7 +264,7 @@ class MainTable extends Component {
     res.sort((a, b) => a.key - b.key);
     const newColumns = this.state.columns.map(column => {
       return {...column, render: text => <div style={this.state.styles}>{text}</div>}
-    })
+    });
 
     this.setState({
       data: res,
@@ -275,6 +275,12 @@ class MainTable extends Component {
 
   async componentDidMount() {
     this.updateTabel();
+  }
+
+
+  static getDerivedStateFromProps(props, state) {
+    localStorage.setItem('currentState', JSON.stringify(state));
+    return null;
   }
 
   addRow = async () => {
@@ -338,7 +344,6 @@ class MainTable extends Component {
           openTaskPage={openTaskPage}
           updateTable={this.updateTabel}
           rowCount={this.state.rowCount}
-
           TableControls={
             <TableControls
               columns={newColumns}
@@ -356,12 +361,6 @@ class MainTable extends Component {
               setColoBgFontSize={this.setColoBgFontSize}
               onHandleAccessible={this.onHandleAccessible}
               isAccessible={this.state.isAccessible}
-            />
-          }
-          MentorToggleButton={
-            <MentorToggleButton
-              onHandleMentor={this.onHandleMentor}
-              isMentor={this.state.isMentor}
             />
           }
         />

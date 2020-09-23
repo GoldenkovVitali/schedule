@@ -26,7 +26,6 @@ class Tables extends React.Component {
       dataShedule,
       columns,
       TableControls,
-      MentorToggleButton,
       openTaskPage,
       updateTable,
       rowCount
@@ -80,8 +79,6 @@ class Tables extends React.Component {
           >
             Save table as PDF
           </Button>
-          {TableControls}
-          {MentorToggleButton}
         </div>
 
         <PDFExport

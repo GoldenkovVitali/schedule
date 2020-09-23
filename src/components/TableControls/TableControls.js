@@ -46,7 +46,7 @@ const TableControls = (props) => {
         <ModalButton onSaveSettings={onSaveSettings} icon={<SettingOutlined />}>
           <Row>
             <Col span={12} offset={1}>
-              <Title level={5}>Отображение  колонок:</Title>
+              <Title level={5}>Show/Hide columns:</Title>
             </Col>
           </Row>
           <Row>

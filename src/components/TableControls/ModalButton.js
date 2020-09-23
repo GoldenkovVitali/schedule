@@ -21,9 +21,9 @@ const ModalButton = (props) => {
     return (
       <>
         <Button  style={{ marginBottom: 16, marginLeft: 16 }}  type="primary" onClick={showModal}>
-          Настройки таблицы
+          Table Settings
         </Button>
-        <Modal okText="Сохранить" cancelText="Отменить" title="Настройки таблицы"  width='80%' visible={visible} onOk={handleOk} onCancel={handleCancel}>
+        <Modal okText="Save" cancelText="Cancel" title="Table Settings"  width='80%' visible={visible} onOk={handleOk} onCancel={handleCancel}>
           {children}
         </Modal>
       </>
