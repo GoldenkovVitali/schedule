@@ -235,7 +235,6 @@ class MainTable extends Component {
           fontSize: `${this.state.fontSize}px`,
         },
       });
-      console.log(this.state.styles)
     } else {
       this.onHandleAccessible
     }
@@ -271,6 +270,7 @@ class MainTable extends Component {
       lastRowIndex: +res[res.length - 1].key + 1,
       columns: [...newColumns]
     });
+   
   };
 
   async componentDidMount() {
@@ -281,6 +281,29 @@ class MainTable extends Component {
   static getDerivedStateFromProps(props, state) {
     localStorage.setItem('currentState', JSON.stringify(state));
     return null;
+  }
+
+  setStateFromLocalStorage = () => {
+    if(localStorage.getItem('currentState')){
+      const newState = JSON.parse(localStorage.getItem('currentState'))
+      console.log('newState', newState)
+      this.setState({
+        ...this.state,
+        fontSize: newState.fontSize,
+        rowCount: newState.rowCount,
+        colorBgPicker: newState.colorBgPicker,
+        colorFontPicker: newState.colorFontPicker,
+        styles: {
+          color: newState.styles.color,
+          backgroundColor: newState.styles.backgroundColor,
+          fontSize: newState.styles.fontSize,
+        },
+        hiddenKeys: newState.hiddenKeys,
+        selectedRowKeys: newState.selectedRowKeys,
+        isAccessible: newState.isAccessible,
+        isMentor: newState.isMentor,
+      });
+    }
   }
 
   addRow = async () => {
@@ -324,7 +347,7 @@ class MainTable extends Component {
     const { openTaskPage } = this.props;
     const newColumns = this.state.columns.map(column => {
       return {...column, render: text => <div style={this.state.styles}>{text}</div>}
-    })
+    });
     return (
       <>
         <Row justify="end">
