@@ -6,6 +6,8 @@ import Tables from './table-shedule/table';
 import TableControls from '../TableControls';
 import Select from 'react-select';
 import MentorToggleButton from '../MentorToggle';
+import TableView from "../TableView";
+import helpers from "../../helpers/helpers";
 
 const options = [
   { value: 'Europe/London', label: 'Europe/London' },
@@ -264,47 +266,18 @@ class MainTable extends Component {
     const newColumns = this.state.columns.map(column => {
       return {...column, render: text => <div style={this.state.styles}>{text}</div>}
     });
-
     this.setState({
       data: res,
       lastRowIndex: +res[res.length - 1].key + 1,
-      columns: [...newColumns]
+      columns: [...newColumns],
     });
-   
+
   };
 
   async componentDidMount() {
     this.updateTabel();
   }
 
-
-  static getDerivedStateFromProps(props, state) {
-    localStorage.setItem('currentState', JSON.stringify(state));
-    return null;
-  }
-
-  setStateFromLocalStorage = () => {
-    if(localStorage.getItem('currentState')){
-      const newState = JSON.parse(localStorage.getItem('currentState'))
-      console.log('newState', newState)
-      this.setState({
-        ...this.state,
-        fontSize: newState.fontSize,
-        rowCount: newState.rowCount,
-        colorBgPicker: newState.colorBgPicker,
-        colorFontPicker: newState.colorFontPicker,
-        styles: {
-          color: newState.styles.color,
-          backgroundColor: newState.styles.backgroundColor,
-          fontSize: newState.styles.fontSize,
-        },
-        hiddenKeys: newState.hiddenKeys,
-        selectedRowKeys: newState.selectedRowKeys,
-        isAccessible: newState.isAccessible,
-        isMentor: newState.isMentor,
-      });
-    }
-  }
 
   addRow = async () => {
     const { columns, lastRowIndex } = this.state;
@@ -344,7 +317,7 @@ class MainTable extends Component {
 
   render() {
     const { data, columns } = this.state;
-    const { openTaskPage } = this.props;
+    const { openTaskPage, onHandleView, tableView } = this.props;
     const newColumns = this.state.columns.map(column => {
       return {...column, render: text => <div style={this.state.styles}>{text}</div>}
     });
@@ -353,6 +326,9 @@ class MainTable extends Component {
         <Row justify="end">
           <Col span={4} offset={1}>
             <MentorToggleButton onHandleMentor={this.onHandleMentor} isMentor={this.state.isMentor}/>
+          </Col>
+          <Col span={4} offset={1}>
+            <TableView onHandleView={onHandleView} tableView={tableView}/>
           </Col>
         </Row>
         <MyComponent />
