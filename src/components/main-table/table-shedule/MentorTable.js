@@ -40,8 +40,13 @@ const EditableCell = ({
   );
 };
 
-
-const EditableTable = ({ dataShedule, columns, openTaskPage, updateTable, rowCount }) => {
+const EditableTable = ({
+  dataShedule,
+  columns,
+  openTaskPage,
+  updateTable,
+  rowCount,
+}) => {
   if (dataShedule !== null) {
     const [form] = Form.useForm();
     const [data, setData] = useState(dataShedule);
@@ -97,7 +102,7 @@ const EditableTable = ({ dataShedule, columns, openTaskPage, updateTable, rowCou
           return editable ? (
             <span>
               <a
-                href="javascript:;"
+                href="#"
                 onClick={() => {
                   save(record.key);
                 }}
@@ -162,8 +167,7 @@ const EditableTable = ({ dataShedule, columns, openTaskPage, updateTable, rowCou
             onChange: cancel,
           }}
           rowClassName={(record, index) =>
-            record.key === selectedKey ||
-            selectedRowKeys.includes(record.key)
+            record.key === selectedKey || selectedRowKeys.includes(record.key)
               ? 'table-row-dark'
               : 'table-row-light'
           }
@@ -173,16 +177,16 @@ const EditableTable = ({ dataShedule, columns, openTaskPage, updateTable, rowCou
               onClick: event => {
                 if (event.shiftKey) {
                   setSelectedRowKeys(() => {
-                    return [...selectedRowKeys, record.key]
-                  })
+                    return [...selectedRowKeys, record.key];
+                  });
                 } else {
-                  setSelectedRowKeys([])
-                  setSelectedKey(record.key)
+                  setSelectedRowKeys([]);
+                  setSelectedKey(record.key);
                 }
               },
               onDoubleClick: () => {
                 openTaskPage(record, updateTable);
-                console.log('sadasdasd')
+                console.log('sadasdasd');
               },
             };
           }}
