@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input, InputNumber, Popconfirm, Form } from 'antd';
 import Service from '../../../service/Service';
 import { Table } from 'ant-table-extensions';
@@ -50,6 +50,10 @@ const EditableTable = ({ dataShedule, columns, openTaskPage, updateTable, rowCou
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
     const isEditing = record => record.key === editingKey;
+
+    useEffect(() => {
+      setData(dataShedule);
+    }, [dataShedule])
 
     const edit = record => {
       form.setFieldsValue({

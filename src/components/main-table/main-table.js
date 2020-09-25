@@ -8,6 +8,7 @@ import Select from 'react-select';
 import MentorToggleButton from '../MentorToggle';
 import TableView from "../TableView";
 import helpers from "../../helpers/helpers";
+import TaskFilter from "../TaskFilter";
 
 const options = [
   { value: 'Europe/London', label: 'Europe/London' },
@@ -140,6 +141,8 @@ class MainTable extends Component {
     selectedRowKeys: [],
     isAccessible: 'Выкл',
     isMentor: 'Ментор',
+    sowTaskTypes: null,
+    initialData: [],
   };
 
   service = new Service();
@@ -270,6 +273,7 @@ class MainTable extends Component {
       data: res,
       lastRowIndex: +res[res.length - 1].key + 1,
       columns: [...newColumns],
+      initialData: res,
     });
 
   };
@@ -315,20 +319,42 @@ class MainTable extends Component {
     this.updateTabel();
   };
 
+  onHandleSowTaskTypes = (values) => {
+    console.log('values', values)
+    const newData = [];
+    values.forEach((item) => {
+      this.state.initialData.forEach((row) => {
+        if(row.type.toLowerCase() == item.toLowerCase()) {
+          newData.push(row)
+        }
+      })
+    })
+
+    this.setState({
+      data: newData,
+      sowTaskTypes: values,
+    });
+  };
+
   render() {
     const { data, columns } = this.state;
     const { openTaskPage, onHandleView, tableView } = this.props;
     const newColumns = this.state.columns.map(column => {
       return {...column, render: text => <div style={this.state.styles}>{text}</div>}
     });
+
+    console.log(this.state)
     return (
       <>
         <Row justify="end">
-          <Col span={4} offset={1}>
-            <MentorToggleButton onHandleMentor={this.onHandleMentor} isMentor={this.state.isMentor}/>
-          </Col>
-          <Col span={4} offset={1}>
+          <Col span={4} offset={0}>
             <TableView onHandleView={onHandleView} tableView={tableView}/>
+          </Col>
+          <Col span={16} offset={0}>
+            <TaskFilter onHandleSowTaskTypes={this.onHandleSowTaskTypes}/>
+          </Col>
+          <Col span={4} offset={0}>
+            <MentorToggleButton onHandleMentor={this.onHandleMentor} isMentor={this.state.isMentor}/>
           </Col>
         </Row>
         <MyComponent />
