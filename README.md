@@ -33,3 +33,5 @@
 5) If something works incorrectly, you should point this in the issue comments. In that case, the issue assignee should create a new 'fix' branch from `develop` and fix problems.
 
 6) An issue should be closed if everything is ok or bug is fixed.
+
+#application documentation
