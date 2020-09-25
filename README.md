@@ -1,4 +1,4 @@
-# schedule
+# Schedule - RS School course schedule
 
 ### Project - https://github.com/GoldenkovVitali/schedule/projects
 ### Task description - https://github.com/rolling-scopes-school/tasks/blob/master/tasks/schedule.md
@@ -34,4 +34,45 @@
 
 6) An issue should be closed if everything is ok or bug is fixed.
 
-#application documentation
+# application documentation
+## Deploy - [schedule](https://heuristic-almeida-b20599.netlify.app)
+## The project is an RS School curriculum with the ability to view and edit data
+
+## The project used WebPack and there is a file package.json. Framework used react. 
+## Third party libraries applied:
+
+#### Ant Design(npm install antd --save) - An enterprise-class UI design language and React UI library
+#### Moment.js(npm install moment --save) - Parse, validate, manipulate, and display dates and times in JavaScript
+#### @ant-design/icons(npm install @ant-design/icons --save) - Ant Design Icons for React
+#### mapbox-gl(npm install mapbox-gl --save) - Mapbox GL JS is a JavaScript library that uses WebGL to render interactive maps from vector tiles and Mapbox styles. It is part of the Mapbox GL ecosystem, which includes Mapbox Mobile, a compatible renderer written in C++ with bindings for desktop and mobile platforms.
+#### react-color(npm install react-color --save) - A Collection of Color Pickers from Sketch, Photoshop, Chrome, Github, Twitter, Material Design & more
+#### react-modal-button(npm install react-modal-button --save) - A simple responsive and accessible react modal compatible with React 16 and ready for React 17
+#### ColTransfer (npm install ColTransfer --save) library for color change
+#### ControlPanel (npm install ControlPanel --save) - Embeddable panel of inputs for adding parameter selection to your app or visualization. Modern and minimalist design. Fully encapsulated module including JS and CSS
+#### FullCalendar (npm install --save @fullcalendar/react @fullcalendar/daygrid) - library react component to make calendar
+
+### ctest API used for the application - (https://rs-react-schedule.firebaseapp.com/api/docs/)
+
+WebPack настроен на работу с js-модулями и SASS, сборка осуществляется в папку Dist
+
+### Preparatory steps:
+
+1.Install node.js along with npm (node package manager) - if not already done)
+
+2.Clone or download this repository (clone, download)
+
+3.In the command line (terminal, bush, pwsh) run: npm install
+
+### Project start:
+
+#### Way #1:
+
+1.On the command line, run: npm run build (will compile the Dist folder)
+
+2.Open ./docs/index.html in the latest Google Chrome browser
+
+#### Way #2:
+
+1.At the command line, run: npm run dev
+
+2.Wait the browser will automatically open the project
