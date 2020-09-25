@@ -8,8 +8,8 @@ const AccesebilityButton = ({isAccessible, onHandleAccessible }) => {
   };
 
   const options = [
-    { label: 'Вкл', value: 'Вкл' },
-    { label: 'Выкл', value: 'Выкл' },
+    { label: 'On', value: 'Вкл' },
+    { label: 'Off', value: 'Выкл' },
   ];
 
     return (

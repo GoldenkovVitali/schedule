@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Service from '../../service/Service';
 import './main-table.css';
-
+import {Col, Row, Tag} from 'antd';
 import Tables from './table-shedule/table';
 import TableControls from '../TableControls';
 import Select from 'react-select';
@@ -75,8 +75,6 @@ class MainTable extends Component {
       },
     ],
     lastRowIndex: null,
-    hiddenKeys: [],
-    initColumns: [],
     fontSize: 14,
     rowCount: 10,
     colorBgPicker: { r: '250', g: '250', b: '250', a: '1' },
@@ -237,7 +235,6 @@ class MainTable extends Component {
           fontSize: `${this.state.fontSize}px`,
         },
       });
-      console.log(this.state.styles)
     } else {
       this.onHandleAccessible
     }
@@ -266,17 +263,47 @@ class MainTable extends Component {
     res.sort((a, b) => a.key - b.key);
     const newColumns = this.state.columns.map(column => {
       return {...column, render: text => <div style={this.state.styles}>{text}</div>}
-    })
+    });
 
     this.setState({
       data: res,
       lastRowIndex: +res[res.length - 1].key + 1,
       columns: [...newColumns]
     });
+   
   };
 
   async componentDidMount() {
     this.updateTabel();
+  }
+
+
+  static getDerivedStateFromProps(props, state) {
+    localStorage.setItem('currentState', JSON.stringify(state));
+    return null;
+  }
+
+  setStateFromLocalStorage = () => {
+    if(localStorage.getItem('currentState')){
+      const newState = JSON.parse(localStorage.getItem('currentState'))
+      console.log('newState', newState)
+      this.setState({
+        ...this.state,
+        fontSize: newState.fontSize,
+        rowCount: newState.rowCount,
+        colorBgPicker: newState.colorBgPicker,
+        colorFontPicker: newState.colorFontPicker,
+        styles: {
+          color: newState.styles.color,
+          backgroundColor: newState.styles.backgroundColor,
+          fontSize: newState.styles.fontSize,
+        },
+        hiddenKeys: newState.hiddenKeys,
+        selectedRowKeys: newState.selectedRowKeys,
+        isAccessible: newState.isAccessible,
+        isMentor: newState.isMentor,
+      });
+    }
   }
 
   addRow = async () => {
@@ -320,10 +347,14 @@ class MainTable extends Component {
     const { openTaskPage } = this.props;
     const newColumns = this.state.columns.map(column => {
       return {...column, render: text => <div style={this.state.styles}>{text}</div>}
-    }) 
+    });
     return (
       <>
-        <div className="todo-app">WOWWWW</div>
+        <Row justify="end">
+          <Col span={4} offset={1}>
+            <MentorToggleButton onHandleMentor={this.onHandleMentor} isMentor={this.state.isMentor}/>
+          </Col>
+        </Row>
         <MyComponent />
         <Tables
           columns={newColumns}
@@ -353,12 +384,6 @@ class MainTable extends Component {
               setColoBgFontSize={this.setColoBgFontSize}
               onHandleAccessible={this.onHandleAccessible}
               isAccessible={this.state.isAccessible}
-            />
-          }
-          MentorToggleButton={
-            <MentorToggleButton
-              onHandleMentor={this.onHandleMentor}
-              isMentor={this.state.isMentor}
             />
           }
         />
