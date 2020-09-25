@@ -35,7 +35,7 @@
 6) An issue should be closed if everything is ok or bug is fixed.
 
 # application documentation
-## Deploy - [schedule](https://heuristic-almeida-b20599.netlify.app)
+## Deploy - [schedule](https://nostalgic-villani-310ca1.netlify.app)
 ## The project is an RS School curriculum with the ability to view and edit data
 
 ## The project used WebPack and there is a file package.json. Framework used react. 
@@ -76,3 +76,25 @@ WebPack настроен на работу с js-модулями и SASS, сб�
 1.At the command line, run: npm run dev
 
 2.Wait the browser will automatically open the project
+
+### The application is made with a division into components. Each component is responsible for its own logic and style. The components are independent from each other and are made with the possibility of making changes to them without causing a breakdown of the main application
+
+modules:
+* app - the main module is used to render the <MainTable /> component (schedule table) or a calendar / list
+* button - the <Button /> component is used to create buttons to control the schedule settings
+* CommentsBlock - the <CommentForm /> component is used to create a form for filling out comments
+* DateBlock - the <DateBlock /> component is used to draw and select the date and time zone when filling out the schedule and task page
+* DescriptionBlock  the <DescriptionBlock /> component is used to create and render job descriptions on the job page
+* ImageBlock - the <ImageBlock /> component is used to create and render a block of images on the task page
+* Link - the <Link /> component is used to create and render a block of links on the task page
+* Main-table - the <MainTable /> component is used to render the main schedule table
+* MapBlock - the <MapBlock /> component is used to create and render a map block on the task page, as well as indicate the event location on the schedule page
+* MentorToggle - <MentorToggleButton /> component - used to create a mentor / student button, as well as to configure the main logic for switching between modes
+* OrganizerBlock - the <OrganizerBlock /> component is used to create and draw notes on the task page
+* TableControls - the <TableControls /> component is used to control the main logic of the schedule table settings
+* TaskPage - <TaskPage /> component main component of the schedule task page
+* TaskPageHeader - the <TaskPageHeader /> component is used to create and render the task name on the task page
+* TaskTypeConstructor - the <TaskTypeConstructor /> component is used to create and render the task type and color on the task page
+* UserSwitchButton - the <UserSwitchButton /> component is used to switch mentor / student buttons
+* VideoBlock - the <VideoBlock /> component is used to create and render a video block on the task page
+* Calendar - the <Calendar /> component is used to create and render a timetable in the form of a calendar
