@@ -9,7 +9,7 @@ import MentorToggleButton from '../MentorToggle';
 import TableView from "../TableView";
 import helpers from "../../helpers/helpers";
 import TaskFilter from "../TaskFilter";
-
+import columnsData from './columnsData';
 const options = [
   { value: 'Europe/London', label: 'Europe/London' },
   { value: 'Europe/Warsaw', label: 'Europe/Warsaw' },
@@ -27,56 +27,7 @@ const MyComponent = () => <Select options={options} />;
 class MainTable extends Component {
   state = {
     data: null,
-    columns: [
-      {
-        title: 'Date',
-        dataIndex: 'dateTime',
-        key: 'date',
-        editable: true,
-      },
-      {
-        title: 'Time',
-        dataIndex: 'time',
-        key: 'time',
-        editable: true,
-      },
-      {
-        title: 'Place',
-        dataIndex: 'place',
-        key: 'place',
-        editable: true,
-      },
-      {
-        title: 'Tags',
-        dataIndex: 'type',
-        key: 'type',
-        editable: true,
-      },
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        editable: true,
-      },
-      {
-        title: 'Description',
-        dataIndex: 'description',
-        key: 'description',
-        editable: true,
-      },
-      {
-        title: 'BroadcastUrl',
-        dataIndex: 'descriptionUrl',
-        key: 'descriptionUrl',
-        editable: true,
-      },
-      {
-        title: 'Comment',
-        dataIndex: 'comment',
-        key: 'comment',
-        editable: true,
-      },
-    ],
+    columns: columnsData,
     lastRowIndex: null,
     fontSize: 14,
     rowCount: 10,
@@ -88,56 +39,7 @@ class MainTable extends Component {
       fontSize: '14px',
     },
     hiddenKeys: [],
-    initColumns: [
-      {
-        title: 'Date',
-        dataIndex: 'dateTime',
-        key: 'date',
-        editable: true,
-      },
-      {
-        title: 'Time',
-        dataIndex: 'time',
-        key: 'time',
-        editable: true,
-      },
-      {
-        title: 'Place',
-        dataIndex: 'place',
-        key: 'place',
-        editable: true,
-      },
-      {
-        title: 'Tags',
-        dataIndex: 'type',
-        key: 'type',
-        editable: true,
-      },
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        editable: true,
-      },
-      {
-        title: 'Description',
-        dataIndex: 'description',
-        key: 'description',
-        editable: true,
-      },
-      {
-        title: 'BroadcastUrl',
-        dataIndex: 'descriptionUrl',
-        key: 'descriptionUrl',
-        editable: true,
-      },
-      {
-        title: 'Comment',
-        dataIndex: 'comment',
-        key: 'comment',
-        editable: true,
-      },
-    ],
+    initColumns: columnsData,
     selectedRowKeys: [],
     isAccessible: 'Выкл',
     isMentor: 'Ментор',
@@ -298,9 +200,7 @@ class MainTable extends Component {
       },
       { key: lastRowIndex }
     );
-
     await this.service.postEvent(result);
-
     this.updateTabel();
   };
 
@@ -308,7 +208,6 @@ class MainTable extends Component {
     rows.forEach(() => {
       let dataSource = [...this.state.data];
       dataSource = dataSource.filter(item => !rows.includes(item.key));
-
       this.setState({
         data: dataSource,
       });
@@ -320,7 +219,6 @@ class MainTable extends Component {
   };
 
   onHandleSowTaskTypes = (values) => {
-    console.log('values', values)
     const newData = [];
     values.forEach((item) => {
       this.state.initialData.forEach((row) => {
@@ -343,7 +241,6 @@ class MainTable extends Component {
       return {...column, render: text => <div style={this.state.styles}>{text}</div>}
     });
 
-    console.log(this.state)
     return (
       <>
         <Row justify="end">
