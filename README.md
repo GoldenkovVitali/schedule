@@ -77,7 +77,7 @@
 
 ### The application is made with a division into components. Each component is responsible for its own logic and style. The components are independent from each other and are made with the possibility of making changes to them without causing a breakdown of the main application
 
-###modules:
+### modules:
 * app - the main module is used to render the <MainTable /> component (schedule table) or a calendar / list
 * button - the <Button /> component is used to create buttons to control the schedule settings
 * CommentsBlock - the <CommentForm /> component is used to create a form for filling out comments
