@@ -9,8 +9,6 @@ export default class LocalStorageSettings {
     const isTaskTypeColors = this.check('taskTypeColors');
     const istaskStructure = this.check('taskStructure');
 
-    console.log(taskTypes, taskTypeColors, taskStructure)
-
     if (!isTaskTypes) {
       this.set('taskTypes', taskTypes);
     }
@@ -60,5 +58,35 @@ export default class LocalStorageSettings {
     const newTaskTypeColors = this.getTaskTypeColors();
     newTaskTypeColors[key] = value;
     this.set('taskTypeColors', newTaskTypeColors)
+  }
+
+  // addTaskTypeSettings = (key, value) => {
+  //   this.addTaskType(key, value);
+  //   this.addTaskTypeColor(key, value);
+  //   this.addTaskStructure(key, value);
+  // }
+
+  deleteTaskTypeStructure = (key) => {
+    const taskStructure = this.getTaskStructure();
+    delete taskStructure[key];
+    this.set('taskStructure', taskStructure);
+  }
+
+  deleteTaskType = (key) => {
+    const taskTypes = this.getTaskTypes();
+    delete taskTypes[key];
+    this.set('taskTypes', taskTypes);
+  }
+
+  deleteTaskTypeColor = (key) => {
+    const taskTypeColors = this.getTaskTypeColors();
+    delete taskTypeColors[key];
+    this.set('taskTypeColors', taskTypeColors);
+  }
+
+  deleteTaskTypeSettings = (key) => {
+    this.deleteTaskType(key);
+    this.deleteTaskTypeColor(key);
+    this.deleteTaskTypeStructure(key);
   }
 }

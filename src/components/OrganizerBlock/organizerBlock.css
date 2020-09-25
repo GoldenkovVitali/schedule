@@ -1,32 +1,32 @@
-.organizer-block {
+.task-page .organizer-block {
   margin-bottom: 30px;
   display: flex;
 }
 
-.organizer-block__checkbox {
+.task-page .organizer-block__checkbox {
   margin-right: 10px;
 }
 
-.organizer-block__data {
+.task-page .organizer-block__data {
   width: 100%;
 }
 
-.organizer-block__organizer_edited {
+.task-page .organizer-block__organizer_edited {
   margin-bottom: 10px;
   font-weight: 700
 }
 
-.organizer-block__organizer {
+.task-page .organizer-block__organizer {
   padding-left: 0;
   margin-bottom: 10px;
   font-weight: 700
 }
 
-.organizer-block__description_edited {
+.task-page .organizer-block__description_edited {
   resize: none;
 }
 
-.organizer-block__description {
+.task-page .organizer-block__description {
   padding-left: 0;
   resize: none;
 }

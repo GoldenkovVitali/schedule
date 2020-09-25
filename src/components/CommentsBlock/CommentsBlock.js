@@ -69,7 +69,8 @@ export default class CommentForm extends Component {
       return;
     }
 
-    const { user } = localStorage;
+    const localStorageData = JSON.parse(localStorage.currentState);
+    const user = localStorageData.isMentor === 'Ментор' ? 'Mentor' : 'Student';
 
     this.setState({ submitting: true });
 
@@ -84,7 +85,7 @@ export default class CommentForm extends Component {
             content: <p>{this.state.value}</p>,
           },
         ],
-      });
+      });      
       this.data.comments = this.state.comments;
       
       this.service.updateEvent(this.data);
@@ -107,7 +108,7 @@ export default class CommentForm extends Component {
   render() {
     const { comments, submitting, value, checked } = this.state;
     const { isEdited } = this.props;
-    const { commentsOn } = this.data;
+    const { commentsOn } = this.data;   
 
     return (
       <>

@@ -349,7 +349,7 @@ class MainTable extends Component {
     const rowIndex = localData.findIndex((event) => event.id === row.id);
     localData.splice(rowIndex, 1, row); 
 
-    this.setState({data: localData});
+    this.setState({ data: localData });
     this.service.updateEvent(row);
   } 
 

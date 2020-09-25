@@ -62,7 +62,7 @@ export default class TaskPage extends Component {
   }
 
   render() {
-    const { isEdited, data } = this.state; 
+    const { isEdited, data, incomingData } = this.state; 
     const { lng, lat, zoom } = data;   
 
     const taskStructure = this.localStorageSettings.getTaskStructure();
@@ -85,6 +85,7 @@ export default class TaskPage extends Component {
           handleChangeSelect={this.handleChangeSelect}
           handleChangeInput={this.handleChangeInput}
           editBtnHandlerOnClick={this.togglePageMode}
+          changeData={this.changeData}
         />
         <DateBlock
           isEdited={isEdited}
@@ -184,7 +185,7 @@ export default class TaskPage extends Component {
           ) : null
         }
         <CommentsBlock 
-          data={data}
+          data={incomingData}
           feedback={feedback}
           isEdited={isEdited}
         />

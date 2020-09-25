@@ -7,7 +7,8 @@ import './taskTypeConstructor.css';
 export default class TaskTypeConstructor extends Component {
   state = {
     color: '#000000d9',
-    tagName: '',
+    tagName: this.props.tagName || '',
+    taskType: this.props.taskType || '',
   }
 
   localStorageSettings = new LocalStorageSettings();
@@ -18,6 +19,13 @@ export default class TaskTypeConstructor extends Component {
 
   changeTagColor = (event) => {
     this.setState({ color: event.target.value });
+  }
+
+  editTaskType = () => {
+    const { taskType } = this.state;
+
+    this.localStorageSettings.deleteTaskType(taskType);
+    this.saveTaskType()
   }
 
   saveTaskType = () => {
@@ -34,7 +42,9 @@ export default class TaskTypeConstructor extends Component {
 
   render() {
     const { color, tagName } = this.state;
-    const { visible, onCancel } = this.props;
+    const { visible, onCancel, constructorEditeMode, taskType } = this.props;
+
+    console.log(taskType, tagName, 'ddd')
 
     return (
       <Modal
@@ -48,7 +58,7 @@ export default class TaskTypeConstructor extends Component {
         maskClosable={false}
         visible={visible}
         onCancel={onCancel}
-        onOk={this.saveTaskType}
+        onOk={constructorEditeMode ? this.editTaskType : this.saveTaskType}
       >
         <div className='task-type-constructor'>
           <div className='task-type-constructor__name-wrapper' >              

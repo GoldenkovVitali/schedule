@@ -1,23 +1,23 @@
-.description-block {
+.task-page .description-block {
   margin-bottom: 30px;
   display: flex;
 }
 
-.description-block__textarea_edited {
+.task-page .description-block__textarea_edited {
   resize: none;
   overflow: hidden;
 }
 
-.description-block__textarea {
+.task-page .description-block__textarea {
   padding-left: 0;
   resize: none;
   overflow: hidden;
 }
 
-.description-block__checkbox {
+.task-page .description-block__checkbox {
   margin-right: 10px;
 }
 
-.ant-input {
+.task-page .ant-input {
   resize: none;
 }
