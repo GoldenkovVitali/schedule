@@ -351,7 +351,7 @@ class MainTable extends Component {
             <TableView onHandleView={onHandleView} tableView={tableView}/>
           </Col>
           <Col span={16} offset={0}>
-            <TaskFilter onHandleSowTaskTypes={this.onHandleSowTaskTypes}/>
+            <TaskFilter onHandleSowTaskTypes={this.onHandleSowTaskTypes} initialData={this.state.initialData}/>
           </Col>
           <Col span={4} offset={0}>
             <MentorToggleButton onHandleMentor={this.onHandleMentor} isMentor={this.state.isMentor}/>

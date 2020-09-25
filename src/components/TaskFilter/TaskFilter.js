@@ -1,20 +1,20 @@
 import React from 'react';
 import {Checkbox} from 'antd';
+import helpers from "../../helpers/helpers";
 
-
-const TaskFilter = ({ onHandleSowTaskTypes }) => {
+const TaskFilter = ({ onHandleSowTaskTypes, initialData }) => {
 
   function onChange(checkedValues) {
     console.log('checked = ', checkedValues);
     onHandleSowTaskTypes(checkedValues)
   }
 
-  const tasks = localStorage.getItem('taskTypes') || {}
-  const options = Object.keys(JSON.parse(tasks));
+  const tasks = helpers.getTypesTasks(initialData)
+  //const options = Object.keys(JSON.parse(tasks));
 
   return (
-    options.length > 0
-      ? (<Checkbox.Group options={options} defaultValue={options} onChange={onChange} />)
+    tasks.length > 0
+      ? (<Checkbox.Group options={tasks} defaultValue={tasks} onChange={onChange} />)
       : null
   );
 }

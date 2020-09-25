@@ -9,7 +9,6 @@ const TableView = ({ onHandleView, tableView }) => {
 
   const options = [
     { label: 'List', value: 'List' },
-    { label: 'Grid', value: 'Grid' },
     { label: 'Table', value: 'Table' },
   ];
 

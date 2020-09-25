@@ -19,6 +19,15 @@ const helpers = {
       console.log(title, value)
       localStorage.setItem('tableSettings', JSON.stringify(newSettings))
     }
+  },
+  getTypesTasks: (arr = []) => {
+    const res = [];
+    arr.forEach((item) => {
+      if(!res.includes(item.type)){
+        res.push(item.type)
+      }
+    })
+    return res;
   }
 };
 
