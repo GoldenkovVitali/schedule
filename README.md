@@ -50,10 +50,8 @@
 #### ColTransfer (npm install ColTransfer --save) library for color change
 #### ControlPanel (npm install ControlPanel --save) - Embeddable panel of inputs for adding parameter selection to your app or visualization. Modern and minimalist design. Fully encapsulated module including JS and CSS
 #### FullCalendar (npm install --save @fullcalendar/react @fullcalendar/daygrid) - library react component to make calendar
-
-### ctest API used for the application - (https://rs-react-schedule.firebaseapp.com/api/docs/)
-
-WebPack настроен на работу с js-модулями и SASS, сборка осуществляется в папку Dist
+#### ctest API used for the application - (https://rs-react-schedule.firebaseapp.com/api/docs/)
+#### WebPack configured to work with js modules and SASS, the assembly is carried out in the Dist folder
 
 ### Preparatory steps:
 
@@ -79,7 +77,7 @@ WebPack настроен на работу с js-модулями и SASS, сб�
 
 ### The application is made with a division into components. Each component is responsible for its own logic and style. The components are independent from each other and are made with the possibility of making changes to them without causing a breakdown of the main application
 
-modules:
+###modules:
 * app - the main module is used to render the <MainTable /> component (schedule table) or a calendar / list
 * button - the <Button /> component is used to create buttons to control the schedule settings
 * CommentsBlock - the <CommentForm /> component is used to create a form for filling out comments
