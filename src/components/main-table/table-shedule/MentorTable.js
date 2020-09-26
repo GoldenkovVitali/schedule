@@ -65,6 +65,7 @@ const EditableTable = ({
       setData(dataShedule);
     }, [dataShedule]);
 
+
     const edit = record => {
       form.setFieldsValue({
         dateTime: '',

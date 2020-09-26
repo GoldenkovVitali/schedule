@@ -6,6 +6,9 @@ import Tables from './table-shedule/table';
 import TableControls from '../TableControls';
 import Select from 'react-select';
 import MentorToggleButton from '../MentorToggle';
+import TableView from "../TableView";
+import helpers from "../../helpers/helpers";
+import TaskFilter from "../TaskFilter";
 import columnsData from './columnsData';
 
 const options = [
@@ -41,7 +44,12 @@ class MainTable extends Component {
     selectedRowKeys: [],
     isAccessible: 'Выкл',
     isMentor: 'Ментор',
+
     deletedRows: [],
+
+    sowTaskTypes: null,
+    initialData: [],
+
   };
 
   service = new Service();
@@ -175,12 +183,14 @@ class MainTable extends Component {
         render: text => <div style={this.state.styles}>{text}</div>,
       };
     });
-
     this.setState({
       data: res,
       lastRowIndex: +res[res.length - 1].key + 1,
       columns: [...newColumns],
+
+      initialData: res,
     });
+
   };
 
   async componentDidMount() {
@@ -215,6 +225,7 @@ class MainTable extends Component {
     }
   };
 
+
   addRow = async () => {
     const { columns, lastRowIndex } = this.state;
 
@@ -230,9 +241,7 @@ class MainTable extends Component {
       },
       { key: lastRowIndex }
     );
-
     await this.service.postEvent(result);
-
     this.updateTabel();
   };
 
@@ -241,6 +250,7 @@ class MainTable extends Component {
       console.log('rows', rows);
       let dataSource = [...this.state.data];
       dataSource = dataSource.filter(item => !rows.includes(item.key));
+
       this.setState({
         data: dataSource,
       });
@@ -254,6 +264,7 @@ class MainTable extends Component {
       let deletedRows = dataSource.filter(item => rows.includes(item.key));
       console.log(deletedRows);
       dataSource = dataSource.filter(item => !rows.includes(item.key));
+
       this.setState({
         data: dataSource,
         deletedRows: deletedRows,
@@ -268,23 +279,45 @@ class MainTable extends Component {
     this.updateTabel();
   };
 
+  onHandleSowTaskTypes = (values) => {
+    const newData = [];
+    values.forEach((item) => {
+      this.state.initialData.forEach((row) => {
+        if(row.type.toLowerCase() == item.toLowerCase()) {
+          newData.push(row)
+        }
+      })
+    })
+
+    this.setState({
+      data: newData,
+      sowTaskTypes: values,
+    });
+  };
+
   render() {
     const { data, columns } = this.state;
-    const { openTaskPage } = this.props;
+    const { openTaskPage, onHandleView, tableView } = this.props;
     const newColumns = this.state.columns.map(column => {
       return {
         ...column,
         render: text => <div style={this.state.styles}>{text}</div>,
       };
     });
+
     return (
       <>
         <Row justify="end">
-          <Col span={4} offset={1}>
-            <MentorToggleButton
-              onHandleMentor={this.onHandleMentor}
-              isMentor={this.state.isMentor}
-            />
+
+          <Col span={4} offset={0}>
+            <TableView onHandleView={onHandleView} tableView={tableView}/>
+          </Col>
+          <Col span={16} offset={0}>
+            <TaskFilter onHandleSowTaskTypes={this.onHandleSowTaskTypes} initialData={this.state.initialData}/>
+          </Col>
+          <Col span={4} offset={0}>
+            <MentorToggleButton onHandleMentor={this.onHandleMentor} isMentor={this.state.isMentor}/>
+
           </Col>
         </Row>
         <MyComponent />
