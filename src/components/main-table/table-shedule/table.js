@@ -170,6 +170,7 @@ class Tables extends React.Component {
                 }
                 let taskTypeColors = this.localStorageSettings.getTaskTypeColors();
                 const rowColor = taskTypeColors[record.type] || 'black';
+
                 return rowColor;
                 // if (
                 //   record.type === 'lecture' ||
