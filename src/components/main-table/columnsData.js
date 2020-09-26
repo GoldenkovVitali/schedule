@@ -42,6 +42,13 @@ const columnsData = [
     editable: true,
   },
   {
+    title: 'Deadline',
+    dataIndex: 'deadline',
+    key: 'deadline',
+    editable: true,
+  },
+  {
+
     title: 'Comment',
     dataIndex: 'comment',
     key: 'comment',

@@ -110,7 +110,7 @@ export default class TaskPageHeader extends Component {
               {taskTypes[taskType]}
             </Tag>
           }
-          {/* { isMentor ?  */}
+          { isMentor ? 
             <Button 
               title={isEdited ? 'Preview' : 'Edit'}
               shape='circle'
@@ -121,9 +121,8 @@ export default class TaskPageHeader extends Component {
               ghost={true}
               onClick={editBtnHandlerOnClick}
             />
-             {/* : */}
-            {/* null          
-          } */}
+            : null          
+          }
             
         </div>
         
