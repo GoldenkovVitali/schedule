@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input, InputNumber, Popconfirm, Form } from 'antd';
 import Service from '../../../service/Service';
 import { Table } from 'ant-table-extensions';
-
+import { Button } from 'antd';
 const service = new Service();
+const localStorageSettings = new LocalStorageSettings();
+import LocalStorageSettings from '../../../service/LocalStorageSettings';
 
 const EditableCell = ({
   editing,
+
   dataIndex,
   title,
   inputType,
@@ -43,18 +46,24 @@ const EditableCell = ({
 const EditableTable = ({
   dataShedule,
   columns,
+  changeState,
   openTaskPage,
   updateTable,
   rowCount,
+  setDataFromMentorTable,
 }) => {
   if (dataShedule !== null) {
     const [form] = Form.useForm();
-    const [data, setData] = useState(dataShedule);
+    const [data, setData] = useState([...dataShedule]);
     const [editingKey, setEditingKey] = useState('');
     const [selectedKey, setSelectedKey] = useState(null);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
     const isEditing = record => record.key === editingKey;
+
+    useEffect(() => {
+      setData(dataShedule);
+    }, [dataShedule]);
 
     const edit = record => {
       form.setFieldsValue({
@@ -81,10 +90,12 @@ const EditableTable = ({
           newData.splice(index, 1, { ...item, ...row });
           service.updateEvent({ ...item, ...row });
           setData(newData);
+          setDataFromMentorTable(newData);
           setEditingKey('');
         } else {
           newData.push(row);
           setData(newData);
+          setDataFromMentorTable(newData);
           setEditingKey('');
         }
       } catch (errInfo) {
@@ -163,25 +174,35 @@ const EditableTable = ({
           dataSource={data}
           columns={mergedColumns}
           rowClassName="editable-row"
+          rowClassName={(record, index) => {
+            if (
+              record.key === selectedKey ||
+              selectedRowKeys.includes(record.key)
+            ) {
+              return 'table-row-dark';
+            }
+            let taskTypeColors = localStorageSettings.getTaskTypeColors();
+            const rowColor = taskTypeColors[record.type] || 'black';
+            return rowColor;
+          }}
           pagination={{
             onChange: cancel,
           }}
-          rowClassName={(record, index) =>
-            record.key === selectedKey || selectedRowKeys.includes(record.key)
-              ? 'table-row-dark'
-              : 'table-row-light'
-          }
           pagination={{ pageSize: rowCount }}
           onRow={(record, rowIndex) => {
             return {
               onClick: event => {
                 if (event.shiftKey) {
+                  changeState([...selectedRowKeys, record.key]);
                   setSelectedRowKeys(() => {
+                    console.log('11', record.key);
                     return [...selectedRowKeys, record.key];
                   });
+                  console.log('EREE2', data);
                 } else {
-                  setSelectedRowKeys([]);
-                  setSelectedKey(record.key);
+                  console.log('22', record.key);
+                  changeState([record.key]);
+                  setSelectedRowKeys([record.key]);
                 }
               },
               onDoubleClick: () => {

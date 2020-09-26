@@ -30,7 +30,9 @@
   cursor: pointer;
 }
 
-
+.ant-btn-primary {
+  margin-left: 16px;
+}
 
 .custom {
   background-color: #63ab91;
@@ -42,4 +44,8 @@
 
 .black {
   background-color: rgb(206, 193, 193);
+}
+
+.ant-input {
+  margin-right: 18px;
 }

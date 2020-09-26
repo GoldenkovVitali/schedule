@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Service from '../../service/Service';
 import './main-table.css';
-import {Col, Row, Tag} from 'antd';
+import { Col, Row, Tag } from 'antd';
 import Tables from './table-shedule/table';
 import TableControls from '../TableControls';
 import Select from 'react-select';
 import MentorToggleButton from '../MentorToggle';
+import columnsData from './columnsData';
 
 const options = [
   { value: 'Europe/London', label: 'Europe/London' },
@@ -24,56 +25,7 @@ const MyComponent = () => <Select options={options} />;
 class MainTable extends Component {
   state = {
     data: null,
-    columns: [
-      {
-        title: 'Date',
-        dataIndex: 'dateTime',
-        key: 'date',
-        editable: true,
-      },
-      {
-        title: 'Time',
-        dataIndex: 'time',
-        key: 'time',
-        editable: true,
-      },
-      {
-        title: 'Place',
-        dataIndex: 'place',
-        key: 'place',
-        editable: true,
-      },
-      {
-        title: 'Tags',
-        dataIndex: 'type',
-        key: 'type',
-        editable: true,
-      },
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        editable: true,
-      },
-      {
-        title: 'Description',
-        dataIndex: 'description',
-        key: 'description',
-        editable: true,
-      },
-      {
-        title: 'BroadcastUrl',
-        dataIndex: 'descriptionUrl',
-        key: 'descriptionUrl',
-        editable: true,
-      },
-      {
-        title: 'Comment',
-        dataIndex: 'comment',
-        key: 'comment',
-        editable: true,
-      },
-    ],
+    columns: columnsData,
     lastRowIndex: null,
     fontSize: 14,
     rowCount: 10,
@@ -85,59 +37,11 @@ class MainTable extends Component {
       fontSize: '14px',
     },
     hiddenKeys: [],
-    initColumns: [
-      {
-        title: 'Date',
-        dataIndex: 'dateTime',
-        key: 'date',
-        editable: true,
-      },
-      {
-        title: 'Time',
-        dataIndex: 'time',
-        key: 'time',
-        editable: true,
-      },
-      {
-        title: 'Place',
-        dataIndex: 'place',
-        key: 'place',
-        editable: true,
-      },
-      {
-        title: 'Tags',
-        dataIndex: 'type',
-        key: 'type',
-        editable: true,
-      },
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        editable: true,
-      },
-      {
-        title: 'Description',
-        dataIndex: 'description',
-        key: 'description',
-        editable: true,
-      },
-      {
-        title: 'BroadcastUrl',
-        dataIndex: 'descriptionUrl',
-        key: 'descriptionUrl',
-        editable: true,
-      },
-      {
-        title: 'Comment',
-        dataIndex: 'comment',
-        key: 'comment',
-        editable: true,
-      },
-    ],
+    initColumns: columnsData,
     selectedRowKeys: [],
     isAccessible: 'Выкл',
     isMentor: 'Ментор',
+    deletedRows: [],
   };
 
   service = new Service();
@@ -191,6 +95,10 @@ class MainTable extends Component {
     }
   };
 
+  setDataFromMentorTable = dataValue => {
+    this.setState({ data: dataValue });
+  };
+
   onFontSizeChange = value => {
     const size =
       value === 'less' ? this.state.fontSize - 1 : this.state.fontSize + 1;
@@ -236,7 +144,7 @@ class MainTable extends Component {
         },
       });
     } else {
-      this.onHandleAccessible
+      this.onHandleAccessible;
     }
   };
 
@@ -262,21 +170,22 @@ class MainTable extends Component {
     const res = await this.service.getAllEvents();
     res.sort((a, b) => a.key - b.key);
     const newColumns = this.state.columns.map(column => {
-      return {...column, render: text => <div style={this.state.styles}>{text}</div>}
+      return {
+        ...column,
+        render: text => <div style={this.state.styles}>{text}</div>,
+      };
     });
 
     this.setState({
       data: res,
       lastRowIndex: +res[res.length - 1].key + 1,
-      columns: [...newColumns]
+      columns: [...newColumns],
     });
-   
   };
 
   async componentDidMount() {
     this.updateTabel();
   }
-
 
   static getDerivedStateFromProps(props, state) {
     localStorage.setItem('currentState', JSON.stringify(state));
@@ -284,9 +193,9 @@ class MainTable extends Component {
   }
 
   setStateFromLocalStorage = () => {
-    if(localStorage.getItem('currentState')){
-      const newState = JSON.parse(localStorage.getItem('currentState'))
-      console.log('newState', newState)
+    if (localStorage.getItem('currentState')) {
+      const newState = JSON.parse(localStorage.getItem('currentState'));
+      console.log('newState', newState);
       this.setState({
         ...this.state,
         fontSize: newState.fontSize,
@@ -304,7 +213,7 @@ class MainTable extends Component {
         isMentor: newState.isMentor,
       });
     }
-  }
+  };
 
   addRow = async () => {
     const { columns, lastRowIndex } = this.state;
@@ -329,11 +238,28 @@ class MainTable extends Component {
 
   hideSelectedRows = rows => {
     rows.forEach(() => {
+      console.log('rows', rows);
       let dataSource = [...this.state.data];
       dataSource = dataSource.filter(item => !rows.includes(item.key));
-
       this.setState({
         data: dataSource,
+      });
+    });
+  };
+
+  deleteSelectedRows = rows => {
+    let dataSource = [...this.state.data];
+
+    rows.forEach(it => {
+      let deletedRows = dataSource.filter(item => rows.includes(item.key));
+      console.log(deletedRows);
+      dataSource = dataSource.filter(item => !rows.includes(item.key));
+      this.setState({
+        data: dataSource,
+        deletedRows: deletedRows,
+      });
+      deletedRows.forEach(async i => {
+        await this.service.deleteEvent(i.id);
       });
     });
   };
@@ -346,27 +272,36 @@ class MainTable extends Component {
     const { data, columns } = this.state;
     const { openTaskPage } = this.props;
     const newColumns = this.state.columns.map(column => {
-      return {...column, render: text => <div style={this.state.styles}>{text}</div>}
+      return {
+        ...column,
+        render: text => <div style={this.state.styles}>{text}</div>,
+      };
     });
     return (
       <>
         <Row justify="end">
           <Col span={4} offset={1}>
-            <MentorToggleButton onHandleMentor={this.onHandleMentor} isMentor={this.state.isMentor}/>
+            <MentorToggleButton
+              onHandleMentor={this.onHandleMentor}
+              isMentor={this.state.isMentor}
+            />
           </Col>
         </Row>
         <MyComponent />
         <Tables
           columns={newColumns}
+          // changeState={this.changeState}
           dataShedule={data}
           addRow={this.addRow}
           hideSelectedRows={this.hideSelectedRows}
+          deleteSelectedRows={this.deleteSelectedRows}
           showSelectedRows={this.showSelectedRows}
           pdfExportComponent={this.pdfExportComponent}
           isMentor={this.state.isMentor}
           openTaskPage={openTaskPage}
           updateTable={this.updateTabel}
           rowCount={this.state.rowCount}
+          setDataFromMentorTable={this.setDataFromMentorTable}
           TableControls={
             <TableControls
               columns={newColumns}
