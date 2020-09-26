@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Select, Tag, Input, Divider, Popconfirm } from 'antd';
 import Button from '../Button/Button';
-import { EditOutlined, EyeOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, EyeOutlined, PlusOutlined, DeleteOutlined, FormOutlined } from '@ant-design/icons';
 import TaskTypeConstructor from '../TaskTypeConstructor/TaskTypeConstructor';
 import LocalStorageSettings from '../../service/LocalStorageSettings';
 
@@ -41,10 +41,6 @@ export default class TaskPageHeader extends Component {
     changeData('taskType', 'default');
   }
 
-  // editTag = () => {
-
-  // }
-
   render() {
     const { isEdited, handleChangeSelect, handleChangeInput, data, taskType, name, editBtnHandlerOnClick, changeData } = this.props;
     const { isTaskTypeConstructor, constructorEditeMode } = this.state;
@@ -59,8 +55,6 @@ export default class TaskPageHeader extends Component {
 
     const localStorageData = JSON.parse(localStorage.currentState);
     const isMentor = localStorageData.isMentor === 'Ментор';
-
-    console.log(taskType, taskTypes[taskType])
 
     return (
       <>
@@ -92,9 +86,9 @@ export default class TaskPageHeader extends Component {
               <div className='task-page__option-item-btn-group'>
                 <Button
                   type="text"
-                  icon={<EditOutlined />}
+                  icon={<FormOutlined />}
                   btnClassName='task-page__option-item-btn'
-                  handlerOnClick={this.openEditeTaskTypeConstructor}
+                  onClick={this.openEditeTaskTypeConstructor}
                 />
                 <Popconfirm 
                   placement="bottom" 
@@ -102,15 +96,13 @@ export default class TaskPageHeader extends Component {
                   onConfirm={this.deleteTag} 
                   okText="Yes" 
                   cancelText="No"
-                >      
-                  <DeleteOutlined />          
-                  {/* <Button
+                >  
+                  <Button
                     type="text"
                     icon={<DeleteOutlined />}
                     btnClassName='task-page__option-item-btn'
                     danger
-                    handlerOnClick={null}
-                  /> */}
+                  />
                 </Popconfirm>
               </div>
             </div>:
@@ -118,19 +110,20 @@ export default class TaskPageHeader extends Component {
               {taskTypes[taskType]}
             </Tag>
           }
-          { isMentor ? 
+          {/* { isMentor ?  */}
             <Button 
-            title={isEdited ? 'Preview' : 'Edit'}
-            shape='circle'
-            type={'primary'}
-            icon={isEdited ? <EyeOutlined /> : <EditOutlined />}
-            btnWrapperClassName='task-page__preview-btn-wrapper'
-            btnClassName='task-page__preview-btn'
-            ghost={true}
-            handlerOnClick={editBtnHandlerOnClick}
-            /> :
-            null          
-          }
+              title={isEdited ? 'Preview' : 'Edit'}
+              shape='circle'
+              type={'primary'}
+              icon={isEdited ? <EyeOutlined /> : <EditOutlined />}
+              btnWrapperClassName='task-page__preview-btn-wrapper'
+              btnClassName='task-page__preview-btn'
+              ghost={true}
+              onClick={editBtnHandlerOnClick}
+            />
+             {/* : */}
+            {/* null          
+          } */}
             
         </div>
         
@@ -152,8 +145,8 @@ export default class TaskPageHeader extends Component {
           handleChangeSelect={handleChangeSelect}
           destroyOnClose={true}
           constructorEditeMode={constructorEditeMode}
-          taskType={taskType}
-          tagName={taskTypes[taskType]}
+          taskType={constructorEditeMode ? taskType : null}
+          tagName={constructorEditeMode ? taskTypes[taskType] : null}
         /> : null 
         }
       </>

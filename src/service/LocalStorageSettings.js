@@ -60,12 +60,6 @@ export default class LocalStorageSettings {
     this.set('taskTypeColors', newTaskTypeColors)
   }
 
-  // addTaskTypeSettings = (key, value) => {
-  //   this.addTaskType(key, value);
-  //   this.addTaskTypeColor(key, value);
-  //   this.addTaskStructure(key, value);
-  // }
-
   deleteTaskTypeStructure = (key) => {
     const taskStructure = this.getTaskStructure();
     delete taskStructure[key];

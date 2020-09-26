@@ -36,7 +36,7 @@ export default class TaskTypeConstructor extends Component {
     this.localStorageSettings.addTaskTypeColor(taskTypeName, color);
     this.localStorageSettings.addTaskStructure(taskTypeName);
 
-    this.props.handleChangeSelect(tagName)
+    this.props.handleChangeSelect(taskTypeName)
     this.props.onCancel();
   }
 

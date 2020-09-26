@@ -359,6 +359,9 @@ class MainTable extends Component {
     const newColumns = this.state.columns.map(column => {
       return {...column, render: text => <div style={this.state.styles}>{text}</div>}
     });
+
+    console.log(data, 'state')
+
     return (
       <>
         <Row justify="end">

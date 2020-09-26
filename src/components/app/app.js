@@ -13,6 +13,7 @@ localStorageSettings.init();
 export default class App extends Component {
   state = {
     isTaskPageOpen: false,
+    confirmLoading: false,
     data: {},
   }
 
@@ -26,13 +27,18 @@ export default class App extends Component {
 
   closeTaskPage = () => {    
     this.setState({
-      isTaskPageOpen: false,
       data: {},
     })
+    setTimeout(() => {
+      this.setState({
+        isTaskPageOpen: false,
+        confirmLoading: false,
+      });
+    }, 1000);
   }
 
   render() {
-    const { isTaskPageOpen, data, updateRow } = this.state;
+    const { isTaskPageOpen, data, updateRow, confirmLoading } = this.state;
 
     return (
       <>
@@ -48,6 +54,7 @@ export default class App extends Component {
           destroyOnClose={true}
           maskClosable={false}
           visible={isTaskPageOpen}
+          confirmLoading={confirmLoading}
           onCancel={this.closeTaskPage}
         >
           <TaskPage  
