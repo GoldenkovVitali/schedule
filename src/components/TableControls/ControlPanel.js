@@ -31,10 +31,10 @@ const ControlPanel = ({
   return (
     <>
       <Row>
-        <Col span={8}>
+        <Col xs={{ span: 18 }} lg={{ span: 8, offset: 1 }}>
           <Title level={5}>Background:</Title>
         </Col>
-        <Col span={8}>
+        <Col xs={{ span: 18 }} lg={{ span: 8, offset: 1 }}>
         <BackgroundColorPicker
           displayBgPicker={displayBgPicker}
           setDisplayBgPicker={setDisplayBgPicker}
@@ -45,10 +45,10 @@ const ControlPanel = ({
         </Col>
       </Row>
       <Row>
-        <Col span={8}>
+        <Col xs={{ span: 18 }} lg={{ span: 8, offset: 1 }}>
           <Title level={5}>Font color:</Title>
         </Col>
-        <Col span={8}>
+        <Col xs={{ span: 18 }} lg={{ span: 8, offset: 1 }}>
           <FontColorPicker
             displayFontPicker={displayFontPicker}
             setDisplayFontPicker={setDisplayFontPicker}
@@ -59,10 +59,10 @@ const ControlPanel = ({
         </Col>
       </Row>
       <Row>
-        <Col span={8} style={{marginBottom: 10}}>
+        <Col xs={{ span: 18 }} lg={{ span: 8, offset: 1 }} style={{marginBottom: 10}}>
           <Title level={5}>Font size:</Title>
         </Col>
-        <Col span={12}>
+        <Col xs={{ span: 18 }} lg={{ span: 12, offset: 1 }}>
           <FontSizeControl
             onFontSizeChange={onFontSizeChange}
             prevFontSize={prevFontSize}
@@ -70,20 +70,20 @@ const ControlPanel = ({
         </Col>
       </Row>
       <Row>
-        <Col span={12}>
+        <Col xs={{ span: 18 }} lg={{ span: 8, offset: 1 }}>
           <Title level={5}>Accessibility:</Title>
         </Col>
-        <Col span={12}>
+        <Col xs={{ span: 18 }} lg={{ span: 8, offset: 1 }}>
           <AccesebilityButton onHandleAccessible={onHandleAccessible} isAccessible={isAccessible} />
         </Col>
       </Row>
     <Row>
-      <Col span={12}>
+      <Col xs={{ span: 18 }} lg={{ span: 8, offset: 1 }}>
         <Title level={5}>Rows:</Title>
       </Col>
     </Row>
     <Row>
-      <Col span={12}>
+      <Col xs={{ span: 18 }} lg={{ span: 12 }}>
         <Slider
           min={1}
           step={1}
@@ -92,7 +92,7 @@ const ControlPanel = ({
           value={typeof rowCount === 'number' ? rowCount : 0}
         />
       </Col>
-      <Col span={4}>
+      <Col xs={{ span: 18 }} lg={{ span: 4 }}>
         <InputNumber
           min={1}
           step={1}

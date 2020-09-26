@@ -28,7 +28,7 @@ class Tables extends React.Component {
       TableControls,
       openTaskPage,
       updateTable,
-      rowCount
+      rowCount,
     } = this.props;
 
     return (

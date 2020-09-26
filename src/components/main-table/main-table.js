@@ -6,7 +6,10 @@ import Tables from './table-shedule/table';
 import TableControls from '../TableControls';
 import Select from 'react-select';
 import MentorToggleButton from '../MentorToggle';
-
+import TableView from "../TableView";
+import helpers from "../../helpers/helpers";
+import TaskFilter from "../TaskFilter";
+import columnsData from './columnsData';
 const options = [
   { value: 'Europe/London', label: 'Europe/London' },
   { value: 'Europe/Warsaw', label: 'Europe/Warsaw' },
@@ -24,56 +27,7 @@ const MyComponent = () => <Select options={options} />;
 class MainTable extends Component {
   state = {
     data: null,
-    columns: [
-      {
-        title: 'Date',
-        dataIndex: 'dateTime',
-        key: 'date',
-        editable: true,
-      },
-      {
-        title: 'Time',
-        dataIndex: 'time',
-        key: 'time',
-        editable: true,
-      },
-      {
-        title: 'Place',
-        dataIndex: 'place',
-        key: 'place',
-        editable: true,
-      },
-      {
-        title: 'Tags',
-        dataIndex: 'type',
-        key: 'type',
-        editable: true,
-      },
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        editable: true,
-      },
-      {
-        title: 'Description',
-        dataIndex: 'description',
-        key: 'description',
-        editable: true,
-      },
-      {
-        title: 'BroadcastUrl',
-        dataIndex: 'descriptionUrl',
-        key: 'descriptionUrl',
-        editable: true,
-      },
-      {
-        title: 'Comment',
-        dataIndex: 'comment',
-        key: 'comment',
-        editable: true,
-      },
-    ],
+    columns: columnsData,
     lastRowIndex: null,
     fontSize: 14,
     rowCount: 10,
@@ -85,59 +39,12 @@ class MainTable extends Component {
       fontSize: '14px',
     },
     hiddenKeys: [],
-    initColumns: [
-      {
-        title: 'Date',
-        dataIndex: 'dateTime',
-        key: 'date',
-        editable: true,
-      },
-      {
-        title: 'Time',
-        dataIndex: 'time',
-        key: 'time',
-        editable: true,
-      },
-      {
-        title: 'Place',
-        dataIndex: 'place',
-        key: 'place',
-        editable: true,
-      },
-      {
-        title: 'Tags',
-        dataIndex: 'type',
-        key: 'type',
-        editable: true,
-      },
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        editable: true,
-      },
-      {
-        title: 'Description',
-        dataIndex: 'description',
-        key: 'description',
-        editable: true,
-      },
-      {
-        title: 'BroadcastUrl',
-        dataIndex: 'descriptionUrl',
-        key: 'descriptionUrl',
-        editable: true,
-      },
-      {
-        title: 'Comment',
-        dataIndex: 'comment',
-        key: 'comment',
-        editable: true,
-      },
-    ],
+    initColumns: columnsData,
     selectedRowKeys: [],
     isAccessible: 'Выкл',
     isMentor: 'Ментор',
+    sowTaskTypes: null,
+    initialData: [],
   };
 
   service = new Service();
@@ -264,47 +171,19 @@ class MainTable extends Component {
     const newColumns = this.state.columns.map(column => {
       return {...column, render: text => <div style={this.state.styles}>{text}</div>}
     });
-
     this.setState({
       data: res,
       lastRowIndex: +res[res.length - 1].key + 1,
-      columns: [...newColumns]
+      columns: [...newColumns],
+      initialData: res,
     });
-   
+
   };
 
   async componentDidMount() {
     this.updateTabel();
   }
 
-
-  static getDerivedStateFromProps(props, state) {
-    localStorage.setItem('currentState', JSON.stringify(state));
-    return null;
-  }
-
-  setStateFromLocalStorage = () => {
-    if(localStorage.getItem('currentState')){
-      const newState = JSON.parse(localStorage.getItem('currentState'))
-      console.log('newState', newState)
-      this.setState({
-        ...this.state,
-        fontSize: newState.fontSize,
-        rowCount: newState.rowCount,
-        colorBgPicker: newState.colorBgPicker,
-        colorFontPicker: newState.colorFontPicker,
-        styles: {
-          color: newState.styles.color,
-          backgroundColor: newState.styles.backgroundColor,
-          fontSize: newState.styles.fontSize,
-        },
-        hiddenKeys: newState.hiddenKeys,
-        selectedRowKeys: newState.selectedRowKeys,
-        isAccessible: newState.isAccessible,
-        isMentor: newState.isMentor,
-      });
-    }
-  }
 
   addRow = async () => {
     const { columns, lastRowIndex } = this.state;
@@ -321,9 +200,7 @@ class MainTable extends Component {
       },
       { key: lastRowIndex }
     );
-
     await this.service.postEvent(result);
-
     this.updateTabel();
   };
 
@@ -331,7 +208,6 @@ class MainTable extends Component {
     rows.forEach(() => {
       let dataSource = [...this.state.data];
       dataSource = dataSource.filter(item => !rows.includes(item.key));
-
       this.setState({
         data: dataSource,
       });
@@ -342,16 +218,39 @@ class MainTable extends Component {
     this.updateTabel();
   };
 
+  onHandleSowTaskTypes = (values) => {
+    const newData = [];
+    values.forEach((item) => {
+      this.state.initialData.forEach((row) => {
+        if(row.type.toLowerCase() == item.toLowerCase()) {
+          newData.push(row)
+        }
+      })
+    })
+
+    this.setState({
+      data: newData,
+      sowTaskTypes: values,
+    });
+  };
+
   render() {
     const { data, columns } = this.state;
-    const { openTaskPage } = this.props;
+    const { openTaskPage, onHandleView, tableView } = this.props;
     const newColumns = this.state.columns.map(column => {
       return {...column, render: text => <div style={this.state.styles}>{text}</div>}
     });
+
     return (
       <>
         <Row justify="end">
-          <Col span={4} offset={1}>
+          <Col span={4} offset={0}>
+            <TableView onHandleView={onHandleView} tableView={tableView}/>
+          </Col>
+          <Col span={16} offset={0}>
+            <TaskFilter onHandleSowTaskTypes={this.onHandleSowTaskTypes} initialData={this.state.initialData}/>
+          </Col>
+          <Col span={4} offset={0}>
             <MentorToggleButton onHandleMentor={this.onHandleMentor} isMentor={this.state.isMentor}/>
           </Col>
         </Row>
