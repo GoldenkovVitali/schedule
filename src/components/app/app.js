@@ -5,6 +5,7 @@ import TaskPage from '../TaskPage/TaskPage';
 import EditableTable from '../main-table/table-shedule/MentorTable'
 import MainTable from '../main-table/main-table';
 import LocalStorageSettings from '../../service/LocalStorageSettings';
+import TableView from "../TableView";
 
 
 const localStorageSettings = new LocalStorageSettings();
@@ -15,6 +16,7 @@ export default class App extends Component {
     isTaskPageOpen: false,
     confirmLoading: false,
     data: {},
+    tableView: 'Table',
   }
 
   openTaskPage = (data, updateRow) => {
@@ -25,7 +27,7 @@ export default class App extends Component {
     })
   }
 
-  closeTaskPage = () => {    
+  closeTaskPage = () => {
     this.setState({
       data: {},
     })
@@ -37,13 +39,19 @@ export default class App extends Component {
     }, 1000);
   }
 
+  onHandleView = (value) => {
+    this.setState({
+      tableView: value,
+    })
+  }
+
   render() {
     const { isTaskPageOpen, data, updateRow, confirmLoading } = this.state;
 
     return (
       <>
         <div className="todo-app">WOWWWW</div>
-        <MainTable openTaskPage={this.openTaskPage} />
+        <MainTable openTaskPage={this.openTaskPage} onHandleView={this.onHandleView} tableView={this.state.tableView} />
         <Modal
           className='task-page__content'
           wrapClassName='task-page__wrapper'
@@ -57,7 +65,7 @@ export default class App extends Component {
           confirmLoading={confirmLoading}
           onCancel={this.closeTaskPage}
         >
-          <TaskPage  
+          <TaskPage
             closeTaskPage={this.closeTaskPage}
             data={data} 
             updateRow={updateRow}

@@ -45,15 +45,15 @@ const TableControls = (props) => {
   return (
         <ModalButton onSaveSettings={onSaveSettings} icon={<SettingOutlined />}>
           <Row>
-            <Col span={12} offset={1}>
+            <Col span={12}>
               <Title level={5}>Show/Hide columns:</Title>
             </Col>
           </Row>
           <Row>
-            <Col xs={{ span: 12, offset: 1 }} lg={{ span: 12, offset: 1 }}>
+            <Col xs={{ span: 18 }} lg={{ span: 12, offset: 1 }}>
                <ColTransfer initColumns={col} targetKeys={targetKeys} setTargetKeys={setTargetKeys} />
             </Col>
-            <Col xs={{ span: 8, offset: 1 }} lg={{ span: 8, offset: 1 }}>
+            <Col xs={{ span: 18}} lg={{ span: 8, offset: 1 }}>
                <ControlPanel
                  rowCount={rowCount}
                  setRowCount={setRowCount}
