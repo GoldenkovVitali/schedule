@@ -1,0 +1,45 @@
+.ant-list-items {
+  max-height: 250px;
+  overflow-y: scroll;
+}
+
+.comments-block__checkbox {
+  margin-right: 5px;
+}
+
+.comments-block__checkbox-wrapper {
+  margin-bottom: 10px;
+}
+
+.task-page .comments-block .ant-collapse-content-box {  
+  padding: 50px 50px 0;
+  background-color: #f2f7ff;
+}
+
+.comments-block__content-wrapper,
+.comments-block .ant-spin-nested-loading, 
+.comments-block .ant-list .ant-comment-inner {
+  background-color: #fff;
+}
+
+.comments-block {
+  margin-bottom: 30px;
+}
+
+.ant-list.comments-block.ant-list-split {
+  margin: 0;
+}
+
+.comments-block .ant-comment-inner {
+  background-color: #f2f7ff;
+}
+
+.comments-block .ant-list {
+  padding: 10px;
+}
+
+@media (max-width: 768px) {
+  .comments-block .ant-collapse-content-box {  
+    padding: 15px;
+  }
+}

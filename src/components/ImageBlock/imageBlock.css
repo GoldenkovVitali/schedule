@@ -1,0 +1,26 @@
+.task-page .image-block {
+  margin-bottom: 30px;
+}
+
+.task-page .image-block__edite-block {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.task-page .image-block__checkbox {
+  margin-right: 10px;
+}
+
+.task-page .image-block__image {
+  margin: 0 auto;
+  width: 90%;
+  max-width: 700px;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .task-page .image-block__image {
+    width: 100%;
+  }
+}

@@ -1,0 +1,23 @@
+.task-page .description-block {
+  margin-bottom: 30px;
+  display: flex;
+}
+
+.task-page .description-block__textarea_edited {
+  resize: none;
+  overflow: hidden;
+}
+
+.task-page .description-block__textarea {
+  padding-left: 0;
+  resize: none;
+  overflow: hidden;
+}
+
+.task-page .description-block__checkbox {
+  margin-right: 10px;
+}
+
+.task-page .ant-input {
+  resize: none;
+}

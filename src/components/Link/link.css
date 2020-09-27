@@ -1,0 +1,44 @@
+.task-page .link-block {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.task-page .link-block__checkbox{
+  margin-right: 10px;
+}
+
+.task-page .link-block__content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.task-page .link-block__label {
+  padding-left: 0;
+  padding-right: 0;
+  margin-right: 10px;
+  width: 110px;
+  font-weight: 700;
+}
+
+.task-page .link-block__label_edited {
+  margin-right: 10px;
+  width: fit-content;
+  font-weight: 700;
+}
+
+.task-page .link-block__link {
+  align-self: center;
+}
+
+.task-page .link-block__link-input {
+  width: 90%;
+}
+
+.task-page .link-block__link-wrap {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

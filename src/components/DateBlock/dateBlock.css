@@ -1,0 +1,42 @@
+.task-page .date-block {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.task-page .date-block__item {
+  margin-right: 30px;
+  margin-bottom: 10px;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.task-page .date-block__checkbox {
+  margin-right: 5px;
+}
+
+.task-page .date-block__item-type {
+  margin-right: 10px;
+  width: fit-content;
+  font-weight: 700;
+  display: flex;
+  align-items: center; 
+}
+
+.task-page .date-block input[disabled] {
+  color: #000;
+}
+
+@media (max-width: 768px) {
+  .task-page .date-block {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 375px) {
+  .task-page .date-block__item {
+    margin-bottom: 5px;
+  }
+}

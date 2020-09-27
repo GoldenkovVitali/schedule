@@ -1,0 +1,61 @@
+button:focus {
+  outline: none;
+}
+
+.task-page { 
+  padding: 40px 60px;
+  width: 90vw;
+  max-width: 100%;
+  font-size: 16px;
+  height: fit-content;
+}
+
+.task-page input, .task-page textarea, .task-page div { 
+  font-size: 16px;
+}
+
+.task-page * {
+  box-sizing: border-box;
+}
+
+.task-page p {
+  margin: 0;
+}
+
+.task-page .task-page__header-block {
+  margin-bottom: 20px;
+  width: 100%;
+  border-bottom: 1px solid #7E7E7E;
+}
+
+.task-page .task-page__header {
+  width: 100%;
+  font-size: 30px;
+  line-height: 1.5;  
+  color: #848484;  
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .task-page {
+    padding: 40px 20px 10px;
+  }
+
+  .task-page .task-page__header {
+    font-size: 24px;
+  }
+}
+
+
+@media (max-width: 375px) {
+  .task-page {
+    font-size: 14px;
+  }
+  
+  .task-page .task-page__header {
+    font-size: 18px;
+  }
+}

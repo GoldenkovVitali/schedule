@@ -1,0 +1,55 @@
+.ant-table-wrapper {
+  margin: 20px;
+}
+
+.urlshref {
+  color: blue;
+}
+
+.red {
+  color: red;
+  background-color: #000;
+}
+
+.green {
+  background-color: green;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.table-row-light {
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.table-row-dark {
+  background-color: #64bbf5 !important;
+  cursor: pointer;
+}
+
+.table-row-dark:hover td {
+  background-color: #c4e7ff !important;
+  cursor: pointer;
+}
+
+.ant-btn-primary {
+  margin-left: 16px;
+}
+
+.custom {
+  background-color: #63ab91;
+}
+
+.custom2 {
+  background-color: #bde04a;
+}
+
+.black {
+  background-color: rgb(206, 193, 193);
+}
+
+.ant-input {
+  margin-right: 18px;
+}

@@ -1,0 +1,32 @@
+.task-page .organizer-block {
+  margin-bottom: 30px;
+  display: flex;
+}
+
+.task-page .organizer-block__checkbox {
+  margin-right: 10px;
+}
+
+.task-page .organizer-block__data {
+  width: 100%;
+}
+
+.task-page .organizer-block__organizer_edited {
+  margin-bottom: 10px;
+  font-weight: 700
+}
+
+.task-page .organizer-block__organizer {
+  padding-left: 0;
+  margin-bottom: 10px;
+  font-weight: 700
+}
+
+.task-page .organizer-block__description_edited {
+  resize: none;
+}
+
+.task-page .organizer-block__description {
+  padding-left: 0;
+  resize: none;
+}
