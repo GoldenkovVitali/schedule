@@ -38,6 +38,7 @@ class Tables extends React.Component {
       openTaskPage,
       updateRow,
       rowCount,
+      isAccessible,
     } = this.props;
 
     return (
