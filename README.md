@@ -35,7 +35,7 @@
 6) An issue should be closed if everything is ok or bug is fixed.
 
 # application documentation
-## Deploy - [schedule](https://nostalgic-villani-310ca1.netlify.app)
+## Deploy - [schedule](https://clever-bartik-889bb9.netlify.app/)
 ## The project is an RS School curriculum with the ability to view and edit data
 
 ## The project used WebPack and there is a file package.json. Framework used react. 
