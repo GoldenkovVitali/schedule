@@ -6,24 +6,11 @@ import Tables from './table-shedule/table';
 import TableControls from '../TableControls';
 import Select from 'react-select';
 import MentorToggleButton from '../MentorToggle';
-import TableView from "../TableView";
-import helpers from "../../helpers/helpers";
-import TaskFilter from "../TaskFilter";
+import TableView from '../TableView';
+import helpers from '../../helpers/helpers';
+import TaskFilter from '../TaskFilter';
 import columnsData from './columnsData';
-
-const options = [
-  { value: 'Europe/London', label: 'Europe/London' },
-  { value: 'Europe/Warsaw', label: 'Europe/Warsaw' },
-  { value: 'Europe/Kiev', label: 'Europe/Kiev' },
-  { value: 'Europe/Minsk', label: 'Europe/Minsk' },
-  { value: 'Europe/Moscow', label: 'Europe/Moscow' },
-  { value: 'Europe/Volgograd', label: 'Europe/Volgograd' },
-  { value: 'Europe/Yekaterinburg', label: 'Europe/Yekaterinburg' },
-  { value: 'Asia/Tashkent', label: 'Asia/Tashkent' },
-  { value: 'Asia/Tbilisi', label: 'Asia/Tbilisi' },
-];
-
-const MyComponent = () => <Select options={options} />;
+import LocalStorageSettings from '../../service/LocalStorageSettings';
 
 class MainTable extends Component {
   state = {
@@ -49,10 +36,10 @@ class MainTable extends Component {
 
     sowTaskTypes: null,
     initialData: [],
-
   };
 
   service = new Service();
+  localStorageSettings = new LocalStorageSettings();
 
   getColor = type => {
     if (type === 'font') {
@@ -190,7 +177,6 @@ class MainTable extends Component {
 
       initialData: res,
     });
-
   };
 
   async componentDidMount() {
@@ -205,7 +191,7 @@ class MainTable extends Component {
   setStateFromLocalStorage = () => {
     if (localStorage.getItem('currentState')) {
       const newState = JSON.parse(localStorage.getItem('currentState'));
-      console.log('newState', newState);
+
       this.setState({
         ...this.state,
         fontSize: newState.fontSize,
@@ -224,7 +210,6 @@ class MainTable extends Component {
       });
     }
   };
-
 
   addRow = async () => {
     const { columns, lastRowIndex } = this.state;
@@ -247,7 +232,6 @@ class MainTable extends Component {
 
   hideSelectedRows = rows => {
     rows.forEach(() => {
-      console.log('rows', rows);
       let dataSource = [...this.state.data];
       dataSource = dataSource.filter(item => !rows.includes(item.key));
 
@@ -262,7 +246,7 @@ class MainTable extends Component {
 
     rows.forEach(it => {
       let deletedRows = dataSource.filter(item => rows.includes(item.key));
-      console.log(deletedRows);
+
       dataSource = dataSource.filter(item => !rows.includes(item.key));
 
       this.setState({
@@ -279,27 +263,26 @@ class MainTable extends Component {
     this.updateTabel();
   };
 
-  updateRow = (row) => {
+  updateRow = row => {
     const { data } = this.state;
-    const localData = JSON.parse(JSON.stringify(data)); 
+    const localData = JSON.parse(JSON.stringify(data));
 
-    const rowIndex = localData.findIndex((event) => event.id === row.id);
-    localData.splice(rowIndex, 1, row); 
+    const rowIndex = localData.findIndex(event => event.id === row.id);
+    localData.splice(rowIndex, 1, row);
 
     this.setState({ data: localData });
     this.service.updateEvent(row);
-  } 
+  };
 
-  
-  onHandleSowTaskTypes = (values) => {
+  onHandleSowTaskTypes = values => {
     const newData = [];
-    values.forEach((item) => {
-      this.state.initialData.forEach((row) => {
-        if(row.type.toLowerCase() == item.toLowerCase()) {
-          newData.push(row)
+    values.forEach(item => {
+      this.state.initialData.forEach(row => {
+        if (row.type.toLowerCase() == item.toLowerCase()) {
+          newData.push(row);
         }
-      })
-    })
+      });
+    });
 
     this.setState({
       data: newData,
@@ -317,25 +300,44 @@ class MainTable extends Component {
       };
     });
 
+    const taskTypes = Object.keys(this.localStorageSettings.getTaskTypes());
+    const taskColors = this.localStorageSettings.getTaskTypeColors();
+
+    const styles = taskTypes.map(type => {
+      return (
+        <style key={type}>
+          {`.${type} {
+              background-color: ${taskColors[type]};
+            }; \n`}
+        </style>
+      );
+    });
+
     return (
       <>
+        {styles}
         <Row justify="end">
-
           <Col span={4} offset={0}>
-            <TableView onHandleView={onHandleView} tableView={tableView}/>
+            <TableView onHandleView={onHandleView} tableView={tableView} />
           </Col>
           <Col span={16} offset={0}>
-            <TaskFilter onHandleSowTaskTypes={this.onHandleSowTaskTypes} initialData={this.state.initialData}/>
+            {this.props.tableView === 'Table' ? (
+              <TaskFilter
+                onHandleSowTaskTypes={this.onHandleSowTaskTypes}
+                initialData={this.state.initialData}
+              />
+            ) : null}
           </Col>
           <Col span={4} offset={0}>
-            <MentorToggleButton onHandleMentor={this.onHandleMentor} isMentor={this.state.isMentor}/>
-
+            <MentorToggleButton
+              onHandleMentor={this.onHandleMentor}
+              isMentor={this.state.isMentor}
+            />
           </Col>
         </Row>
-        <MyComponent />
+
         <Tables
           columns={newColumns}
-          // changeState={this.changeState}
           dataShedule={data}
           addRow={this.addRow}
           hideSelectedRows={this.hideSelectedRows}
@@ -347,6 +349,7 @@ class MainTable extends Component {
           updateRow={this.updateRow}
           rowCount={this.state.rowCount}
           setDataFromMentorTable={this.setDataFromMentorTable}
+          tableView={this.props.tableView}
           TableControls={
             <TableControls
               columns={newColumns}

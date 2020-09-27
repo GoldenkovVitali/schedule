@@ -1,15 +1,19 @@
-.task-page__content { 
+.task-page__content {
   width: 100vw;
   max-width: 1120px;
-  border: 1px solid #E5E5E5;
+  border: 1px solid #e5e5e5;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px #00000040;  
+  box-shadow: 0px 0px 10px #00000040;
   box-sizing: border-box;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .task-page__wrapper {
   padding: 20px 0;
+}
+
+.todo-app {
+  margin-bottom: 20px;
 }
 
 @media (max-width: 375px) {

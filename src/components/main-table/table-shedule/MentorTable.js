@@ -6,6 +6,7 @@ import { Button } from 'antd';
 const service = new Service();
 const localStorageSettings = new LocalStorageSettings();
 import LocalStorageSettings from '../../../service/LocalStorageSettings';
+import { DatePicker, Space } from 'antd';
 
 const EditableCell = ({
   editing,
@@ -18,7 +19,7 @@ const EditableCell = ({
   children,
   ...restProps
 }) => {
-  const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+  const inputNode = dataIndex === 'dateTime' ? <DatePicker /> : <Input />;
   return (
     <td {...restProps}>
       {editing ? (
@@ -64,7 +65,6 @@ const EditableTable = ({
     useEffect(() => {
       setData(dataShedule);
     }, [dataShedule]);
-
 
     const edit = record => {
       form.setFieldsValue({
@@ -182,9 +182,10 @@ const EditableTable = ({
             ) {
               return 'table-row-dark';
             }
+
             let taskTypeColors = localStorageSettings.getTaskTypeColors();
-            const rowColor = taskTypeColors[record.type] || 'black';
-            return rowColor;
+            const color = taskTypeColors[record.type] ? record.type : 'black';
+            return color;
           }}
           pagination={{
             onChange: cancel,
@@ -196,12 +197,9 @@ const EditableTable = ({
                 if (event.shiftKey) {
                   changeState([...selectedRowKeys, record.key]);
                   setSelectedRowKeys(() => {
-                    console.log('11', record.key);
                     return [...selectedRowKeys, record.key];
                   });
-                  console.log('EREE2', data);
                 } else {
-                  console.log('22', record.key);
                   changeState([record.key]);
                   setSelectedRowKeys([record.key]);
                 }
