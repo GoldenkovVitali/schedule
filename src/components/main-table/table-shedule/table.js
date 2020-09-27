@@ -12,8 +12,8 @@ class Tables extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRowKeys: [],
-      editing: false,
+      selectedRowKeys: [], // Check here to configure the default column
+      editing: false, // редактирование можно или нет, это вторая часть таска для менторов
       isShowDivTask: false,
     };
   }
@@ -35,8 +35,8 @@ class Tables extends React.Component {
       columns,
       TableControls,
       openTaskPage,
-      updateTable,
-      rowCount,
+      updateRow,
+      rowCount
     } = this.props;
 
     return (
@@ -154,7 +154,7 @@ class Tables extends React.Component {
                     console.log(this.state);
                   },
                   onDoubleClick: () => {
-                    openTaskPage(record, updateTable);
+                    openTaskPage(record, updateRow);
                   },
                 };
               }}
@@ -170,18 +170,46 @@ class Tables extends React.Component {
                 }
                 let taskTypeColors = this.localStorageSettings.getTaskTypeColors();
                 const rowColor = taskTypeColors[record.type] || 'black';
+
                 return rowColor;
+                // if (
+                //   record.type === 'lecture' ||
+                //   record.type === 'lectureMixed' ||
+                //   record.type === 'lectureSelfstudy' ||
+                //   record.type === 'lectureOffline' ||
+                //   record.type === 'lectureOnline'
+                // ) {
+                //   return 'blue';
+                // } else if (
+                //   record.type === 'interview' ||
+                //   record.type === 'test' ||
+                //   record.type === 'warmup'
+                // ) {
+                //   return 'custom';
+                // } else if (
+                //   record.type === 'codejam' ||
+                //   record.type === 'codewars' ||
+                //   record.type === 'htmltask' ||
+                //   record.type === 'jstask'
+                // ) {
+                //   return 'green';
+                // } else if (
+                //   record.type === 'meetup' ||
+                //   record.type === 'workshop'
+                // ) {
+                //   return 'custom2';
+                // } else {
+                //   return 'black';
+                // }
               }}
-              // rowClassName={record => record.color.replace('#', '_')}
-              // style={{ background: 'yellow' }}
               columns={columns}
             />
           ) : (
-            <EditableTable
-              dataShedule={dataShedule}
-              columns={columns}
-              openTaskPage={openTaskPage}
-              updateTable={updateTable}
+            <EditableTable 
+              dataShedule={dataShedule} 
+              columns={columns} 
+              openTaskPage={openTaskPage} 
+              updateRow={updateRow}
               rowCount={rowCount}
               changeState={this.changeState}
               setDataFromMentorTable={setDataFromMentorTable}

@@ -1,21 +1,21 @@
-.link-block {
+.task-page .link-block {
   margin-bottom: 30px;
   display: flex;
   align-items: center;
 }
 
-.link-block__checkbox{
+.task-page .link-block__checkbox{
   margin-right: 10px;
 }
 
-.link-block__content {
+.task-page .link-block__content {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
 
-.link-block__label {
+.task-page .link-block__label {
   padding-left: 0;
   padding-right: 0;
   margin-right: 10px;
@@ -23,21 +23,21 @@
   font-weight: 700;
 }
 
-.link-block__label_edited {
+.task-page .link-block__label_edited {
   margin-right: 10px;
   width: fit-content;
   font-weight: 700;
 }
 
-.link-block__link {
+.task-page .link-block__link {
   align-self: center;
 }
 
-.link-block__link-input {
+.task-page .link-block__link-input {
   width: 90%;
 }
 
-.link-block__link-wrap {
+.task-page .link-block__link-wrap {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

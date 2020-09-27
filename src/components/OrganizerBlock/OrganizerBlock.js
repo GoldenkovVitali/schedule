@@ -71,6 +71,7 @@ export default class OrganizerBlock extends Component {
             value={organizer}
             data-name={name.organizer}
             disabled={!checked}
+            readOnly={isEdited ? false : true}
             bordered={isEdited ? true : false}
             onChange={this.handleChangeInput}
           />

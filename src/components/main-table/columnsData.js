@@ -40,7 +40,6 @@ const columnsData = [
     dataIndex: 'descriptionUrl',
     key: 'descriptionUrl',
     editable: true,
-    render: text => <a>{text}</a>,
   },
   {
     title: 'Deadline',
@@ -49,6 +48,7 @@ const columnsData = [
     editable: true,
   },
   {
+
     title: 'Comment',
     dataIndex: 'comment',
     key: 'comment',

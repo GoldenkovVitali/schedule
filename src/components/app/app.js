@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import './app.css';
 import { Modal } from 'antd';
 import TaskPage from '../TaskPage/TaskPage';
-
-import UserSwitchButton from '../UserSwitchButton/UserSwitchButton';
 import EditableTable from '../main-table/table-shedule/MentorTable'
 import MainTable from '../main-table/main-table';
 import LocalStorageSettings from '../../service/LocalStorageSettings';
 import TableView from "../TableView";
-
 
 
 const localStorageSettings = new LocalStorageSettings();
@@ -17,23 +14,29 @@ localStorageSettings.init();
 export default class App extends Component {
   state = {
     isTaskPageOpen: false,
+    confirmLoading: false,
     data: {},
     tableView: 'Table',
   }
 
-  openTaskPage = (data, updateTable) => {
+  openTaskPage = (data, updateRow) => {
     this.setState({
       isTaskPageOpen: true,
       data: data,
-      updateTable: updateTable,
+      updateRow: updateRow,
     })
   }
 
   closeTaskPage = () => {
     this.setState({
-      isTaskPageOpen: false,
       data: {},
     })
+    setTimeout(() => {
+      this.setState({
+        isTaskPageOpen: false,
+        confirmLoading: false,
+      });
+    }, 1000);
   }
 
   onHandleView = (value) => {
@@ -43,7 +46,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { isTaskPageOpen, data, updateTable } = this.state;
+    const { isTaskPageOpen, data, updateRow, confirmLoading } = this.state;
 
     return (
       <>
@@ -57,15 +60,16 @@ export default class App extends Component {
           footer={null}
           centered
           destroyOnClose={true}
-          closable={false}
+          maskClosable={false}
           visible={isTaskPageOpen}
+          confirmLoading={confirmLoading}
           onCancel={this.closeTaskPage}
         >
           <TaskPage
             closeTaskPage={this.closeTaskPage}
-            data={data}
-            updateTable={updateTable}
-          />
+            data={data} 
+            updateRow={updateRow}
+          /> 
         </Modal>
       </>
     );

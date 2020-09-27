@@ -6,7 +6,23 @@ import './button.css';
 export default class UserSwitchButton extends Component {
 
   render() {
-    const { type, size, shape, btnClassName, btnWrapperClassName, handlerOnClick, text, icon, ghost, danger, title } = this.props;
+    const { 
+      type, 
+      size, 
+      shape, 
+      btnClassName, 
+      btnWrapperClassName,
+      onClick,
+      text, 
+      icon, 
+      ghost, 
+      danger, 
+      title,
+      loading,
+      onMouseEnter,
+      onMouseLeave,
+      onFocus,
+    } = this.props;
     
     return (
       <div className={btnWrapperClassName}>
@@ -19,7 +35,11 @@ export default class UserSwitchButton extends Component {
           ghost={ghost}
           danger={danger}
           className={btnClassName}
-          onClick={handlerOnClick}
+          onClick={onClick}
+          loading={loading}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+          onFocus={onFocus}
         >
           {text}
         </Button>

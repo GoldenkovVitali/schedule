@@ -21,7 +21,7 @@ export default class Link extends Component {
   }
 
   onChangeCheckbox = (event) => {
-    const { data, name, changeData } = this.props;
+    const { name, changeData } = this.props;
     const { descriptionUrl, descriptionUrlTitle } = this.state;
 
     const isChecked = event.target.checked;
@@ -70,6 +70,7 @@ export default class Link extends Component {
             placeholder='Add link title...'          
             value={descriptionUrlTitle}
             data-name={linkTitle}
+            readOnly={isEdited ? false : true}
             disabled={!checked}
             bordered={isEdited ? true : false}
             onChange={this.handleChangeInput}

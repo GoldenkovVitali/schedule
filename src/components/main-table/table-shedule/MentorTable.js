@@ -48,7 +48,7 @@ const EditableTable = ({
   columns,
   changeState,
   openTaskPage,
-  updateTable,
+  updateRow,
   rowCount,
   setDataFromMentorTable,
 }) => {
@@ -207,8 +207,7 @@ const EditableTable = ({
                 }
               },
               onDoubleClick: () => {
-                openTaskPage(record, updateTable);
-                console.log('sadasdasd');
+                openTaskPage(record, updateRow);
               },
             };
           }}
