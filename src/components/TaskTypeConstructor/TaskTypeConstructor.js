@@ -6,7 +6,7 @@ import './taskTypeConstructor.css';
 
 export default class TaskTypeConstructor extends Component {
   state = {
-    color: '#000000d9',
+    color: '#000000d9', 
     tagName: this.props.tagName || '',
     taskType: this.props.taskType || '',
   }
