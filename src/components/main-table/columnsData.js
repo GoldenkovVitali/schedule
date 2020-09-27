@@ -1,15 +1,15 @@
+import { Col, Row, Tag } from 'antd';
+
 const columnsData = [
   {
-    title: 'Date',
-    dataIndex: 'dateTime',
-    key: 'date',
-    editable: true,
+    title: 'Start Date',
+    dataIndex: 'startDate',
+    key: 'startDate',
   },
   {
-    title: 'Time',
-    dataIndex: 'time',
-    key: 'time',
-    editable: true,
+    title: 'Start Time',
+    dataIndex: 'startTime',
+    key: 'startTime',
   },
   {
     title: 'Place',
@@ -21,7 +21,6 @@ const columnsData = [
     title: 'Tags',
     dataIndex: 'type',
     key: 'type',
-    editable: true,
   },
   {
     title: 'Name',
@@ -36,22 +35,16 @@ const columnsData = [
     editable: true,
   },
   {
-    title: 'BroadcastUrl',
+    title: 'Description Url',
     dataIndex: 'descriptionUrl',
     key: 'descriptionUrl',
     editable: true,
+    render: text => <a>{text}</a>,
   },
   {
     title: 'Deadline',
     dataIndex: 'deadline',
     key: 'deadline',
-    editable: true,
-  },
-  {
-
-    title: 'Comment',
-    dataIndex: 'comment',
-    key: 'comment',
     editable: true,
   },
 ];
