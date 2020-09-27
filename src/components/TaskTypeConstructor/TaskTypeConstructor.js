@@ -44,8 +44,6 @@ export default class TaskTypeConstructor extends Component {
     const { color, tagName } = this.state;
     const { visible, onCancel, constructorEditeMode, taskType } = this.props;
 
-    console.log(taskType, tagName, 'ddd')
-
     return (
       <Modal
         className=''
