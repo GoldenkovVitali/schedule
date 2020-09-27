@@ -30,7 +30,7 @@
   height: 50vh;
 }
 
-.map__address {
+.task-page .map__address {
   padding-left: 0;
 }
 
@@ -39,7 +39,7 @@
   font-weight: 700;
 }
 
-.map__address-wrapper {  
+.task-page .map__address-wrapper {  
   margin-bottom: 10px;
   display: flex;
   align-items: center;

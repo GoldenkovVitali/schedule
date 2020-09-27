@@ -279,6 +279,18 @@ class MainTable extends Component {
     this.updateTabel();
   };
 
+  updateRow = (row) => {
+    const { data } = this.state;
+    const localData = JSON.parse(JSON.stringify(data)); 
+
+    const rowIndex = localData.findIndex((event) => event.id === row.id);
+    localData.splice(rowIndex, 1, row); 
+
+    this.setState({ data: localData });
+    this.service.updateEvent(row);
+  } 
+
+  
   onHandleSowTaskTypes = (values) => {
     const newData = [];
     values.forEach((item) => {
@@ -332,7 +344,7 @@ class MainTable extends Component {
           pdfExportComponent={this.pdfExportComponent}
           isMentor={this.state.isMentor}
           openTaskPage={openTaskPage}
-          updateTable={this.updateTabel}
+          updateRow={this.updateRow}
           rowCount={this.state.rowCount}
           setDataFromMentorTable={this.setDataFromMentorTable}
           TableControls={

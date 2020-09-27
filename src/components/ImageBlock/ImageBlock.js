@@ -7,13 +7,29 @@ import './imageBlock.css';
 
 export default class ImageBlock extends Component {
   state = {
-    url: '',
+    url: this.props.data[this.props.name],
     checked: !!this.props.data[this.props.name],
   }
 
   onChangeCheckbox = (event) => {
+    const { name, changeData } = this.props;
+    const { url } = this.state;
+
     const isChecked = event.target.checked;
+
+    if (!isChecked) {
+      changeData(name, '');
+    } else {
+      changeData(name, url);
+    }
+
     this.setState({ checked: isChecked })
+  }
+
+  handleChangeInput = (event) => {
+    const inputValue = event.target.value;
+    this.props.handleChangeInput(event);
+    this.setState({ url: inputValue });
   }
   
   render() {
@@ -35,7 +51,7 @@ export default class ImageBlock extends Component {
           />
           <Input 
             placeholder='Add image url...'
-            defaultValue={data[name] || url}
+            value={url}
             data-name={name}
             disabled={!checked}
             onChange={handleChangeInput}
@@ -43,7 +59,7 @@ export default class ImageBlock extends Component {
         </div> :
         <Image
           className='image-block__image'
-          src={data[name] || url}
+          src={url}
           fallback={noImage} 
         /> }
       </div>

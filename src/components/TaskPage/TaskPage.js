@@ -20,7 +20,10 @@ export default class TaskPage extends Component {
     incomingData: this.props.data,
     data: JSON.parse(JSON.stringify(this.props.data)),
     isEdited: false,
+    btnLoading: false,
   }
+
+  isMounted = false;
 
   service = new Service();
   localStorageSettings = new LocalStorageSettings();
@@ -53,28 +56,47 @@ export default class TaskPage extends Component {
   };
 
   postEvent = () => {
-    this.service.postEvent(this.state.data);
+    const { data } = this.state;    
+    this.service.postEvent(data);
   }
 
-  updateEvent = () => {
-    this.service.updateEvent(this.state.data);
-    this.props.closeTaskPage();
-    this.props.updateTable(); // ??
+  updateEvent = () => {   
+    this.isMounted = true;
+    this.setState({ btnLoading: true });
+
+    const { data } = this.state;  
+    const { updateRow, closeTaskPage } = this.props; 
+
+    updateRow(data); 
+    closeTaskPage();
+  }
+
+  componentWillUnmount() {
+    this.isMounted = false;
   }
 
   render() {
-    const { isEdited, data } = this.state; 
-    const { lng, lat, zoom } = data;   
-
-    const taskStructure = this.localStorageSettings.getTaskStructure();
+    const { isEdited, data, incomingData, btnLoading } = this.state; 
+    const { lng, lat, zoom, type } = data;     
     
     const longitude = !lng ? 27.56 : lng;
     const latitude = !lat ? 53.9 : lat;
-    const zoomNew = !zoom ? 11 : zoom;    
+    const zoomNew = !zoom ? 11 : zoom;  
 
-    const dataType = taskStructure[data.type] ? data.type : 'default';
+    const taskStructure = this.localStorageSettings.getTaskStructure();    
+    const dataType = taskStructure[type] ? type : 'default';
 
-    const { date, lectureDescription, image, video, link, taskDescription, map, organizer, feedback } = taskStructure[dataType];
+    const { 
+      date, 
+      lectureDescription, 
+      image, 
+      video, 
+      link, 
+      taskDescription, 
+      map, 
+      organizer, 
+      feedback 
+    } = taskStructure[dataType];
 
     return (
       <div className='task-page'>
@@ -86,6 +108,7 @@ export default class TaskPage extends Component {
           handleChangeSelect={this.handleChangeSelect}
           handleChangeInput={this.handleChangeInput}
           editBtnHandlerOnClick={this.togglePageMode}
+          changeData={this.changeData}
         />
         <DateBlock
           isEdited={isEdited}
@@ -185,18 +208,22 @@ export default class TaskPage extends Component {
           ) : null
         }
         <CommentsBlock 
-          data={data}
+          data={incomingData}
           feedback={feedback}
           isEdited={isEdited}
         />
-        <Button 
-          type='primary'
-          size='default'
-          btnClassName='task-page__confirm-btn'
-          btnWrapperClassName = 'task-page__confirm-btn-wrapper'
-          text='Confirm'
-          handlerOnClick={this.updateEvent}
-        />
+        {isEdited ? 
+          <Button 
+            type='primary'
+            size='default'
+            btnClassName='task-page__confirm-btn'
+            btnWrapperClassName = 'task-page__confirm-btn-wrapper'
+            text='Confirm'
+            onClick={this.updateEvent}
+            loading={btnLoading}
+          /> : 
+          null 
+        }
       </div>
     );
   }

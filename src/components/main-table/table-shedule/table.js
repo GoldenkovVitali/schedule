@@ -35,8 +35,8 @@ class Tables extends React.Component {
       columns,
       TableControls,
       openTaskPage,
-      updateTable,
-      rowCount,
+      updateRow,
+      rowCount
     } = this.props;
 
     return (
@@ -154,7 +154,7 @@ class Tables extends React.Component {
                     console.log(this.state);
                   },
                   onDoubleClick: () => {
-                    openTaskPage(record, updateTable);
+                    openTaskPage(record, updateRow);
                   },
                 };
               }}
@@ -205,11 +205,11 @@ class Tables extends React.Component {
               columns={columns}
             />
           ) : (
-            <EditableTable
-              dataShedule={dataShedule}
-              columns={columns}
-              openTaskPage={openTaskPage}
-              updateTable={updateTable}
+            <EditableTable 
+              dataShedule={dataShedule} 
+              columns={columns} 
+              openTaskPage={openTaskPage} 
+              updateRow={updateRow}
               rowCount={rowCount}
               changeState={this.changeState}
               setDataFromMentorTable={setDataFromMentorTable}

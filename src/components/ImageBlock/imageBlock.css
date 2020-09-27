@@ -1,18 +1,18 @@
-.image-block {
+.task-page .image-block {
   margin-bottom: 30px;
 }
 
-.image-block__edite-block {
+.task-page .image-block__edite-block {
   margin-bottom: 10px;
   display: flex;
   align-items: center;
 }
 
-.image-block__checkbox {
+.task-page .image-block__checkbox {
   margin-right: 10px;
 }
 
-.image-block__image {
+.task-page .image-block__image {
   margin: 0 auto;
   width: 90%;
   max-width: 700px;
@@ -20,7 +20,7 @@
 }
 
 @media (max-width: 768px) {
-  .image-block__image {
+  .task-page .image-block__image {
     width: 100%;
   }
 }

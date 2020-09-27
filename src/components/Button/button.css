@@ -1,9 +1,9 @@
-.task-page__confirm-btn-wrapper, .task-page__close-btn-wrapper {
+.task-page .task-page__confirm-btn-wrapper, .task-page .task-page__close-btn-wrapper {
   display: flex;
   justify-content: flex-end;
 }
 
-.task-page__preview-btn, .task-page__close-btn {
+.task-page .task-page__preview-btn, .task-page .task-page__close-btn {
   display: flex;
   justify-content: center;
   align-items: center;

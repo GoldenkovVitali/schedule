@@ -60,6 +60,7 @@ export default class MapBlock extends Component {
             placeholder='Write address...'
             value={place}
             data-name={name}
+            readOnly={isEdited ? false : true}
             bordered={isEdited ? true : false}
             onChange={this.handleChangeInput}
           />
