@@ -211,13 +211,15 @@ export default class TaskPage extends Component {
           data={incomingData}
           feedback={feedback}
           isEdited={isEdited}
+          changeData={this.changeData}
+          updateRow={this.props.updateRow}
         />
         {isEdited ? 
           <Button 
             type='primary'
             size='default'
             btnClassName='task-page__confirm-btn'
-            btnWrapperClassName = 'task-page__confirm-btn-wrapper'
+            btnWrapperClassName='task-page__confirm-btn-wrapper'
             text='Confirm'
             onClick={this.updateEvent}
             loading={btnLoading}

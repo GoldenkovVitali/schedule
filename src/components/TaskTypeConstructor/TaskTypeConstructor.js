@@ -6,7 +6,7 @@ import './taskTypeConstructor.css';
 
 export default class TaskTypeConstructor extends Component {
   state = {
-    color: '#000000d9',
+    color: '#000000d9', 
     tagName: this.props.tagName || '',
     taskType: this.props.taskType || '',
   }
@@ -14,7 +14,14 @@ export default class TaskTypeConstructor extends Component {
   localStorageSettings = new LocalStorageSettings();
 
   changeTagName = (event) => {
-    this.setState({ tagName: event.target.value });
+    const value = event.target.value;
+
+    if (value.match(/[\dА-Яа-я]+/g)) {
+      this.setState({ tagName: this.state.tagName });
+      return;
+    }
+
+    this.setState({ tagName: value });
   }
 
   changeTagColor = (event) => {

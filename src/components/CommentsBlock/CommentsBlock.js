@@ -40,7 +40,7 @@ export default class CommentForm extends Component {
     checked: this.props.data.commentsOn,
   };
 
-  data = this.props.data;
+  data = JSON.parse(JSON.stringify(this.props.data));
   id = this.props.data.id;
 
   service = new Service();
@@ -85,7 +85,9 @@ export default class CommentForm extends Component {
             content: <p>{this.state.value}</p>,
           },
         ],
-      });      
+      });   
+      
+      this.props.updateRow(this.data);
       this.data.comments = this.state.comments;
       
       this.service.updateEvent(this.data);
@@ -99,6 +101,7 @@ export default class CommentForm extends Component {
   onChangeCheckbox = (event) => {
     const isChecked = event.target.checked;
 
+    this.props.changeData('commentsOn', isChecked);
     this.data.commentsOn = isChecked;
     this.setState({
       checked: isChecked,
