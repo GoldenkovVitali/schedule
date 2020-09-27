@@ -29,11 +29,11 @@ class MainTable extends Component {
     data: null,
     columns: columnsData,
     lastRowIndex: null,
-    fontSize: 14,
-    rowCount: 10,
-    colorBgPicker: { r: '250', g: '250', b: '250', a: '1' },
-    colorFontPicker: { r: '241', g: '112', b: '19', a: '1' },
-    styles: {
+    fontSize: helpers.getTableSettings('fontSize') || 14,
+    rowCount: helpers.getTableSettings('rowCount') || 10,
+    colorBgPicker: helpers.getTableSettings('colorBgPicker') || { r: '250', g: '250', b: '250', a: '1' },
+    colorFontPicker: helpers.getTableSettings('colorFontPicker') || { r: '241', g: '112', b: '19', a: '1' },
+    styles: helpers.getTableSettings('styles') || {
       color: 'green',
       backgroundColor: 'yellow',
       fontSize: '14px',
@@ -41,8 +41,8 @@ class MainTable extends Component {
     hiddenKeys: [],
     initColumns: columnsData,
     selectedRowKeys: [],
-    isAccessible: 'Выкл',
-    isMentor: 'Ментор',
+    isAccessible: helpers.getTableSettings('isAccessible') || 'Выкл',
+    isMentor:  helpers.getTableSettings('isMentor') || 'Ментор',
     sowTaskTypes: null,
     initialData: [],
   };
@@ -84,6 +84,8 @@ class MainTable extends Component {
         isAccessible: value,
       });
     }
+    helpers.setTableSettings('styles', this.state.styles)
+    helpers.setTableSettings('isAccessible', this.state.isAccessible)
   };
 
   onHandleMentor = value => {
@@ -111,12 +113,16 @@ class MainTable extends Component {
       fontSize: size,
       isAccessible: 'Выкл',
     });
+    helpers.setTableSettings('styles', this.state.styles)
+    helpers.setTableSettings('isAccessible', this.state.isAccessible)
+    helpers.setTableSettings('fontSize', this.state.fontSize)
   };
 
   setRowCount = value => {
     this.setState({
       rowCount: value,
     });
+    helpers.setTableSettings('rowCount', this.state.rowCount)
   };
 
   setColorBgPicker = color => {
@@ -124,6 +130,8 @@ class MainTable extends Component {
       colorBgPicker: color,
       isAccessible: 'Выкл',
     });
+    helpers.setTableSettings('colorBgPicker', this.state.colorBgPicker)
+    helpers.setTableSettings('isAccessible', this.state.isAccessible)
   };
 
   setColorFontPicker = color => {
@@ -131,6 +139,8 @@ class MainTable extends Component {
       colorFontPicker: color,
       isAccessible: 'Выкл',
     });
+    helpers.setTableSettings('colorFontPicker', this.state.colorFontPicker)
+    helpers.setTableSettings('isAccessible', this.state.isAccessible)
   };
 
   setColoBgFontSize = () => {
@@ -142,9 +152,11 @@ class MainTable extends Component {
           fontSize: `${this.state.fontSize}px`,
         },
       });
+      helpers.setTableSettings('styles', this.state.styles)
     } else {
       this.onHandleAccessible
     }
+
   };
 
   onHideColumns = hiddenColumns => {
@@ -177,7 +189,7 @@ class MainTable extends Component {
       columns: [...newColumns],
       initialData: res,
     });
-
+    console.log('update', this.state)
   };
 
   async componentDidMount() {
@@ -240,6 +252,7 @@ class MainTable extends Component {
     const newColumns = this.state.columns.map(column => {
       return {...column, render: text => <div style={this.state.styles}>{text}</div>}
     });
+console.log('render', this.state)
 
     return (
       <>

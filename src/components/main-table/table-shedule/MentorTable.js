@@ -53,7 +53,7 @@ const EditableTable = ({ dataShedule, columns, openTaskPage, updateTable, rowCou
 
     useEffect(() => {
       setData(dataShedule);
-    }, [dataShedule])
+    }, [dataShedule, columns])
 
     const edit = record => {
       form.setFieldsValue({

@@ -18,6 +18,12 @@ const helpers = {
       }
       console.log(title, value)
       localStorage.setItem('tableSettings', JSON.stringify(newSettings))
+    }else {
+      const newSettings = {
+        [title]: value
+      }
+      console.log(title, value)
+      localStorage.setItem('tableSettings', JSON.stringify(newSettings))
     }
   },
   getTypesTasks: (arr = []) => {

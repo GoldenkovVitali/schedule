@@ -128,43 +128,7 @@ class Tables extends React.Component {
                 };
               }}
               bordered
-              rowClassName={(record, index) => {
-                if (
-                  record.key === this.state.selectedKey ||
-                  this.state.selectedRowKeys.includes(record.key)
-                ) {
-                  return 'table-row-dark';
-                }
-                if (
-                  record.type === 'lecture' ||
-                  record.type === 'lectureMixed' ||
-                  record.type === 'lectureSelfstudy' ||
-                  record.type === 'lectureOffline' ||
-                  record.type === 'lectureOnline'
-                ) {
-                  return 'blue';
-                } else if (
-                  record.type === 'interview' ||
-                  record.type === 'test' ||
-                  record.type === 'warmup'
-                ) {
-                  return 'custom';
-                } else if (
-                  record.type === 'codejam' ||
-                  record.type === 'codewars' ||
-                  record.type === 'htmltask' ||
-                  record.type === 'jstask'
-                ) {
-                  return 'green';
-                } else if (
-                  record.type === 'meetup' ||
-                  record.type === 'workshop'
-                ) {
-                  return 'custom2';
-                } else {
-                  return 'black';
-                }
-              }}
+              rowClassName={'(record, index) => console.log(record)'}
               columns={columns}
             />
           ) : (
