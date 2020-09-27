@@ -14,7 +14,14 @@ export default class TaskTypeConstructor extends Component {
   localStorageSettings = new LocalStorageSettings();
 
   changeTagName = (event) => {
-    this.setState({ tagName: event.target.value });
+    const value = event.target.value;
+
+    if (value.match(/[\dА-Яа-я]+/g)) {
+      this.setState({ tagName: this.state.tagName });
+      return;
+    }
+
+    this.setState({ tagName: value });
   }
 
   changeTagColor = (event) => {
