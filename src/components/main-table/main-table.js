@@ -305,8 +305,6 @@ class MainTable extends Component {
 
     const styles = taskTypes.map(type => {      
       let color = taskColors[type] || '#ffffff';
-      console.log(color)
-      console.log(color.length)
 
       if (color.length === 7) {
         color += '70';

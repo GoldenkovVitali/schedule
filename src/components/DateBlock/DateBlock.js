@@ -69,19 +69,17 @@ export default class DateBlock extends Component  {
     const timeFormat = 'HH:mm';
     const dateFormat = 'YYYY-MM-DD';
 
-    // if (deadline === '') {
-    //   deadline = '';
-    // }
+    if (deadline === ' ') {
+      deadline = '';
+    }
 
-    // if (startTime === '') {
-    //   startTime = null
-    // }
+    if (startTime === '') {
+      startTime = null
+    }
 
-    // if (startDate === '') {
-    //   startDate = null
-    // }
-
-    console.log( deadline === ' ' , 'deadline')
+    if (startDate === '') {
+      startDate = null
+    }
 
     return (
       <div className='date-block'>
@@ -146,7 +144,7 @@ export default class DateBlock extends Component  {
               <p className='date-block__item-type'>Deadline: </p>             
               <DatePicker 
                 bordered={isEdited ? true : false}
-                value={false ? moment(deadline, dateFormat) : null}
+                value={deadline ? moment(deadline, dateFormat) : null}
                 data-name={deadlineName} 
                 onChange={this.handleChangeDeadline}
                 disabled={(isEdited && checked[deadlineName]) ? false : true}
