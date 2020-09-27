@@ -19,8 +19,8 @@ class MainTable extends Component {
     lastRowIndex: null,
     fontSize: 14,
     rowCount: 10,
-    colorBgPicker: { r: '250', g: '250', b: '250', a: '1' },
-    colorFontPicker: { r: '241', g: '112', b: '19', a: '1' },
+    colorBgPicker: { r: '250', g: '250', b: '250', a: '0' },
+    colorFontPicker: { r: '26', g: '26', b: '26', a: '1' },
     styles: {
       color: 'green',
       backgroundColor: 'yellow',
@@ -303,11 +303,17 @@ class MainTable extends Component {
     const taskTypes = Object.keys(this.localStorageSettings.getTaskTypes());
     const taskColors = this.localStorageSettings.getTaskTypeColors();
 
-    const styles = taskTypes.map(type => {
+    const styles = taskTypes.map(type => {      
+      let color = taskColors[type] || '#ffffff';
+
+      if (color.length === 7) {
+        color += '70';
+      }
+
       return (
         <style key={type}>
           {`.${type} {
-              background-color: ${taskColors[type]};
+              background-color: ${color};
             }; \n`}
         </style>
       );

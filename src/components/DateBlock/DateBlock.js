@@ -64,10 +64,22 @@ export default class DateBlock extends Component  {
   render() {    
     const { isEdited, name: { startDateName, startTimeName, deadlineName }, data, date: { isStartDate, isStartTime, isDeadlineDate } } = this.props;
 
-    const { startTime, startDate, deadline, checked } = this.state;
+    let { startTime, startDate, deadline, checked } = this.state;
     
     const timeFormat = 'HH:mm';
     const dateFormat = 'YYYY-MM-DD';
+
+    if (deadline === ' ') {
+      deadline = '';
+    }
+
+    if (startTime === '') {
+      startTime = null
+    }
+
+    if (startDate === '') {
+      startDate = null
+    }
 
     return (
       <div className='date-block'>
