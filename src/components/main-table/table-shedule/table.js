@@ -12,8 +12,8 @@ class Tables extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRowKeys: [], // Check here to configure the default column
-      editing: false, // редактирование можно или нет, это вторая часть таска для менторов
+      selectedRowKeys: [],
+      editing: false,
       isShowDivTask: false,
     };
   }
@@ -170,38 +170,10 @@ class Tables extends React.Component {
                 }
                 let taskTypeColors = this.localStorageSettings.getTaskTypeColors();
                 const rowColor = taskTypeColors[record.type] || 'black';
-
                 return rowColor;
-                // if (
-                //   record.type === 'lecture' ||
-                //   record.type === 'lectureMixed' ||
-                //   record.type === 'lectureSelfstudy' ||
-                //   record.type === 'lectureOffline' ||
-                //   record.type === 'lectureOnline'
-                // ) {
-                //   return 'blue';
-                // } else if (
-                //   record.type === 'interview' ||
-                //   record.type === 'test' ||
-                //   record.type === 'warmup'
-                // ) {
-                //   return 'custom';
-                // } else if (
-                //   record.type === 'codejam' ||
-                //   record.type === 'codewars' ||
-                //   record.type === 'htmltask' ||
-                //   record.type === 'jstask'
-                // ) {
-                //   return 'green';
-                // } else if (
-                //   record.type === 'meetup' ||
-                //   record.type === 'workshop'
-                // ) {
-                //   return 'custom2';
-                // } else {
-                //   return 'black';
-                // }
               }}
+              // rowClassName={record => record.color.replace('#', '_')}
+              // style={{ background: 'yellow' }}
               columns={columns}
             />
           ) : (

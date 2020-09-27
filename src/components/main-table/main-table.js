@@ -6,9 +6,9 @@ import Tables from './table-shedule/table';
 import TableControls from '../TableControls';
 import Select from 'react-select';
 import MentorToggleButton from '../MentorToggle';
-import TableView from "../TableView";
-import helpers from "../../helpers/helpers";
-import TaskFilter from "../TaskFilter";
+import TableView from '../TableView';
+import helpers from '../../helpers/helpers';
+import TaskFilter from '../TaskFilter';
 import columnsData from './columnsData';
 
 const options = [
@@ -44,12 +44,9 @@ class MainTable extends Component {
     selectedRowKeys: [],
     isAccessible: 'Выкл',
     isMentor: 'Ментор',
-
     deletedRows: [],
-
     sowTaskTypes: null,
     initialData: [],
-
   };
 
   service = new Service();
@@ -190,7 +187,6 @@ class MainTable extends Component {
 
       initialData: res,
     });
-
   };
 
   async componentDidMount() {
@@ -224,7 +220,6 @@ class MainTable extends Component {
       });
     }
   };
-
 
   addRow = async () => {
     const { columns, lastRowIndex } = this.state;
@@ -279,15 +274,15 @@ class MainTable extends Component {
     this.updateTabel();
   };
 
-  onHandleSowTaskTypes = (values) => {
+  onHandleSowTaskTypes = values => {
     const newData = [];
-    values.forEach((item) => {
-      this.state.initialData.forEach((row) => {
-        if(row.type.toLowerCase() == item.toLowerCase()) {
-          newData.push(row)
+    values.forEach(item => {
+      this.state.initialData.forEach(row => {
+        if (row.type.toLowerCase() == item.toLowerCase()) {
+          newData.push(row);
         }
-      })
-    })
+      });
+    });
 
     this.setState({
       data: newData,
@@ -308,16 +303,20 @@ class MainTable extends Component {
     return (
       <>
         <Row justify="end">
-
           <Col span={4} offset={0}>
-            <TableView onHandleView={onHandleView} tableView={tableView}/>
+            <TableView onHandleView={onHandleView} tableView={tableView} />
           </Col>
           <Col span={16} offset={0}>
-            <TaskFilter onHandleSowTaskTypes={this.onHandleSowTaskTypes} initialData={this.state.initialData}/>
+            <TaskFilter
+              onHandleSowTaskTypes={this.onHandleSowTaskTypes}
+              initialData={this.state.initialData}
+            />
           </Col>
           <Col span={4} offset={0}>
-            <MentorToggleButton onHandleMentor={this.onHandleMentor} isMentor={this.state.isMentor}/>
-
+            <MentorToggleButton
+              onHandleMentor={this.onHandleMentor}
+              isMentor={this.state.isMentor}
+            />
           </Col>
         </Row>
         <MyComponent />
